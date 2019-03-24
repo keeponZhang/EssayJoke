@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/EssayJoke1.iml" filepath="$PROJECT_DIR$/EssayJoke1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/baselibrary/baselibrary.iml" filepath="$PROJECT_DIR$/baselibrary/baselibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/builder_dialog_07/builder_dialog_07.iml" filepath="$PROJECT_DIR$/builder_dialog_07/builder_dialog_07.iml" />
+      <module fileurl="file://$PROJECT_DIR$/builder_http_09/builder_http_09.iml" filepath="$PROJECT_DIR$/builder_http_09/builder_http_09.iml" />
+      <module fileurl="file://$PROJECT_DIR$/builder_navigationBar_08/builder_navigationBar_08.iml" filepath="$PROJECT_DIR$/builder_navigationBar_08/builder_navigationBar_08.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ioc_02/ioc_02.iml" filepath="$PROJECT_DIR$/ioc_02/ioc_02.iml" />
+    </modules>
+  </component>
+</project>

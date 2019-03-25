@@ -2,11 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/EssayJoke1.iml" filepath="$PROJECT_DIR$/EssayJoke1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EssayJoke.iml" filepath="$PROJECT_DIR$/EssayJoke.iml" />
       <module fileurl="file://$PROJECT_DIR$/baselibrary/baselibrary.iml" filepath="$PROJECT_DIR$/baselibrary/baselibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/builder_dialog_07/builder_dialog_07.iml" filepath="$PROJECT_DIR$/builder_dialog_07/builder_dialog_07.iml" />
       <module fileurl="file://$PROJECT_DIR$/builder_http_09/builder_http_09.iml" filepath="$PROJECT_DIR$/builder_http_09/builder_http_09.iml" />
       <module fileurl="file://$PROJECT_DIR$/builder_navigationBar_08/builder_navigationBar_08.iml" filepath="$PROJECT_DIR$/builder_navigationBar_08/builder_navigationBar_08.iml" />
+      <module fileurl="file://$PROJECT_DIR$/db_kuangjia_11/db_kuangjia_11.iml" filepath="$PROJECT_DIR$/db_kuangjia_11/db_kuangjia_11.iml" />
       <module fileurl="file://$PROJECT_DIR$/ioc_02/ioc_02.iml" filepath="$PROJECT_DIR$/ioc_02/ioc_02.iml" />
     </modules>
   </component>

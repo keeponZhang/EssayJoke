@@ -1,4 +1,4 @@
-package com.hc.baselibrary.navigationbar;
+package com.hc.essay.joke.navigationbar;
 
 import android.app.Activity;
 import android.content.Context;
@@ -60,7 +60,7 @@ public abstract class AbsNavigationBar<P extends AbsNavigationBar.Builder.AbsNav
     }
 
     /**
-     * 绑定和创建View
+     * 绑定和创建View(类似模板设计模式，构造过程有父类决定，子类重写一些方法，最后表现出不同点)
      */
     private void createAndBindView() {
         // 1. 创建View
@@ -79,7 +79,7 @@ public abstract class AbsNavigationBar<P extends AbsNavigationBar.Builder.AbsNav
         if(mParams.mParent == null){
             return;
         }
-
+        //需要NoActionBar并且LinearLayout
         mNavigationView = LayoutInflater.from(mParams.mContext).
                 inflate(bindLayoutId(), mParams.mParent, false);// 插件换肤
 
@@ -91,9 +91,9 @@ public abstract class AbsNavigationBar<P extends AbsNavigationBar.Builder.AbsNav
 
     // Builder  仿照系统写的， 套路，活  AbsNavigationBar  Builder  参数Params
     public abstract static class Builder {
-
+        //视频说去掉这个，其实不影响，因为这个赋值会被子类的覆盖掉
+//        AbsNavigationParams P;
         public Builder(Context context, ViewGroup parent) {
-
         }
 
         public abstract AbsNavigationBar builder();

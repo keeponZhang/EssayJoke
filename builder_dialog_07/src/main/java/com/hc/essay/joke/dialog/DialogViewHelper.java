@@ -54,6 +54,7 @@ class DialogViewHelper {
     }
 
     public <T extends View> T getView(int viewId) {
+        //这里用弱引用防止内存泄漏，因为mViews是一个集合，持有view的应用，view又持有activity的引用
         WeakReference<View> viewReference = mViews.get(viewId);
         // 侧漏的问题  到时候到这个系统优化的时候再去介绍
         View view = null;

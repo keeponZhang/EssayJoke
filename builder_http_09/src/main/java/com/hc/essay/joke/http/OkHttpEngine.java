@@ -1,4 +1,4 @@
-package com.hc.baselibrary.http;
+package com.hc.essay.joke.http;
 
 import android.content.Context;
 import android.util.Log;
@@ -25,7 +25,7 @@ import okhttp3.Response;
  * Version 1.0
  * Description: OkHttp默认的引擎
  */
-public class OkHttpEngine implements IHttpEngine{
+public class OkHttpEngine implements IHttpEngine {
     private static OkHttpClient mOkHttpClient = new OkHttpClient();
 
     @Override

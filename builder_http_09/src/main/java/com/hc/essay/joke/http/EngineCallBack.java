@@ -1,4 +1,4 @@
-package com.hc.baselibrary.http;
+package com.hc.essay.joke.http;
 
 import android.content.Context;
 
@@ -11,7 +11,7 @@ import java.util.Map;
  * Description:
  */
 public interface EngineCallBack {
-    // 开始执行，在执行之前会回掉的方法
+    // 开始执行，在执行之前会回掉的方法(这里可以实现携带公共参数)
     public void onPreExecute(Context context,Map<String,Object> params);
 
     // 错误

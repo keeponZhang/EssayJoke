@@ -1,5 +1,5 @@
 include ':ioc_02', ':baselibrary', ':builder_dialog_07', ':resource_assetmanager_2_01', ':hook_view_2_02'
-//include ':fanxing'
+include ':fanxing'
 include ':builder_navigationBar_08'
 include ':builder_http_09'
-include ':db_kuangjia_11'
+include ':db_kuangjia_11_12'

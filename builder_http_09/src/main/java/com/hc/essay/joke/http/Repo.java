@@ -1,4 +1,4 @@
-package com.darren.architect_day33.simple1.bean;
+package com.hc.essay.joke.http;
 
 import com.google.gson.annotations.SerializedName;
 

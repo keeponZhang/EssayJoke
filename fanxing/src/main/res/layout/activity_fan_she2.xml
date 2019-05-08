@@ -14,56 +14,50 @@
 		android:padding="15dp"
 		android:textAllCaps="false"
 		android:layout_width="wrap_content"
-		android:text="getClass"
-		android:onClick="getClazz"
+		android:text="getGenericClass"
+		android:onClick="getGenericClass"
 		android:layout_height="wrap_content"
 		/>
 	<Button
 		android:padding="15dp"
 		android:textAllCaps="false"
 		android:layout_width="wrap_content"
-		android:text="getClass2"
-		android:onClick="getClazz2"
+		android:text="getGenericInterface"
+		android:onClick="getGenericInterface"
+		android:layout_height="wrap_content"
+		/>
+
+	<Button
+		android:padding="15dp"
+		android:textAllCaps="false"
+		android:layout_width="wrap_content"
+		android:text="getGenericInterface2"
+		android:onClick="getGenericInterface2"
+		android:layout_height="wrap_content"
+		/>
+
+	<Button
+		android:padding="15dp"
+		android:textAllCaps="false"
+		android:layout_width="wrap_content"
+		android:text="getGenericInterface3"
+		android:onClick="getGenericInterface3"
 		android:layout_height="wrap_content"
 		/>
 	<Button
 		android:padding="15dp"
 		android:textAllCaps="false"
 		android:layout_width="wrap_content"
-		android:text="getClass2"
-		android:onClick="getClazz2"
+		android:text="getGenericInterface4"
+		android:onClick="getGenericInterface4"
 		android:layout_height="wrap_content"
 		/>
 	<Button
 		android:padding="15dp"
 		android:textAllCaps="false"
 		android:layout_width="wrap_content"
-		android:text="getClassPackage"
-		android:onClick="getClassPackage"
-		android:layout_height="wrap_content"
-		/>
-	<Button
-		android:padding="15dp"
-		android:textAllCaps="false"
-		android:layout_width="wrap_content"
-		android:text="getClassInfo"
-		android:onClick="getClassInfo"
-		android:layout_height="wrap_content"
-		/>
-	<Button
-		android:padding="15dp"
-		android:textAllCaps="false"
-		android:layout_width="wrap_content"
-		android:text="getClassInfo2"
-		android:onClick="getClassInfo2"
-		android:layout_height="wrap_content"
-		/>
-	<Button
-		android:padding="15dp"
-		android:textAllCaps="false"
-		android:layout_width="wrap_content"
-		android:text="getClassInfo3"
-		android:onClick="getClassInfo3"
+		android:text="parseClass"
+		android:onClick="parseClass"
 		android:layout_height="wrap_content"
 		/>
 </LinearLayout>

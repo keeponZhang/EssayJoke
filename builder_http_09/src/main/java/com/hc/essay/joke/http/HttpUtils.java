@@ -69,6 +69,7 @@ public class HttpUtils{
         // 1.baseLibrary里面这里面不包含业务逻辑
         // 2.如果有多条业务线，
         // 让callBack回调去
+        //这里不同的callback可以往mParams放一些不同的共同的请求参数
         callBack.onPreExecute(mContext,mParams);
 
         if(callBack == null){

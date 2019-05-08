@@ -18,6 +18,7 @@ public interface EngineCallBack {
     public void onError(Exception e);
 
     // 成功  返回对象会出问题   成功  data对象{"",""}  失败  data:""
+    //处理方法，这里返回String类型，子类再做一层处理（其实子类也会面临同样的问题）
     public void onSuccess(String result);
 
 

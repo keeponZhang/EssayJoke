@@ -1,4 +1,4 @@
-package com.zhang.fanshe;
+package com.zhang.fanshe.bean;
 
 /**
  * @创建者 keepon
@@ -8,5 +8,14 @@ package com.zhang.fanshe;
  * @更新者 $$Author$$
  * @更新时间 $$Date$$
  */
-class Person {
+public class Person {
+	private int age;
+	private String name;
+	public Person(){
+
+	}
+	public Person(int age, String name) {
+		this.age = age;
+		this.name = name;
+	}
 }

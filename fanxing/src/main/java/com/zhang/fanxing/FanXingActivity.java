@@ -1,12 +1,12 @@
-package com.zhang.fanshe;
+package com.zhang.fanxing;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.zhang.fanshe.bean.CEO;
-import com.zhang.fanshe.bean.Employee;
-import com.zhang.fanshe.bean.Manager;
+import com.zhang.fanxing.bean.CEO;
+import com.zhang.fanxing.bean.Employee;
+import com.zhang.fanxing.bean.Manager;
 
 import java.util.ArrayList;
 import java.util.List;

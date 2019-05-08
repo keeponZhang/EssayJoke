@@ -1,4 +1,4 @@
-package com.zhang.fanshe;
+package com.zhang.fanxing;
 
 import org.junit.Test;
 

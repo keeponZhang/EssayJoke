@@ -1,14 +1,13 @@
-package com.hc.essay.library.adapter;
+package com.zhang.app.banner;
 
 import android.content.Context;
 import android.text.Html;
 import android.view.View;
 
-import com.example.administrator.framelibrary.recyclerview.adapter.CommonRecyclerAdapter;
-import com.example.administrator.framelibrary.recyclerview.adapter.ViewHolder;
-import com.hc.essay.library.GlideImageLoader;
-import com.hc.essay.library.R;
-import com.hc.essay.library.mode.DiscoverListResult;
+import com.example.administrator.framelibrary.GlideImageLoader;
+import com.zhang.app.R;
+import com.zhang.recyclerview.adapter.CommonRecyclerAdapter;
+import com.zhang.recyclerview.adapter.ViewHolder;
 
 import java.util.List;
 
@@ -19,7 +18,7 @@ import java.util.List;
  * Description:
  */
 public class DiscoverListAdapter extends
-        CommonRecyclerAdapter<DiscoverListResult.DataBean.CategoriesBean.CategoryListBean>{
+        CommonRecyclerAdapter<DiscoverListResult.DataBean.CategoriesBean.CategoryListBean> {
     public DiscoverListAdapter(Context context, List<DiscoverListResult.DataBean.CategoriesBean.CategoryListBean> data) {
         super(context, data, R.layout.channel_list_item);
     }

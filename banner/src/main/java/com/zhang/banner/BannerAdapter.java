@@ -1,4 +1,4 @@
-package com.example.administrator.framelibrary.banner;
+package com.zhang.banner;
 
 import android.view.View;
 
@@ -14,7 +14,7 @@ public abstract class BannerAdapter {
     /**
      * 1.获取根据位置获取ViewPager里面的子View
      */
-    public abstract View getView(int position,View convertView);
+    public abstract View getView(int position, View convertView);
 
     /**
      * 5.获取轮播的数量

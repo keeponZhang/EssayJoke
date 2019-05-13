@@ -1,4 +1,4 @@
-package com.example.administrator.framelibrary.recyclerview.adapter;
+package com.zhang.recyclerview.adapter;
 
 /**
  * Created by Darren on 2016/12/28.
@@ -6,5 +6,5 @@ package com.example.administrator.framelibrary.recyclerview.adapter;
  * Description: Adapter条目的长按事件
  */
 public interface OnLongClickListener {
-    public boolean onLongClick(int position);
+     boolean onLongClick(int position);
 }

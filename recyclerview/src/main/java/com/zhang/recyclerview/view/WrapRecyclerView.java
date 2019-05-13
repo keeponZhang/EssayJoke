@@ -1,4 +1,4 @@
-package com.example.administrator.framelibrary.recyclerview.view;
+package com.zhang.recyclerview.view;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -6,7 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.example.administrator.framelibrary.recyclerview.adapter.OnItemClickListener;
+import com.zhang.recyclerview.adapter.OnItemClickListener;
+
 
 /**
  * Created by Darren on 2016/12/29.
@@ -15,9 +16,9 @@ import com.example.administrator.framelibrary.recyclerview.adapter.OnItemClickLi
  */
 public class WrapRecyclerView extends RecyclerView {
     // 包裹了一层的头部底部Adapter
-    private WrapRecyclerAdapter mWrapRecyclerAdapter;
+    private com.example.administrator.framelibrary.recyclerview.view.WrapRecyclerAdapter mWrapRecyclerAdapter;
     // 这个是列表数据的Adapter
-    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.Adapter                                                         mAdapter;
 
     // 增加一些通用功能
     // 空列表数据应该显示的空View
@@ -46,10 +47,10 @@ public class WrapRecyclerView extends RecyclerView {
 
         this.mAdapter = adapter;
 
-        if (adapter instanceof WrapRecyclerAdapter) {
-            mWrapRecyclerAdapter = (WrapRecyclerAdapter) adapter;
+        if (adapter instanceof com.example.administrator.framelibrary.recyclerview.view.WrapRecyclerAdapter) {
+            mWrapRecyclerAdapter = (com.example.administrator.framelibrary.recyclerview.view.WrapRecyclerAdapter) adapter;
         } else {
-            mWrapRecyclerAdapter = new WrapRecyclerAdapter(adapter);
+            mWrapRecyclerAdapter = new com.example.administrator.framelibrary.recyclerview.view.WrapRecyclerAdapter(adapter);
         }
 
         super.setAdapter(mWrapRecyclerAdapter);
@@ -193,8 +194,8 @@ public class WrapRecyclerView extends RecyclerView {
     /***************
      * 给条目设置点击和长按事件
      *********************/
-    public OnItemClickListener mItemClickListener;
-    public com.example.administrator.framelibrary.recyclerview.adapter.OnLongClickListener mLongClickListener;
+    public OnItemClickListener                                mItemClickListener;
+    public com.zhang.recyclerview.adapter.OnLongClickListener mLongClickListener;
 
     public void setOnItemClickListener(OnItemClickListener itemClickListener) {
         this.mItemClickListener = itemClickListener;
@@ -204,7 +205,7 @@ public class WrapRecyclerView extends RecyclerView {
         }
     }
 
-    public void setOnLongClickListener(com.example.administrator.framelibrary.recyclerview.adapter.OnLongClickListener longClickListener) {
+    public void setOnLongClickListener(com.zhang.recyclerview.adapter.OnLongClickListener longClickListener) {
         this.mLongClickListener = longClickListener;
 
         if (mWrapRecyclerAdapter != null) {

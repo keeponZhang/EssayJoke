@@ -6,8 +6,8 @@ import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.administrator.framelibrary.recyclerview.adapter.OnItemClickListener;
-import com.example.administrator.framelibrary.recyclerview.adapter.OnLongClickListener;
+import com.zhang.recyclerview.adapter.OnItemClickListener;
+import com.zhang.recyclerview.adapter.OnLongClickListener;
 
 /**
  * Created by Darren on 2016/12/29.

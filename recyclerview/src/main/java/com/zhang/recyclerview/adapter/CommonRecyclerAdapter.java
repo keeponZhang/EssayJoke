@@ -1,4 +1,4 @@
-package com.example.administrator.framelibrary.recyclerview.adapter;
+package com.zhang.recyclerview.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,6 +29,9 @@ public abstract class CommonRecyclerAdapter<T> extends RecyclerView.Adapter<View
     public CommonRecyclerAdapter(Context context, List<T> data, int layoutId) {
         this.mContext = context;
         this.mInflater = LayoutInflater.from(mContext);
+        if(data==null){
+            data = new ArrayList<>();
+        }
         this.mData = data;
         this.mLayoutId = layoutId;
     }

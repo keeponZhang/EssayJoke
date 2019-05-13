@@ -1,4 +1,4 @@
-package com.example.administrator.framelibrary.banner;
+package com.zhang.banner;
 
 import android.app.Activity;
 import android.app.Application;
@@ -43,7 +43,7 @@ public class BannerViewPager extends ViewPager {
     private Handler mHandler;
 
     // 10.内存优化 --> 当前Activity
-    private Activity mActivity;
+    private Activity   mActivity;
     // 10.内存优化 --> 复用的View
     private List<View> mConvertViews;
 
@@ -172,7 +172,7 @@ public class BannerViewPager extends ViewPager {
         /**
          * 创建ViewPager条目回调的方法
          */
-        @Override
+        @Override  //container:viewpager
         public Object instantiateItem(ViewGroup container, final int position) {
             // Adapter 设计模式为了完全让用户自定义
             // position  0 -> 2的31次方

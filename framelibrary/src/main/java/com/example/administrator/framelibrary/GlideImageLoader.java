@@ -1,10 +1,10 @@
-package com.hc.essay.library;
+package com.example.administrator.framelibrary;
 
 import android.content.Context;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.example.administrator.framelibrary.recyclerview.adapter.ViewHolder;
+import com.zhang.recyclerview.adapter.ViewHolder;
 
 
 /**

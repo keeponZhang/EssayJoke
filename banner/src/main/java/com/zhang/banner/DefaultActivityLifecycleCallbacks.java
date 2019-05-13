@@ -1,4 +1,4 @@
-package com.example.administrator.framelibrary.banner;
+package com.zhang.banner;
 
 import android.app.Activity;
 import android.app.Application;

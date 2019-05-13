@@ -1,4 +1,4 @@
-package com.example.administrator.framelibrary.banner;
+package com.zhang.banner;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -14,8 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.administrator.framelibrary.R;
-
 
 /**
  * description:
@@ -26,15 +24,15 @@ import com.example.administrator.framelibrary.R;
  * Version：1.0
  */
 public class BannerView extends RelativeLayout {
-    private static final String TAG = "BannerView";
+    private static final String          TAG = "BannerView";
     // 4.自定义BannerView - 轮播的ViewPager
-    private BannerViewPager mBannerVp;
+    private              BannerViewPager mBannerVp;
     // 4.自定义BannerView - 轮播的描述
-    private TextView mBannerDescTv;
+    private              TextView        mBannerDescTv;
     // 4.自定义BannerView - 点的容器
-    private LinearLayout mDotContainerView;
+    private              LinearLayout    mDotContainerView;
     // 4.自定义BannerView - 自定义的BannerAdapter
-    private BannerAdapter mAdapter;
+    private              BannerAdapter   mAdapter;
 
     private Context mContext;
 
@@ -47,15 +45,15 @@ public class BannerView extends RelativeLayout {
     private int mCurrentPosition = 0;
 
     // 8.自定义属性 - 点的显示位置  默认右边
-    private int mDotGravity = 1;
+    private int   mDotGravity = 1;
     // 8.自定义属性 - 点的大小  默认8dp
-    private int mDotSize = 8;
+    private int   mDotSize = 8;
     // 8.自定义属性 - 点的间距  默认8dp
-    private int mDotDistance = 8;
+    private int   mDotDistance = 8;
     // 8.自定义属性 - 底部容器
-    private View mBannerBv;
+    private View  mBannerBv;
     // 8.自定义属性 - 底部容器颜色默认透明
-    private int mBottomColor = Color.TRANSPARENT;
+    private int   mBottomColor = Color.TRANSPARENT;
     // 8.自定义属性 - 宽高比例
     private float mWidthProportion, mHeightProportion;
 

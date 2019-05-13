@@ -1,4 +1,4 @@
-package com.example.administrator.framelibrary.banner;
+package com.zhang.banner;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -9,7 +9,6 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 
 /**
  * description:  圆的指示器
@@ -19,7 +18,7 @@ import android.widget.ImageView;
  * Email: 240336124@qq.com
  * Version：1.0
  */
-public class DotIndicatorView extends ImageView {
+public class DotIndicatorView extends android.support.v7.widget.AppCompatImageView {
 
     private Drawable drawable;
 

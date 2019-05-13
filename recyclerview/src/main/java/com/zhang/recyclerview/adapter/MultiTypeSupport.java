@@ -1,4 +1,4 @@
-package com.example.administrator.framelibrary.recyclerview.adapter;
+package com.zhang.recyclerview.adapter;
 
 /**
  * Created by Darren on 2016/12/28.

@@ -1,4 +1,4 @@
-package com.example.administrator.framelibrary.recyclerview.adapter;
+package com.zhang.recyclerview.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

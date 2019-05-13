@@ -1,4 +1,4 @@
-package com.example.administrator.framelibrary.banner;
+package com.zhang.banner;
 
 import android.content.Context;
 import android.view.animation.Interpolator;
@@ -13,7 +13,7 @@ import android.widget.Scroller;
  * Version：1.0
  */
 // 3.改变ViewPager切换的速率
-public class BannerScroller extends Scroller{
+public class BannerScroller extends Scroller {
     // 3.改变ViewPager切换的速率 - 动画持续的时间
     private int mScrollerDuration = 950;
 

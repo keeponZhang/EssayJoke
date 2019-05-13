@@ -131,7 +131,7 @@ public class IndicatorActivity extends AppCompatActivity {
 			public View getBottomTrackView() {
 				View view = new View(IndicatorActivity.this);
 				view.setBackgroundColor(Color.parseColor("#ff0000"));
-				ViewGroup.LayoutParams layoutParams = new FrameLayout.LayoutParams(100,8);
+				ViewGroup.LayoutParams layoutParams = new FrameLayout.LayoutParams(80,3);
 				view.setLayoutParams(layoutParams);
 				return view;
 			}

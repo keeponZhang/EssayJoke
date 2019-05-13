@@ -7,7 +7,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.example.administrator.framelibrary.ItemFragment;
 import com.hc.baselibrary.ioc.ViewById;
@@ -123,6 +125,15 @@ public class IndicatorActivity extends AppCompatActivity {
 				// 上一个View
 				view.setDirection(ColorTrackTextView.Direction.RIGHT_TO_LEFT);
 				view.setCurrentProgress(0);
+			}
+
+			@Override
+			public View getBottomTrackView() {
+				View view = new View(IndicatorActivity.this);
+				view.setBackgroundColor(Color.parseColor("#ff0000"));
+				ViewGroup.LayoutParams layoutParams = new FrameLayout.LayoutParams(100,8);
+				view.setLayoutParams(layoutParams);
+				return view;
 			}
 		},mViewPager,false);
 	}

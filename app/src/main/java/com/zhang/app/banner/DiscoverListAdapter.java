@@ -20,7 +20,7 @@ import java.util.List;
 public class DiscoverListAdapter extends
         CommonRecyclerAdapter<DiscoverListResult.DataBean.CategoriesBean.CategoryListBean> {
     public DiscoverListAdapter(Context context, List<DiscoverListResult.DataBean.CategoriesBean.CategoryListBean> data) {
-        super(context, data, R.layout.channel_list_item);
+        super(context, data, R.layout.item_recyclerview);
     }
 
     @Override

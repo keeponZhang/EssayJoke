@@ -40,10 +40,20 @@ public abstract class HttpCallBack<T> implements EngineCallBack{
     @Override
     public void onSuccess(String result) {
         Gson gson = new Gson();
+        if(isOriginalString()){
+            getOriginalString(result);
+            return;
+        }
         // data:{"name","darren"}   data:"请求失败"
         T objResult = (T) gson.fromJson(result,
                 HttpUtils.analysisClazzInfo(this));
         onSuccess(objResult);
+
+    }
+    public  boolean isOriginalString(){
+        return false ;
+    }
+    public  void getOriginalString(String result){
     }
 
     // 返回可以直接操作的对象

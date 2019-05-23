@@ -17,6 +17,21 @@
 
 		</activity>
 		<activity android:name="com.zhang.recyclerview.itemdecoration.ItemDecorationActivity">
+
+		</activity>
+		<activity android:name="com.zhang.coordinatorLayout.CoordinatorLayoutActivity">
+
+		</activity>
+		<activity android:name="com.zhang.coordinatorLayout.CoordinatorLayoutToolBarActivity"
+			>
+
+		</activity>
+		<activity android:name="com.zhang.coordinatorLayout.CoordinatorLayoutAppBarLayoutActivity"
+		          android:theme="@style/Theme.AppCompat.NoActionBar">
+
+		</activity>
+		<activity android:name="com.zhang.coordinatorLayout.CoordinatorLayoutCollapsingToolbarLayoutActivity"
+		          android:theme="@style/Theme.AppCompat.NoActionBar">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 				<category android:name="android.intent.category.LAUNCHER"/>

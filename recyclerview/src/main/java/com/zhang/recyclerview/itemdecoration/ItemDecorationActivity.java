@@ -21,7 +21,6 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 public class ItemDecorationActivity extends AppCompatActivity {
-	String url = "https://api.github.com/users/momodiy/followers";
 	private RecyclerView mRecyclerView;
 
 	@Override
@@ -32,6 +31,7 @@ public class ItemDecorationActivity extends AppCompatActivity {
 
 
 	}
+	String url = "https://api.github.com/users/momodiy/followers";
 	public void getData(View view){
 		HttpUtils.with(this).url(url).execute(new HttpCallBack<FollowerInfos>() {
 			@Override
@@ -66,9 +66,8 @@ public class ItemDecorationActivity extends AppCompatActivity {
 
 	private void updateData(List<FollowerBean> followerBeans ) {
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+		mRecyclerView.addItemDecoration(new CategoryItemDecoration(getResources().getColor(R.color.blue)));
 		CategoryListAdapter categoryListAdapter = new CategoryListAdapter(this, followerBeans);
 		mRecyclerView.setAdapter(categoryListAdapter);
-
-
 	}
 }

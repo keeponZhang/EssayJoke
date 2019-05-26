@@ -4,9 +4,11 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import com.zhang.recyclerview.adapter.OnItemClickListener;
+import com.zhang.recyclerview.adapter.OnMyLongClickListener;
 
 
 /**
@@ -16,7 +18,7 @@ import com.zhang.recyclerview.adapter.OnItemClickListener;
  */
 public class WrapRecyclerView extends RecyclerView {
     // 包裹了一层的头部底部Adapter
-    private com.example.administrator.framelibrary.recyclerview.view.WrapRecyclerAdapter mWrapRecyclerAdapter;
+    private WrapRecyclerAdapter mWrapRecyclerAdapter;
     // 这个是列表数据的Adapter
     private RecyclerView.Adapter                                                         mAdapter;
 
@@ -47,10 +49,10 @@ public class WrapRecyclerView extends RecyclerView {
 
         this.mAdapter = adapter;
 
-        if (adapter instanceof com.example.administrator.framelibrary.recyclerview.view.WrapRecyclerAdapter) {
-            mWrapRecyclerAdapter = (com.example.administrator.framelibrary.recyclerview.view.WrapRecyclerAdapter) adapter;
+        if (adapter instanceof WrapRecyclerAdapter) {
+            mWrapRecyclerAdapter = (WrapRecyclerAdapter) adapter;
         } else {
-            mWrapRecyclerAdapter = new com.example.administrator.framelibrary.recyclerview.view.WrapRecyclerAdapter(adapter);
+            mWrapRecyclerAdapter = new WrapRecyclerAdapter(adapter);
         }
 
         super.setAdapter(mWrapRecyclerAdapter);
@@ -108,6 +110,7 @@ public class WrapRecyclerView extends RecyclerView {
     private AdapterDataObserver mDataObserver = new AdapterDataObserver() {
         @Override
         public void onChanged() {
+            Log.e("TAG", "WrapRecyclerView onChanged:" );
             if (mAdapter == null) return;
             // 观察者  列表Adapter更新 包裹的也需要更新不然列表的notifyDataSetChanged没效果
             if (mWrapRecyclerAdapter != mAdapter)
@@ -194,8 +197,8 @@ public class WrapRecyclerView extends RecyclerView {
     /***************
      * 给条目设置点击和长按事件
      *********************/
-    public OnItemClickListener                                mItemClickListener;
-    public com.zhang.recyclerview.adapter.OnLongClickListener mLongClickListener;
+    public OnItemClickListener   mItemClickListener;
+    public OnMyLongClickListener mLongClickListener;
 
     public void setOnItemClickListener(OnItemClickListener itemClickListener) {
         this.mItemClickListener = itemClickListener;
@@ -205,7 +208,7 @@ public class WrapRecyclerView extends RecyclerView {
         }
     }
 
-    public void setOnLongClickListener(com.zhang.recyclerview.adapter.OnLongClickListener longClickListener) {
+    public void setOnLongClickListener(OnMyLongClickListener longClickListener) {
         this.mLongClickListener = longClickListener;
 
         if (mWrapRecyclerAdapter != null) {

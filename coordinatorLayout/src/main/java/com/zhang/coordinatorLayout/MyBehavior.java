@@ -22,8 +22,10 @@ public class MyBehavior extends CoordinatorLayout.Behavior<Button> {
         width = display.widthPixels;
     }
 
+    //这个例子中，dependency既可能是CustomView ,也可能是TempView
     @Override
     public boolean layoutDependsOn(CoordinatorLayout parent, Button child, View dependency) {
+        Log.e("TAG", "MyBehavior layoutDependsOn dependency:" +dependency);
         //如果dependency是TempView的实例，说明它就是我们所需要的Dependency
         return dependency instanceof TempView;
     }

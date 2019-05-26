@@ -1,4 +1,4 @@
-package com.example.administrator.framelibrary.recyclerview.view;
+package com.zhang.recyclerview.view;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.zhang.recyclerview.adapter.OnItemClickListener;
-import com.zhang.recyclerview.adapter.OnLongClickListener;
+import com.zhang.recyclerview.adapter.OnMyLongClickListener;
 
 /**
  * Created by Darren on 2016/12/29.
@@ -71,7 +71,6 @@ public class WrapRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
      */
     private RecyclerView.ViewHolder createHeaderFooterViewHolder(View view) {
         return new RecyclerView.ViewHolder(view) {
-
         };
     }
 
@@ -211,14 +210,14 @@ public class WrapRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     /***************
      * 给条目设置点击和长按事件
      *********************/
-    public OnItemClickListener mItemClickListener;
-    public OnLongClickListener mLongClickListener;
+    public OnItemClickListener   mItemClickListener;
+    public OnMyLongClickListener mLongClickListener;
 
     public void setOnItemClickListener(OnItemClickListener itemClickListener) {
         this.mItemClickListener = itemClickListener;
     }
 
-    public void setOnLongClickListener(OnLongClickListener longClickListener) {
+    public void setOnLongClickListener(OnMyLongClickListener longClickListener) {
         this.mLongClickListener = longClickListener;
     }
 }

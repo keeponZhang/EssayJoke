@@ -108,14 +108,14 @@ public abstract class CommonRecyclerAdapter<T> extends RecyclerView.Adapter<View
     /***************
      * 给条目设置点击和长按事件
      *********************/
-    public OnItemClickListener mItemClickListener;
-    public OnLongClickListener mLongClickListener;
+    public OnItemClickListener   mItemClickListener;
+    public OnMyLongClickListener mLongClickListener;
 
     public void setOnItemClickListener(OnItemClickListener itemClickListener) {
         this.mItemClickListener = itemClickListener;
     }
 
-    public void setOnLongClickListener(OnLongClickListener longClickListener) {
+    public void setOnLongClickListener(OnMyLongClickListener longClickListener) {
         this.mLongClickListener = longClickListener;
     }
 }

@@ -12,13 +12,19 @@ import com.bumptech.glide.Glide;
 import com.zhang.recyclerview.R;
 import com.zhang.recyclerview.itemdecoration.bean.FollowerBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapter.ViewHolder> {
 
-    private List<FollowerBean> mList;
+    private List<FollowerBean> mList = new ArrayList<>();
     private Context            mContext;
     private LayoutInflater     mInflater;
+
+    public CategoryListAdapter(Context context) {
+        mContext = context;
+        this.mInflater = LayoutInflater.from(mContext);
+    }
 
     public CategoryListAdapter(Context context, List<FollowerBean> list) {
         this.mContext = context;

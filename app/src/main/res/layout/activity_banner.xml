@@ -7,7 +7,12 @@
               android:orientation="vertical"
               android:clipToPadding="false"
               android:layout_height="match_parent">
-
+	<Button
+		android:textAllCaps="false"
+		android:text="getData"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:onClick="getData"/>
 	<com.zhang.recyclerview.view.WrapRecyclerView
 		android:id="@+id/recycler_view"
 		android:layout_width="match_parent"

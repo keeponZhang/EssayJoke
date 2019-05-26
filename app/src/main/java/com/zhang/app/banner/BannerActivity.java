@@ -1,6 +1,8 @@
 package com.zhang.app.banner;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
@@ -10,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.hc.baselibrary.ioc.ViewById;
 import com.hc.baselibrary.ioc.ViewUtils;
 import com.hc.essay.joke.http.HttpCallBack;
@@ -18,24 +22,78 @@ import com.zhang.app.R;
 import com.zhang.banner.BannerAdapter;
 import com.zhang.banner.BannerView;
 import com.zhang.banner.BannerViewPager;
+import com.zhang.recyclerview.itemdecoration.CategoryItemDecoration;
+import com.zhang.recyclerview.itemdecoration.CategoryListAdapter;
+import com.zhang.recyclerview.itemdecoration.bean.FollowerBean;
+import com.zhang.recyclerview.itemdecoration.bean.FollowerInfos;
 import com.zhang.recyclerview.view.WrapRecyclerView;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BannerActivity extends AppCompatActivity implements BannerViewPager.BannerItemClickListener {
 	@ViewById(R.id.recycler_view)
 	private WrapRecyclerView mRecyclerView;
+	private List<FollowerBean> mList = new ArrayList<>();
+	private CategoryListAdapter mCategoryListAdapter;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_banner);
 		ViewUtils.inject(this);
-//		initData();
-		showListData(null);
+		mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+		mRecyclerView.addItemDecoration(new CategoryItemDecoration(getResources().getColor(com.zhang.recyclerview.R.color.blue)));
+		mCategoryListAdapter = new CategoryListAdapter(this,mList);
+		mRecyclerView.setAdapter(mCategoryListAdapter);
 		setBanner();
 	}
 
+	String url = "https://api.github.com/users/momodiy/followers";
+	public void getData(View view){
+		HttpUtils.with(this).url(url).execute(new HttpCallBack<FollowerInfos>() {
+			@Override
+			public void onError(Exception e) {
+				Log.e("TAG", "ItemDecorationActivity onError:" );
+			}
+
+			@Override
+			public void onSuccess(FollowerInfos result) {
+				Log.e("TAG", "ItemDecorationActivity onSuccess:" );
+			}
+
+			@Override
+			public boolean isOriginalString() {
+				return true;
+			}
+
+			@Override
+			public void getOriginalString(String result) {
+				Type listType = new TypeToken<List<FollowerBean>>() {}.getType();
+				final List<FollowerBean> followerBeans = new Gson().fromJson(result, listType);
+				Log.e("TAG", "ItemDecorationActivity getOriginalString:"+followerBeans );
+				new Handler(Looper.getMainLooper()).post(new Runnable() {
+					@Override
+					public void run() {
+						updateData2(followerBeans);
+					}
+				});
+			}
+		});
+	}
+
+	private void updateData2(List<FollowerBean> followerBeans ) {
+		mList.addAll(followerBeans);
+		mCategoryListAdapter.notifyDataSetChanged();
+
+	}
+	private void updateData(List<FollowerBean> followerBeans ) {
+		mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+		mRecyclerView.addItemDecoration(new CategoryItemDecoration(getResources().getColor(com.zhang.recyclerview.R.color.blue)));
+		CategoryListAdapter categoryListAdapter = new CategoryListAdapter(this, followerBeans);
+		mRecyclerView.setAdapter(categoryListAdapter);
+	}
 	private void setBanner() {
 		bannerList.clear();
 		for (String banner : banners) {
@@ -84,83 +142,8 @@ public class BannerActivity extends AppCompatActivity implements BannerViewPager
 			"http://ep.dzb.ciwong.com/rep/image/3170.jpg"
 	};
 
-	protected void initData() {
-		HttpUtils.with(this).url("http://is.snssdk.com/2/essay/discovery/v3/?")
-				.addParam("iid", 6152551759L)
-				.addParam("aid", 7)
-				.execute(new HttpCallBack<DiscoverListResult>() {
-					@Override
-					public void onError(Exception e) {
 
-					}
 
-					@Override
-					public void onSuccess(DiscoverListResult result) {
-
-						// 先显示列表
-						showListData(result.getData().getCategories().getCategory_list());
-						addBannerView(result.getData().getRotate_banner().getBanners());
-					}
-				});
-	}
-
-	/**
-	 * 初始化Banner
-	 * @param banners
-	 */
-	private void addBannerView(final List<DiscoverListResult.DataBean.RotateBannerBean.BannersBean> banners) {
-		Log.e("TAG", "banners --> " + banners.size());
-
-		// 后台没有轮播那就不添加
-		if(banners.size()<=0){
-			return;
-		}
-
-		BannerView bannerView = (BannerView) LayoutInflater.from(this)
-				.inflate(R.layout.layout_banner_view, mRecyclerView, false);
-
-		// 自己把万能的无限轮播看一下
-		bannerView.setAdapter(new BannerAdapter() {
-			@Override
-			public View getView(int position, View convertView) {
-				if (convertView == null) {
-					convertView = new ImageView(BannerActivity.this);
-				}
-				((ImageView) convertView).setScaleType(ImageView.ScaleType.CENTER_CROP);
-
-				Glide.with(BannerActivity.this).load(banners.get(position).getBanner_url().getUrl_list()
-						.get(0).getUrl()).into((ImageView) convertView);
-				return convertView;
-			}
-
-			@Override
-			public int getCount() {
-				return banners.size();
-			}
-
-			@Override
-			public String getBannerDesc(int position) {
-				return banners.get(position).getBanner_url().getTitle();
-			}
-		});
-
-		bannerView.setOnBannerItemClickListener(BannerActivity.this);
-		// 开启滚动
-		bannerView.startRoll();
-
-		mRecyclerView.addHeaderView(bannerView);
-	}
-
-	/**
-	 * 显示列表
-	 *
-	 * @param list
-	 */
-	private void showListData(List<DiscoverListResult.DataBean.CategoriesBean.CategoryListBean> list) {
-		final DiscoverListAdapter listAdapter = new DiscoverListAdapter(this, list);
-		mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-		mRecyclerView.setAdapter(listAdapter);
-	}
 
 
 
@@ -170,4 +153,6 @@ public class BannerActivity extends AppCompatActivity implements BannerViewPager
 		// 轮播点击
 		Toast.makeText(this, position + "", Toast.LENGTH_SHORT).show();
 	}
+
+
 }

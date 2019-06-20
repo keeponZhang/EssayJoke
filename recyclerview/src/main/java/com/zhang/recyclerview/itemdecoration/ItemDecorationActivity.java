@@ -6,6 +6,7 @@ import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 
@@ -16,6 +17,7 @@ import com.hc.essay.joke.http.HttpUtils;
 import com.zhang.recyclerview.R;
 import com.zhang.recyclerview.itemdecoration.bean.FollowerBean;
 import com.zhang.recyclerview.itemdecoration.bean.FollowerInfos;
+import com.zhang.recyclerview.itemhelper.DragCallBack;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -67,7 +69,9 @@ public class ItemDecorationActivity extends AppCompatActivity {
 	private void updateData(List<FollowerBean> followerBeans ) {
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 		mRecyclerView.addItemDecoration(new CategoryItemDecoration(getResources().getColor(R.color.blue)));
-		CategoryListAdapter categoryListAdapter = new CategoryListAdapter(this, followerBeans);
+		CategoryRecyclerviewAdapter categoryListAdapter = new CategoryRecyclerviewAdapter(this, followerBeans);
 		mRecyclerView.setAdapter(categoryListAdapter);
+		ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new DragCallBack(mRecyclerView));
+		itemTouchHelper.attachToRecyclerView(mRecyclerView);
 	}
 }

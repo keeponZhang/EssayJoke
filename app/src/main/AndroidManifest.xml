@@ -14,13 +14,13 @@
 
 		</activity>
 		<activity android:name=".banner.BannerActivity">
+
+		</activity>
+		<activity android:name="com.zhang.recyclerview.itemdecoration.ItemDecorationActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
-		</activity>
-		<activity android:name="com.zhang.recyclerview.itemdecoration.ItemDecorationActivity">
-
 		</activity>
 		<activity android:name="com.zhang.coordinatorLayout.CoordinatorLayoutActivity">
 

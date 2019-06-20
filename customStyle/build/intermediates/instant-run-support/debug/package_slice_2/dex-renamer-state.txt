@@ -1,4 +1,0 @@
-#Sun May 26 16:33:27 CST 2019
-base.0=D\:\\test5\\EassayJoke\\EssayJoke\\customStyle\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\5\\slice_2
-renamed.0=classes.dex
-file.0=D\:\\test5\\EassayJoke\\EssayJoke\\customStyle\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\5\\slice_2\\classes.dex

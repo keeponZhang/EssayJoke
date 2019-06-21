@@ -15,10 +15,7 @@
 		android:background="#FFCC00"
 		android:text="Hello"
 		app:layout_behavior="com.zhang.coordinatorLayout.MyBehavior" />
-	<RelativeLayout
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content">
-	</RelativeLayout>
+
 <!--被移动那个view添加behavior-->
 	<com.zhang.coordinatorLayout.TempView
 		android:layout_gravity="top"

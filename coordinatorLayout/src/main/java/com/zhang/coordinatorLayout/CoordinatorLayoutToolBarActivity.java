@@ -14,6 +14,6 @@ public class CoordinatorLayoutToolBarActivity extends AppCompatActivity {
 		toolbar.setTitle("这里是Title");
 		toolbar.setSubtitle("这里是子标题");
 		toolbar.setLogo(R.drawable.icon);
-		setSupportActionBar(toolbar);
+//		setSupportActionBar(toolbar);
 	}
 }

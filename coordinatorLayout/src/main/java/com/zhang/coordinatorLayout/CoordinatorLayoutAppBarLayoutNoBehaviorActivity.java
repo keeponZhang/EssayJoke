@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-public class CoordinatorLayoutAppBarLayoutActivity extends AppCompatActivity {
+public class CoordinatorLayoutAppBarLayoutNoBehaviorActivity extends AppCompatActivity {
 //	AppBarLayout继承自LinearLayout，布局方向为垂直方向。所以你可以把它当成垂直布局的LinearLayout来使用。AppBarLayout是在LinearLayou上加了一些材料设计的概念，它可以让你定制当某个可滚动View的滚动手势发生变化时，其内部的子View实现何种动作
 //	作者：huachao1001
 //	链接：https://www.jianshu.com/p/d159f0176576
@@ -12,7 +12,7 @@ public class CoordinatorLayoutAppBarLayoutActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_coordinator_layout_appbarlayout_exituntil_collapsed);
+		setContentView(R.layout.activity_coordinator_layout_appbarlayout);
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		toolbar.setTitle("这里是Title");
 		toolbar.setSubtitle("这里是子标题");

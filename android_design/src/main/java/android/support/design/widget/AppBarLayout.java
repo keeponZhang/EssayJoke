@@ -826,7 +826,10 @@ public class AppBarLayout extends LinearLayout {
                                            View directTargetChild, View target, int nestedScrollAxes, int type) {
             // Return true if we're nested scrolling vertically, and we have scrollable children
             // and the scrolling view is big enough to scroll
-            Log.e("TAG", "Behavior onStartNestedScroll:" +parent);
+            int parentHeight = parent.getHeight();
+            int directTargetChildHeight = directTargetChild.getHeight();
+
+            Log.e("TAG", "Behavior onStartNestedScroll parentHeight:" +parentHeight+" directTargetChildHeight="+directTargetChildHeight+"  childHeigt="+child.getHeight());
             final boolean started = (nestedScrollAxes & ViewCompat.SCROLL_AXIS_VERTICAL) != 0
                     && child.hasScrollableChildren()
                     && parent.getHeight() - directTargetChild.getHeight() <= child.getHeight();

@@ -15,7 +15,7 @@ import android.widget.TextView;
 /**
  * Created by hcDarren on 2017/7/10.
  */
-
+//recyclerview-v7-27.0.0-sources
 public class DarrenBehaviorActivity extends AppCompatActivity {
 
     @Override

@@ -40,7 +40,15 @@ ext {
     SUPPORT_LIBRARY_VERSION = '27.0.0'
     CONTRANT_LAYOUT_VERSION = '1.1.2'
     GLIDE_VERSION = '3.7.0'
+
+    supportCompileSdkVersion = 27
+    supportBuildToolsVersion = "27.0.3"
+    supportMinSdkVersion = 18
+    supportTargetSdkVersion = 26
+    CUSTOM_SUPPORT_LIBRARY_VERSION = '27.0.0'
+
 }
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

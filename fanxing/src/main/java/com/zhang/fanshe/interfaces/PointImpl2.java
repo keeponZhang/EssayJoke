@@ -1,6 +1,6 @@
-package com.zhang.fanshe.interfaces;
+package com.android.fanshe.interfaces;
 
-import com.zhang.fanshe.bean.Point;
+import com.android.fanshe.bean.Point;
 
 public class PointImpl2 extends Point<Integer> implements PointInterface<String,Double> {
 }

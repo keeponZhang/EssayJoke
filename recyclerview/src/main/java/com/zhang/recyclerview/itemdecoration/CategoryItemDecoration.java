@@ -1,4 +1,4 @@
-package com.zhang.recyclerview.itemdecoration;
+package com.android.recyclerview.itemdecoration;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;

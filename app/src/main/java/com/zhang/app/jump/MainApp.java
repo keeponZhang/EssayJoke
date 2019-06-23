@@ -1,4 +1,4 @@
-package com.zhang.app.jump;
+package com.android.app.jump;
 
 import android.app.Application;
 

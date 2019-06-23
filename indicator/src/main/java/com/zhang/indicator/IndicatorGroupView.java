@@ -1,4 +1,4 @@
-package com.zhang.indicator;
+package com.android.indicator;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;

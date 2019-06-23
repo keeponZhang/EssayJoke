@@ -1,4 +1,4 @@
-package com.zhang.fanxing;
+package com.android.fanxing;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

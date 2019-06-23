@@ -1,4 +1,4 @@
-package com.zhang.fanshe.interfaces;
+package com.android.fanshe.interfaces;
 
 import java.io.Serializable;
 

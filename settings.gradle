@@ -1,5 +1,5 @@
 //include ':ioc_02'
-include ':baselibrary', ':android_design'
+include ':baselibrary', ':android_design_27', ':android_appcompat_27', ':android_support_modle'
 //include        ':builder_dialog_07'
 //include ':hook_view_2_02'
 //include        ':resource_assetmanager_2_01'

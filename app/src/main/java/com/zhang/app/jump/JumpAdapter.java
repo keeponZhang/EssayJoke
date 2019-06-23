@@ -1,4 +1,4 @@
-package com.zhang.app.jump;
+package com.android.app.jump;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,17 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.zhang.app.R;
-import com.zhang.app.banner.BannerActivity;
-import com.zhang.app.indicator.IndicatorActivity;
-import com.zhang.coordinatorLayout.CoordinatorLayoutActivity;
-import com.zhang.coordinatorLayout.CoordinatorLayoutAppBarLayoutEnterAlwaysCollapsedActivity;
-import com.zhang.coordinatorLayout.CoordinatorLayoutAppBarLayoutExituntilCollapsedActivity;
-import com.zhang.coordinatorLayout.CoordinatorLayoutAppBarLayoutNoBehaviorActivity;
-import com.zhang.coordinatorLayout.CoordinatorLayoutCollapsingToolbarLayoutActivity;
-import com.zhang.coordinatorLayout.CoordinatorLayoutToolBarActivity;
-import com.zhang.coordinatorLayout.darren.DarrenBehaviorActivity;
-import com.zhang.recyclerview.itemdecoration.ItemDecorationActivity;
+import com.android.app.R;
+import com.android.app.banner.BannerActivity;
+import com.android.app.indicator.IndicatorActivity;
+import com.android.coordinatorLayout.CoordinatorLayoutActivity;
+import com.android.coordinatorLayout.CoordinatorLayoutAppBarLayoutEnterAlwaysCollapsedActivity;
+import com.android.coordinatorLayout.CoordinatorLayoutAppBarLayoutExituntilCollapsedActivity;
+import com.android.coordinatorLayout.CoordinatorLayoutAppBarLayoutNoBehaviorActivity;
+import com.android.coordinatorLayout.CoordinatorLayoutCollapsingToolbarLayoutActivity;
+import com.android.coordinatorLayout.CoordinatorLayoutToolBarActivity;
+import com.android.coordinatorLayout.darren.DarrenBehaviorActivity;
+import com.android.recyclerview.itemdecoration.ItemDecorationActivity;
 
 import java.util.ArrayList;
 import java.util.List;

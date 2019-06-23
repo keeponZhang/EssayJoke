@@ -1,4 +1,4 @@
-package com.zhang.fanxing;
+package com.android.fanxing;
 
 import org.junit.Test;
 

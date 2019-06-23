@@ -1,4 +1,4 @@
-package com.zhang.recyclerview.itemdecoration.bean;
+package com.android.recyclerview.itemdecoration.bean;
 
 import java.util.ArrayList;
 

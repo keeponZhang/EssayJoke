@@ -1,4 +1,4 @@
-package com.zhang.recyclerview.itemdecoration;
+package com.android.recyclerview.itemdecoration;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,8 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.zhang.recyclerview.R;
-import com.zhang.recyclerview.itemdecoration.bean.FollowerBean;
+import com.android.recyclerview.R;
+import com.android.recyclerview.itemdecoration.bean.FollowerBean;
 
 import java.util.ArrayList;
 import java.util.List;

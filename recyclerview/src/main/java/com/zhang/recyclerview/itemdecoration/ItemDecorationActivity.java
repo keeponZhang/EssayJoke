@@ -1,4 +1,4 @@
-package com.zhang.recyclerview.itemdecoration;
+package com.android.recyclerview.itemdecoration;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,10 +14,10 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hc.essay.joke.http.HttpCallBack;
 import com.hc.essay.joke.http.HttpUtils;
-import com.zhang.recyclerview.R;
-import com.zhang.recyclerview.itemdecoration.bean.FollowerBean;
-import com.zhang.recyclerview.itemdecoration.bean.FollowerInfos;
-import com.zhang.recyclerview.itemhelper.DragCallBack;
+import com.android.recyclerview.R;
+import com.android.recyclerview.itemdecoration.bean.FollowerBean;
+import com.android.recyclerview.itemdecoration.bean.FollowerInfos;
+import com.android.recyclerview.itemhelper.DragCallBack;
 
 import java.lang.reflect.Type;
 import java.util.List;

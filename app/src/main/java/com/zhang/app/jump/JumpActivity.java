@@ -1,11 +1,11 @@
-package com.zhang.app.jump;
+package com.android.app.jump;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.zhang.app.R;
+import com.android.app.R;
 
 import java.util.ArrayList;
 import java.util.List;

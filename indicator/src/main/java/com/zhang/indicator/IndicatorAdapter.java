@@ -1,4 +1,4 @@
-package com.zhang.indicator;
+package com.android.indicator;
 
 import android.view.View;
 import android.view.ViewGroup;

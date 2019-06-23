@@ -1,4 +1,4 @@
-package com.zhang.recyclerview.view;
+package com.android.recyclerview.view;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -7,8 +7,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
-import com.zhang.recyclerview.adapter.OnItemClickListener;
-import com.zhang.recyclerview.adapter.OnMyLongClickListener;
+import com.android.recyclerview.adapter.OnItemClickListener;
+import com.android.recyclerview.adapter.OnMyLongClickListener;
 
 
 /**

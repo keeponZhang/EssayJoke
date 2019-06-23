@@ -4,7 +4,7 @@ import android.content.Context;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.zhang.recyclerview.adapter.ViewHolder;
+import com.android.recyclerview.adapter.ViewHolder;
 
 
 /**

@@ -16,24 +16,24 @@
         <!--<activity android:name="com.zhang.recyclerview.itemdecoration.ItemDecorationActivity">-->
 
         <!--</activity>-->
-        <activity android:name="com.zhang.coordinatorLayout.CoordinatorLayoutActivity"></activity>
-        <activity android:name="com.zhang.coordinatorLayout.CoordinatorLayoutToolBarActivity"></activity>
+        <activity android:name="com.android.coordinatorLayout.CoordinatorLayoutActivity"></activity>
+        <activity android:name="com.android.coordinatorLayout.CoordinatorLayoutToolBarActivity"></activity>
         <activity
-            android:name="com.zhang.coordinatorLayout.CoordinatorLayoutAppBarLayoutNoBehaviorActivity"
+            android:name="com.android.coordinatorLayout.CoordinatorLayoutAppBarLayoutNoBehaviorActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
         <activity
-            android:name="com.zhang.coordinatorLayout.CoordinatorLayoutAppBarLayoutExituntilCollapsedActivity"
+            android:name="com.android.coordinatorLayout.CoordinatorLayoutAppBarLayoutExituntilCollapsedActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
         <activity
-            android:name="com.zhang.coordinatorLayout.CoordinatorLayoutAppBarLayoutEnterAlwaysCollapsedActivity"
+            android:name="com.android.coordinatorLayout.CoordinatorLayoutAppBarLayoutEnterAlwaysCollapsedActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
         <activity
-            android:name="com.zhang.coordinatorLayout.CoordinatorLayoutCollapsingToolbarLayoutActivity"
+            android:name="com.android.coordinatorLayout.CoordinatorLayoutCollapsingToolbarLayoutActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
-        <activity android:name="com.zhang.coordinatorLayout.darren.DarrenBehaviorActivity"></activity>
+        <activity android:name="com.android.coordinatorLayout.darren.DarrenBehaviorActivity"></activity>
         <activity android:name=".jump.JumpActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

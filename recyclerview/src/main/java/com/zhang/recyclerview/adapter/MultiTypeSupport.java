@@ -1,4 +1,4 @@
-package com.zhang.recyclerview.adapter;
+package com.android.recyclerview.adapter;
 
 /**
  * Created by Darren on 2016/12/28.

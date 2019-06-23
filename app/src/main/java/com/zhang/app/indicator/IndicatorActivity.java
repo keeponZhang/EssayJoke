@@ -1,4 +1,4 @@
-package com.zhang.app.indicator;
+package com.android.app.indicator;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,10 +14,10 @@ import android.widget.FrameLayout;
 import com.example.administrator.framelibrary.ItemFragment;
 import com.hc.baselibrary.ioc.ViewById;
 import com.hc.baselibrary.ioc.ViewUtils;
-import com.zhang.app.R;
-import com.zhang.indicator.ColorTrackTextView;
-import com.zhang.indicator.IndicatorAdapter;
-import com.zhang.indicator.TrackIndicatorView;
+import com.android.app.R;
+import com.android.indicator.ColorTrackTextView;
+import com.android.indicator.IndicatorAdapter;
+import com.android.indicator.TrackIndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;

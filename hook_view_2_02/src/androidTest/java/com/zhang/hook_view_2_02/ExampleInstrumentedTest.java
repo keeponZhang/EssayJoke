@@ -1,4 +1,4 @@
-package com.zhang.hook_view_2_02;
+package com.android.hook_view_2_02;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

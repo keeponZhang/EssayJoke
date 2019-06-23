@@ -1,4 +1,4 @@
-package com.zhang.recyclerview.view;
+package com.android.recyclerview.view;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -6,8 +6,8 @@ import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.zhang.recyclerview.adapter.OnItemClickListener;
-import com.zhang.recyclerview.adapter.OnMyLongClickListener;
+import com.android.recyclerview.adapter.OnItemClickListener;
+import com.android.recyclerview.adapter.OnMyLongClickListener;
 
 /**
  * Created by Darren on 2016/12/29.

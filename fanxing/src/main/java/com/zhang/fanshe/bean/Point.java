@@ -1,4 +1,4 @@
-package com.zhang.fanshe.bean;
+package com.android.fanshe.bean;
 public class Point<T> {
     private T x,y;
  

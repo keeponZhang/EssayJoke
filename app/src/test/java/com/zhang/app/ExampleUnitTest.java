@@ -1,4 +1,4 @@
-package com.zhang.app;
+package com.android.app;
 
 import org.junit.Test;
 

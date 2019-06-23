@@ -1,6 +1,6 @@
-package com.zhang.fanshe.bean;
+package com.android.fanshe.bean;
 
-import com.zhang.fanshe.interfaces.IAnimal;
+import com.android.fanshe.interfaces.IAnimal;
 
 public  class Animal implements IAnimal {
 	private String name;

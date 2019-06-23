@@ -1,4 +1,4 @@
-package com.zhang.designsample;
+package com.android.designsample;
 
 import android.view.View;
 

@@ -1,4 +1,4 @@
-package com.zhang.resource_assetmanager_2_01;
+package com.android.resource_assetmanager_2_01;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

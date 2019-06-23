@@ -1,12 +1,12 @@
-package com.zhang.recyclerview.itemhelper;
+package com.android.recyclerview.itemhelper;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
-import com.zhang.recyclerview.adapter.BaseRecyclerViewAdapter;
-import com.zhang.recyclerview.itemdecoration.bean.FollowerBean;
+import com.android.recyclerview.adapter.BaseRecyclerViewAdapter;
+import com.android.recyclerview.itemdecoration.bean.FollowerBean;
 
 import java.util.List;
 

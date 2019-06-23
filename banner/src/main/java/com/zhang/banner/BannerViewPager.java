@@ -1,4 +1,4 @@
-package com.zhang.banner;
+package com.zhang.designsample;
 
 import android.app.Activity;
 import android.app.Application;

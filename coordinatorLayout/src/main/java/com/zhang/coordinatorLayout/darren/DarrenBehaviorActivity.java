@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.zhang.coordinatorLayout.R;
 
@@ -42,7 +43,8 @@ public class DarrenBehaviorActivity extends AppCompatActivity {
 
             @Override
             public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+	            ViewHolder holder1 = (ViewHolder) holder;
+	            holder1.tv.setText("text:"+position);
             }
 
             @Override
@@ -53,8 +55,10 @@ public class DarrenBehaviorActivity extends AppCompatActivity {
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder{
+	    public TextView tv;
         public ViewHolder(View itemView) {
             super(itemView);
+	        tv = itemView.findViewById(R.id.tv);
         }
     }
 }

@@ -5,22 +5,14 @@
       <GradleProjectSettings>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleHome" value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.4-all" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/banner" />
+            <option value="$PROJECT_DIR$/android_design" />
             <option value="$PROJECT_DIR$/baselibrary" />
-            <option value="$PROJECT_DIR$/builder_dialog_07" />
-            <option value="$PROJECT_DIR$/builder_http_09" />
             <option value="$PROJECT_DIR$/coordinatorLayout" />
-            <option value="$PROJECT_DIR$/customStyle" />
-            <option value="$PROJECT_DIR$/fanxing" />
-            <option value="$PROJECT_DIR$/framelibrary" />
-            <option value="$PROJECT_DIR$/http" />
-            <option value="$PROJECT_DIR$/indicator" />
-            <option value="$PROJECT_DIR$/ioc" />
-            <option value="$PROJECT_DIR$/recyclerview" />
+            <option value="$PROJECT_DIR$/design_sample" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

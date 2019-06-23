@@ -55,10 +55,10 @@ public class TanslationBehavior extends FloatingActionButton.Behavior{
      */
     @Override
     public void onNestedPreScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull FloatingActionButton child, @NonNull View target, int dx, int dy, @NonNull int[] consumed) {
-        Log.d("TAG", "TanslationBehavior onNestedPreScroll dy:" +dy);
+        Log.d("TAG", "TanslationBehavior onNestedPreScroll dy:" +dy+"   consumed[1]="+ consumed[1]);
 //        consumed[1] =dy;
-        //表示已经处理了多少
-        consumed[1] =dy *87/88;
+        //表示已经处理了多少（这里如果不注释的话，recyclerview手指move的时候不会动，up的时候才会动（轻放的时候不会动，带点fling的时候会动））
+        consumed[1] =dy ;
         super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed);
     }
 
@@ -86,11 +86,14 @@ public class TanslationBehavior extends FloatingActionButton.Behavior{
                 isOut = true;
             }
         }else{
-            if(isOut) {
-                // 往下滑动
-                child.animate().translationY(0).setDuration(500).start();
-                isOut = false;
+            if(dyConsumed<0){
+                if(isOut) {
+                    // 往下滑动
+                    child.animate().translationY(0).setDuration(500).start();
+                    isOut = false;
+                }
             }
+
         }
     }
     /**
@@ -144,7 +147,7 @@ public class TanslationBehavior extends FloatingActionButton.Behavior{
      */
     @Override
     public boolean onLayoutChild(CoordinatorLayout parent, FloatingActionButton child, int layoutDirection) {
-        Log.w("TAG", "TanslationBehavior onLayoutChild:" );
+//        Log.w("TAG", "TanslationBehavior onLayoutChild:" );
             return super.onLayoutChild(parent, child, layoutDirection);
     }
 
@@ -152,13 +155,13 @@ public class TanslationBehavior extends FloatingActionButton.Behavior{
     @Override
     public boolean layoutDependsOn(CoordinatorLayout parent, FloatingActionButton child, View dependency) {
         boolean b = super.layoutDependsOn(parent, child, dependency);
-        Log.w("TAG", "TanslationBehavior layoutDependsOn return:"+b );
+//        Log.w("TAG", "TanslationBehavior layoutDependsOn return:"+b );
         return b;
     }
 
     @Override
     public boolean onDependentViewChanged(CoordinatorLayout parent, FloatingActionButton child, View dependency) {
-        Log.d("TAG", "TanslationBehavior onDependentViewChanged:" );
+//        Log.d("TAG", "TanslationBehavior onDependentViewChanged:" );
         return super.onDependentViewChanged(parent, child, dependency);
 
     }

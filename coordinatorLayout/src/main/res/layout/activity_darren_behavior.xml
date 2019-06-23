@@ -36,7 +36,7 @@
         android:layout_marginRight="16dp"
         android:src="@mipmap/ic_launcher"
         app:layout_behavior="com.zhang.coordinatorLayout.darren.TanslationBehavior"
-        app:layout_scrollFlags="scroll|enterAlways|snap" />
+         />
 
     <LinearLayout
         android:id="@+id/bottom_tab_layout"

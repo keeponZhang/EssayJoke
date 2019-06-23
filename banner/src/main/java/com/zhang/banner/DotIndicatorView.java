@@ -1,4 +1,4 @@
-package com.zhang.banner;
+package com.zhang.designsample;
 
 import android.content.Context;
 import android.graphics.Bitmap;

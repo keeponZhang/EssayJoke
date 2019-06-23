@@ -1,0 +1,52 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.supportCompileSdkVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.supportMinSdkVersion
+        targetSdkVersion rootProject.ext.supportTargetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation ('com.android.support:support-core-utils:27.0.0',
+            { exclude group: 'com.android.support', module: 'support-v4'
+                 exclude group: 'com.android.support', module: 'support-compat'
+            })
+    implementation ('com.android.support:support-fragment:27.0.0',
+            { exclude group: 'com.android.support', module: 'support-v4'
+             exclude group: 'com.android.support', module: 'support-compat'
+            })
+    implementation ('com.android.support:transition:27.0.0',
+            { exclude group: 'com.android.support', module: 'support-v4'
+                 exclude group: 'com.android.support', module: 'support-compat'
+            })
+    implementation ('com.android.support:support-vector-drawable:27.0.0',
+            { exclude group: 'com.android.support', module: 'support-v4'
+                exclude group: 'com.android.support', module: 'support-compat'
+            })
+    implementation ('com.android.support:animated-vector-drawable:27.0.0',
+            {  exclude group: 'com.android.support', module: 'support-v4'
+                exclude group: 'com.android.support', module: 'support-compat'
+            })
+    implementation ('com.android.support:design:27.0.0',
+            { exclude group: 'com.android.support', module: 'support-v4'
+                exclude group: 'com.android.support', module: 'support-compat'
+            })
+
+}

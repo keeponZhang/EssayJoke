@@ -3,13 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/EssayJoke.iml" filepath="$PROJECT_DIR$/EssayJoke.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android_appcompat_27/android_appcompat_27.iml" filepath="$PROJECT_DIR$/android_appcompat_27/android_appcompat_27.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android_design/android_design.iml" filepath="$PROJECT_DIR$/android_design/android_design.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android_appcompat_v4_27/android_appcompat_v4_27.iml" filepath="$PROJECT_DIR$/android_appcompat_v4_27/android_appcompat_v4_27.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android_appcompat_v7/android_appcompat_v7.iml" filepath="$PROJECT_DIR$/android_appcompat_v7/android_appcompat_v7.iml" />
       <module fileurl="file://$PROJECT_DIR$/android_design_27/android_design_27.iml" filepath="$PROJECT_DIR$/android_design_27/android_design_27.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android_support_modle/android_support_modle.iml" filepath="$PROJECT_DIR$/android_support_modle/android_support_modle.iml" />
-      <module fileurl="file://$PROJECT_DIR$/baselibrary/baselibrary.iml" filepath="$PROJECT_DIR$/baselibrary/baselibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/coordinatorLayout/coordinatorLayout.iml" filepath="$PROJECT_DIR$/coordinatorLayout/coordinatorLayout.iml" />
-      <module fileurl="file://$PROJECT_DIR$/design_sample/design_sample.iml" filepath="$PROJECT_DIR$/design_sample/design_sample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android_support_recyclerview_27/android_support_recyclerview_27.iml" filepath="$PROJECT_DIR$/android_support_recyclerview_27/android_support_recyclerview_27.iml" />
+      <module fileurl="file://$PROJECT_DIR$/custom_support_sample/custom_support_sample.iml" filepath="$PROJECT_DIR$/custom_support_sample/custom_support_sample.iml" />
     </modules>
   </component>
 </project>

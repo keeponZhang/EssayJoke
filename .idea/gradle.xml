@@ -9,13 +9,11 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/android_appcompat_27" />
-            <option value="$PROJECT_DIR$/android_design" />
+            <option value="$PROJECT_DIR$/android_appcompat_v4_27" />
+            <option value="$PROJECT_DIR$/android_appcompat_v7" />
             <option value="$PROJECT_DIR$/android_design_27" />
-            <option value="$PROJECT_DIR$/android_support_modle" />
-            <option value="$PROJECT_DIR$/baselibrary" />
-            <option value="$PROJECT_DIR$/coordinatorLayout" />
-            <option value="$PROJECT_DIR$/design_sample" />
+            <option value="$PROJECT_DIR$/android_support_recyclerview_27" />
+            <option value="$PROJECT_DIR$/custom_support_sample" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

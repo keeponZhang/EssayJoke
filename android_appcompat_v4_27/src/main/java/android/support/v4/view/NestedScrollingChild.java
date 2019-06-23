@@ -53,6 +53,11 @@ public interface NestedScrollingChild {
      *
      * @see #isNestedScrollingEnabled()
      */
+    /**
+     * 设置嵌套滑动是否可用
+     *
+     * @param enabled
+     */
     void setNestedScrollingEnabled(boolean enabled);
 
     /**
@@ -66,6 +71,11 @@ public interface NestedScrollingChild {
      * @return true if nested scrolling is enabled
      *
      * @see #setNestedScrollingEnabled(boolean)
+     */
+    /**
+     * 嵌套滑动是否可用
+     *
+     * @return
      */
     boolean isNestedScrollingEnabled();
 
@@ -107,6 +117,13 @@ public interface NestedScrollingChild {
      * @see #dispatchNestedPreScroll(int, int, int[], int[])
      * @see #dispatchNestedScroll(int, int, int, int, int[])
      */
+    /**
+     * 开始嵌套滑动,
+     *
+     * @param axes 表示方向 有一下两种值
+     *             ViewCompat.SCROLL_AXIS_HORIZONTAL 横向哈东
+     *             ViewCompat.SCROLL_AXIS_VERTICAL 纵向滑动
+     */
     boolean startNestedScroll(@ScrollAxis int axes);
 
     /**
@@ -115,6 +132,9 @@ public interface NestedScrollingChild {
      * <p>Calling this method when a nested scroll is not currently in progress is harmless.</p>
      *
      * @see #startNestedScroll(int)
+     */
+    /**
+     * 停止嵌套滑动
      */
     void stopNestedScroll();
 
@@ -125,6 +145,10 @@ public interface NestedScrollingChild {
      * a nested scroll and it was accepted by an ancestor view further up the view hierarchy.</p>
      *
      * @return whether this view has a nested scrolling parent
+     */
+    /**
+     * 是否有父View 支持 嵌套滑动,  会一层层的网上寻找父View
+     * @return
      */
     boolean hasNestedScrollingParent();
 
@@ -151,6 +175,15 @@ public interface NestedScrollingChild {
      * @return true if the event was dispatched, false if it could not be dispatched.
      * @see #dispatchNestedPreScroll(int, int, int[], int[])
      */
+    /**
+     * 在处理滑动之后 调用
+     * @param dxConsumed x轴上 被消费的距离
+     * @param dyConsumed y轴上 被消费的距离
+     * @param dxUnconsumed x轴上 未被消费的距离
+     * @param dyUnconsumed y轴上 未被消费的距离
+     * @param offsetInWindow view 的移动距离
+     * @return
+     */
     boolean dispatchNestedScroll(int dxConsumed, int dyConsumed,
                                  int dxUnconsumed, int dyUnconsumed, @Nullable int[] offsetInWindow);
 
@@ -173,6 +206,14 @@ public interface NestedScrollingChild {
      * @return true if the parent consumed some or all of the scroll delta
      * @see #dispatchNestedScroll(int, int, int, int, int[])
      */
+    /**
+     * 一般在滑动之前调用, 在ontouch 中计算出滑动距离, 然后 调用改 方法, 就给支持的嵌套的父View 处理滑动事件
+     * @param dx x 轴上滑动的距离, 相对于上一次事件, 不是相对于 down事件的 那个距离
+     * @param dy y 轴上滑动的距离
+     * @param consumed 一个数组, 可以传 一个空的 数组,  表示 x 方向 或 y 方向的事件 是否有被消费
+     * @param offsetInWindow   支持嵌套滑动到额父View 消费 滑动事件后 导致 本 View 的移动距离
+     * @return 支持的嵌套的父View 是否处理了 滑动事件
+     */
     boolean dispatchNestedPreScroll(int dx, int dy, @Nullable int[] consumed,
                                     @Nullable int[] offsetInWindow);
 
@@ -193,6 +234,13 @@ public interface NestedScrollingChild {
      * @param velocityY Vertical fling velocity in pixels per second
      * @param consumed true if the child consumed the fling, false otherwise
      * @return true if the nested scrolling parent consumed or otherwise reacted to the fling
+     */
+    /**
+     *
+     * @param velocityX x 轴上的滑动速度
+     * @param velocityY y 轴上的滑动速度
+     * @param consumed 是否被消费
+     * @return
      */
     boolean dispatchNestedFling(float velocityX, float velocityY, boolean consumed);
 
@@ -225,6 +273,12 @@ public interface NestedScrollingChild {
      * @param velocityX Horizontal fling velocity in pixels per second
      * @param velocityY Vertical fling velocity in pixels per second
      * @return true if a nested scrolling parent consumed the fling
+     */
+    /**
+     *
+     * @param velocityX x 轴上的滑动速度
+     * @param velocityY y 轴上的滑动速度
+     * @return
      */
     boolean dispatchNestedPreFling(float velocityX, float velocityY);
 }

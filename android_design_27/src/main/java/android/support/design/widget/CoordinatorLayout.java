@@ -110,6 +110,7 @@ import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
 public class CoordinatorLayout extends ViewGroup implements NestedScrollingParent2 {
     static final String TAG = "CoordinatorLayout";
     static final String WIDGET_PACKAGE_NAME;
+    public static final String TAG2="TAG RecyclerView";
 
     static {
         final Package pkg = CoordinatorLayout.class.getPackage();
@@ -1730,11 +1731,13 @@ public class CoordinatorLayout extends ViewGroup implements NestedScrollingParen
                 lp.setNestedScrollAccepted(type, false);
             }
         }
+        Log.e(TAG2, " <<<   CoordinatorLayout onStartNestedScroll type handled:"+handled );
         return handled;
     }
 
     @Override
     public void onNestedScrollAccepted(View child, View target, int nestedScrollAxes) {
+        Log.e(TAG2, "<<<   CoordinatorLayout onNestedScrollAccepted:" );
         onNestedScrollAccepted(child, target, nestedScrollAxes, ViewCompat.TYPE_TOUCH);
     }
 
@@ -1831,6 +1834,7 @@ public class CoordinatorLayout extends ViewGroup implements NestedScrollingParen
 
     @Override
     public void onNestedPreScroll(View target, int dx, int dy, int[] consumed, int  type) {
+        Log.e(TAG2, "<<<    CoordinatorLayout onNestedPreScroll type:" );
         int xConsumed = 0;
         int yConsumed = 0;
         boolean accepted = false;

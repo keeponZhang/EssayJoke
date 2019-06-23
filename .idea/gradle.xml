@@ -10,8 +10,8 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/android_appcompat_v4_27" />
-            <option value="$PROJECT_DIR$/android_appcompat_v7" />
             <option value="$PROJECT_DIR$/android_design_27" />
+            <option value="$PROJECT_DIR$/android_support_core_ui" />
             <option value="$PROJECT_DIR$/android_support_recyclerview_27" />
             <option value="$PROJECT_DIR$/custom_support_sample" />
           </set>

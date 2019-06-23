@@ -60,6 +60,13 @@ public interface NestedScrollingParent {
      *                         {@link ViewCompat#SCROLL_AXIS_VERTICAL} or both
      * @return true if this ViewParent accepts the nested scroll operation
      */
+    /**
+     * 回调开始滑动
+     * @param child 该父VIew 的子View
+     * @param target 支持嵌套滑动的 VIew
+     * @param nestedScrollAxes 滑动方向
+     * @return 是否支持 嵌套滑动
+     */
     boolean onStartNestedScroll(@NonNull View child, @NonNull View target, @ScrollAxis int axes);
 
     /**
@@ -113,6 +120,7 @@ public interface NestedScrollingParent {
      * @param dyConsumed Vertical scroll distance in pixels already consumed by target
      * @param dxUnconsumed Horizontal scroll distance in pixels not consumed by target
      * @param dyUnconsumed Vertical scroll distance in pixels not consumed by target
+     *  这里 主要处理 dyUnconsumed dxUnconsumed 这两个值对应的数据
      */
     void onNestedScroll(@NonNull View target, int dxConsumed, int dyConsumed,
                         int dxUnconsumed, int dyUnconsumed);
@@ -136,6 +144,10 @@ public interface NestedScrollingParent {
      * @param dx Horizontal scroll distance in pixels
      * @param dy Vertical scroll distance in pixels
      * @param consumed Output. The horizontal and vertical scroll distance consumed by this parent
+     */
+     /* 这里 传来了 x y 方向上的滑动距离
+     * 并且 先于子VIew  处理滑动,  并且 consumed  中可以设置相应的 已经消费了的距离
+     * 然后 子View  需要根据消费了的距离, 来处理自己滑动
      */
     void onNestedPreScroll(@NonNull View target, int dx, int dy, @NonNull int[] consumed);
 

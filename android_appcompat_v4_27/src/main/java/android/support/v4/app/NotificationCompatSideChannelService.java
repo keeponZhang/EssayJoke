@@ -68,7 +68,8 @@ public abstract class NotificationCompatSideChannelService extends Service {
     /**
      * Handle the side-channelled cancelling of all notifications for a package.
      */
-    public abstract void cancelAll(String packageName);
+    public abstract void cancelAll(String var1);
+
 
     private class NotificationSideChannelStub extends INotificationSideChannel.Stub {
         NotificationSideChannelStub() {

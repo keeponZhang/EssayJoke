@@ -1773,6 +1773,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
      * @return Whether any scroll was consumed in either direction.
      */
     boolean scrollByInternal(int x, int y, MotionEvent ev) {
+        Log.d("TAG", "RecyclerView scrollByInternal:" );
         int unconsumedX = 0, unconsumedY = 0;
         int consumedX = 0, consumedY = 0;
 
@@ -2935,6 +2936,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
                 if (canScrollVertically) {
                     nestedScrollAxis |= ViewCompat.SCROLL_AXIS_VERTICAL;
                 }
+                Log.d("TAG", "RecyclerView onTouchEvent ACTION_DOWN startNestedScroll:" );
                 startNestedScroll(nestedScrollAxis, TYPE_TOUCH);
             } break;
 
@@ -2956,7 +2958,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
                 final int y = (int) (e.getY(index) + 0.5f);
                 int dx = mLastTouchX - x;
                 int dy = mLastTouchY - y;
-
+                Log.d("TAG", "RecyclerView onTouchEvent ACTION_MOVE dispatchNestedPreScroll:" );
                 if (dispatchNestedPreScroll(dx, dy, mScrollConsumed, mScrollOffset, TYPE_TOUCH)) {
                     dx -= mScrollConsumed[0];
                     dy -= mScrollConsumed[1];
@@ -4889,7 +4891,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
                 if (getOverScrollMode() != View.OVER_SCROLL_NEVER) {
                     considerReleasingGlowsOnScroll(dx, dy);
                 }
-
+                Log.d("TAG", "ViewFlinger run:" );
                 if (!dispatchNestedScroll(hresult, vresult, overscrollX, overscrollY, null,
                         TYPE_NON_TOUCH)
                         && (overscrollX != 0 || overscrollY != 0)) {
@@ -10914,6 +10916,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
 
     @Override
     public boolean startNestedScroll(int axes, int type) {
+        Log.w("TAG", "RecyclerView startNestedScroll type:" );
         return getScrollingChildHelper().startNestedScroll(axes, type);
     }
 
@@ -10934,12 +10937,15 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
 
     @Override
     public boolean hasNestedScrollingParent(int type) {
-        return getScrollingChildHelper().hasNestedScrollingParent(type);
+        boolean b = getScrollingChildHelper().hasNestedScrollingParent(type);
+        Log.d("TAG", "RecyclerView hasNestedScrollingParent:" +b);
+        return b ;
     }
 
     @Override
     public boolean dispatchNestedScroll(int dxConsumed, int dyConsumed, int dxUnconsumed,
             int dyUnconsumed, int[] offsetInWindow) {
+        Log.d("TAG", "RecyclerView dispatchNestedScroll:" );
         return getScrollingChildHelper().dispatchNestedScroll(dxConsumed, dyConsumed,
                 dxUnconsumed, dyUnconsumed, offsetInWindow);
     }
@@ -10947,18 +10953,21 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
     @Override
     public boolean dispatchNestedScroll(int dxConsumed, int dyConsumed, int dxUnconsumed,
             int dyUnconsumed, int[] offsetInWindow, int type) {
+        Log.d("TAG", "RecyclerView dispatchNestedScroll:" );
         return getScrollingChildHelper().dispatchNestedScroll(dxConsumed, dyConsumed,
                 dxUnconsumed, dyUnconsumed, offsetInWindow, type);
     }
 
     @Override
     public boolean dispatchNestedPreScroll(int dx, int dy, int[] consumed, int[] offsetInWindow) {
+        Log.d("TAG", "RecyclerView dispatchNestedPreScroll:" );
         return getScrollingChildHelper().dispatchNestedPreScroll(dx, dy, consumed, offsetInWindow);
     }
 
     @Override
     public boolean dispatchNestedPreScroll(int dx, int dy, int[] consumed, int[] offsetInWindow,
             int type) {
+        Log.w("TAG", "RecyclerView dispatchNestedPreScroll type:" );
         return getScrollingChildHelper().dispatchNestedPreScroll(dx, dy, consumed, offsetInWindow,
                 type);
     }

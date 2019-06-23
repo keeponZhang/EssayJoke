@@ -59,7 +59,7 @@ public class TanslationBehavior extends FloatingActionButton.Behavior{
 //        consumed[1] =dy;
         //表示已经处理了多少（这里如果不注释的话，recyclerview手指move的时候不会动，up的时候才会动（轻放的时候不会动，带点fling的时候会动））
         //并且下面的onNestedScroll不会被调用
-        consumed[1] =dy ;
+//        consumed[1] =dy ;
         super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed);
     }
 

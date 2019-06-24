@@ -1869,7 +1869,7 @@ public class CoordinatorLayout extends ViewGroup implements NestedScrollingParen
 
         consumed[0] = xConsumed;
         consumed[1] = yConsumed;
-        Log.e(TAG2, "<<<     CoordinatorLayout onNestedPreScroll 我要消费 consumed[1]:"+consumed[1]);
+        Log.e(TAG2, "<<<     CoordinatorLayout mScrollOffset onNestedPreScroll 我要消费 consumed[1]:"+consumed[1]);
         if (accepted) {
             onChildViewsChanged(EVENT_NESTED_SCROLL);
         }

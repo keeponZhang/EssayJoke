@@ -17,6 +17,7 @@
 //include ':customStyle'
 //include ':coordinatorLayout'
 //include ':android_appcompat_v7'
+include ':coordinatorLayout'
 include ':android_design_27'
 include ':android_support_recyclerview_27'
 include ':custom_support_sample'

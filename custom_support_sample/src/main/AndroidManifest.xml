@@ -7,17 +7,36 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:name=".jump.MainApp"
         android:theme="@style/AppTheme">
-        <activity android:name=".DarrenBehaviorActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".SwipeRefreshActivity">
+	    <activity android:name=".SwipeRefreshActivity">
 
         </activity>
+	    <activity android:name="com.android.coordinatorLayout.CoordinatorLayoutActivity"></activity>
+	    <activity android:name="com.android.coordinatorLayout.CoordinatorLayoutToolBarActivity"></activity>
+	    <activity
+		    android:name="com.android.coordinatorLayout.CoordinatorLayoutAppBarLayoutNoBehaviorActivity"
+		    android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+	    <activity
+		    android:name="com.android.coordinatorLayout.CoordinatorLayoutAppBarLayoutExituntilCollapsedActivity"
+		    android:theme="@style/Theme.AppCompat.NoActionBar">
+	    </activity>
+	    <activity
+		    android:name="com.android.coordinatorLayout.CoordinatorLayoutAppBarLayoutEnterAlwaysCollapsedActivity"
+		    android:theme="@style/Theme.AppCompat.NoActionBar">
+	    </activity>
+	    <activity
+		    android:name="com.android.coordinatorLayout.CoordinatorLayoutCollapsingToolbarLayoutActivity"
+		    android:theme="@style/Theme.AppCompat.NoActionBar">
+	    </activity>
+	    <activity android:name="com.android.coordinatorLayout.darren.DarrenBehaviorActivity"></activity>
+	    <activity android:name=".jump.JumpActivity">
+		    <intent-filter>
+			    <action android:name="android.intent.action.MAIN" />
+
+			    <category android:name="android.intent.category.LAUNCHER" />
+		    </intent-filter>
+	    </activity>
     </application>
 
 </manifest>

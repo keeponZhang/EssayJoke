@@ -1804,6 +1804,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
         if (dispatchNestedScroll(consumedX, consumedY, unconsumedX, unconsumedY, mScrollOffset,
                 TYPE_TOUCH)) {
             // Update the last touch co-ords, taking any scroll offset into account
+            Log.e("TAG", "RecyclerView scrollByInternal mScrollOffset 偏移mScrollOffset[1] :"+mScrollOffset[1]+" 被消费:" );
             mLastTouchX -= mScrollOffset[0];
             mLastTouchY -= mScrollOffset[1];
             if (ev != null) {
@@ -2972,6 +2973,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
                 if (dispatchNestedPreScroll(dx, dy, mScrollConsumed, mScrollOffset, TYPE_TOUCH)) {
                     dx -= mScrollConsumed[0];
                     dy -= mScrollConsumed[1];
+                    Log.e("TAG", "RecyclerView onTouchEvent dispatchNestedPreScroll ACTION_MOVE mScrollOffset 偏移mScrollOffset[1] :"+mScrollOffset[1] );
                     vtev.offsetLocation(mScrollOffset[0], mScrollOffset[1]);
                     // Updated the nested offsets
                     mNestedOffsets[0] += mScrollOffset[0];
@@ -3001,13 +3003,13 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
                     if (startScroll) {
                         setScrollState(SCROLL_STATE_DRAGGING);
                     }
-                    Log.w("TAG", "RecyclerView onTouchEvent Actino_move canScrollVertically:"+canScrollVertically+  " startScroll ="+startScroll);
+                    Log.w("TAG", "RecyclerView mScrollOffset onTouchEvent Actino_move canScrollVertically:"+canScrollVertically+  " startScroll ="+startScroll);
                 }
 
                 if (mScrollState == SCROLL_STATE_DRAGGING) {
                     mLastTouchX = x - mScrollOffset[0];
                     mLastTouchY = y - mScrollOffset[1];
-                    Log.w("TAG", "RecyclerView onTouchEvent ACTION_MOVE 调用 scrollByInternal:");
+                    Log.w("TAG", "RecyclerView mScrollOffset onTouchEvent ACTION_MOVE 调用>>>>>>> scrollByInternal mLastTouchY:"+mLastTouchY+" y="+y);
                     if (scrollByInternal(
                             canScrollHorizontally ? dx : 0,
                             canScrollVertically ? dy : 0,
@@ -10982,7 +10984,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
             int type) {
         boolean b = getScrollingChildHelper().dispatchNestedPreScroll(dx, dy, consumed, offsetInWindow,
                 type);
-        Log.d("TAG", "RecyclerView dispatchNestedPreScroll return type:"+b+"  consumed[1]="+consumed );
+        Log.d("TAG", "RecyclerView dispatchNestedPreScroll mScrollOffset return type:"+b+"  consumed[1]="+consumed[1] );
         return b ;
     }
 

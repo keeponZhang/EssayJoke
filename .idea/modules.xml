@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/android_design_27/android_design_27.iml" filepath="$PROJECT_DIR$/android_design_27/android_design_27.iml" />
       <module fileurl="file://$PROJECT_DIR$/android_support_core_ui/android_support_core_ui.iml" filepath="$PROJECT_DIR$/android_support_core_ui/android_support_core_ui.iml" />
       <module fileurl="file://$PROJECT_DIR$/android_support_recyclerview_27/android_support_recyclerview_27.iml" filepath="$PROJECT_DIR$/android_support_recyclerview_27/android_support_recyclerview_27.iml" />
+      <module fileurl="file://$PROJECT_DIR$/coordinatorLayout/coordinatorLayout.iml" filepath="$PROJECT_DIR$/coordinatorLayout/coordinatorLayout.iml" />
       <module fileurl="file://$PROJECT_DIR$/custom_support_sample/custom_support_sample.iml" filepath="$PROJECT_DIR$/custom_support_sample/custom_support_sample.iml" />
     </modules>
   </component>

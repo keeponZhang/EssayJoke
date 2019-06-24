@@ -310,10 +310,13 @@ public class NestedScrollingChildHelper {
                 if (offsetInWindow != null) {
                     // 父View 处理了相应的滑动,  很可能导致 子View 的位置的移动
                     // 这里计算出  父view 消费 滑动事件后,  导致 子View 的移动距离
+                    Log.w("TAG", "RecyclerView>>>>     NestedScrollingChildHelper dispatchNestedPreScroll offsetInWindow mScrollOffset before  offsetInWindow[1]:" + offsetInWindow[1]);
                     mView.getLocationInWindow(offsetInWindow);
+                    Log.w("TAG", "RecyclerView>>>>     NestedScrollingChildHelper dispatchNestedPreScroll offsetInWindow mScrollOffset after  offsetInWindow[1]:"+ offsetInWindow[1] +"  父控件消费了="+consumed[1]);
                     // 这里 子View 的移动距离
                     offsetInWindow[0] -= startX;
                     offsetInWindow[1] -= startY;
+                    Log.w("TAG", "RecyclerView>>>>     NestedScrollingChildHelper dispatchNestedPreScroll offsetInWindow mScrollOffset return  offsetInWindow[1]:"+ offsetInWindow[1] );
                 }
                 // 如果  xy 方向 上 有不为0 的表示消费了 则返回true
                 if(consumed[0] != 0 || consumed[1] != 0){

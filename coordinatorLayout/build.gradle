@@ -26,9 +26,17 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "com.android.support:appcompat-v7:${rootProject.ext.SUPPORT_LIBRARY_VERSION}"
-    implementation "com.android.support:design:${rootProject.ext.SUPPORT_LIBRARY_VERSION}"
-    implementation "com.android.support.constraint:constraint-layout:${rootProject.ext.CONTRANT_LAYOUT_VERSION}"
     testCompile 'junit:junit:4.12'
     implementation "com.android.support:support-annotations:${rootProject.ext.SUPPORT_LIBRARY_VERSION}"
+    implementation("com.android.support:appcompat-v7:${rootProject.ext.SUPPORT_LIBRARY_VERSION}",
+            {
+                exclude group: 'com.android.support', module: 'support-v4'
+                exclude group: 'com.android.support', module: 'support-compat'
+                exclude group: 'com.android.support', module: 'support-core-ui'
+            }
+    )
+    implementation project(path: ':android_design_27')
+    implementation project(path: ':android_support_recyclerview_27')
+    implementation "android.arch.lifecycle:runtime:1.0.0"
+
 }

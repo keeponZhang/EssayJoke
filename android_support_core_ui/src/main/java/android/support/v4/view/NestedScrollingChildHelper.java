@@ -316,6 +316,9 @@ public class NestedScrollingChildHelper {
                     offsetInWindow[1] -= startY;
                 }
                 // 如果  xy 方向 上 有不为0 的表示消费了 则返回true
+                if(consumed[0] != 0 || consumed[1] != 0){
+                    Log.e("TAG", "RecyclerView>>>>     NestedScrollingChildHelper dispatchNestedPreScroll return true  consumed[1] :"+ consumed[1]  );
+                }
                 return consumed[0] != 0 || consumed[1] != 0;
             } else if (offsetInWindow != null) {
                 offsetInWindow[0] = 0;

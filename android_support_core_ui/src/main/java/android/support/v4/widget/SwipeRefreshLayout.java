@@ -179,6 +179,7 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
 
         @Override
         public void onAnimationEnd(Animation animation) {
+            Log.e("TAG", "SwipeRefreshLayout onAnimationEnd:");
             if (mRefreshing) {
                 // Make sure the progress view is fully visible
                 mProgress.setAlpha(MAX_ALPHA);
@@ -193,6 +194,7 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
                 reset();
             }
         }
+
     };
 
     void reset() {
@@ -766,6 +768,8 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
     public void onNestedPreScroll(View target, int dx, int dy, int[] consumed) {
         // If we are in the middle of consuming, a scroll, then we want to move the spinner back up
         // before allowing the list to scroll
+        //只有当refreshView已经出现在屏幕中，并且手指往上移动才会调用下面的代码
+        Log.e("TAG", " RecyclerView  &&&&&&  SwipeRefreshLayout onNestedPreScroll dy:"+dy+"  mTotalUnconsumed="+mTotalUnconsumed);
         if (dy > 0 && mTotalUnconsumed > 0) {
             if (dy > mTotalUnconsumed) {
                 consumed[1] = dy - (int) mTotalUnconsumed;
@@ -774,6 +778,8 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
                 mTotalUnconsumed -= dy;
                 consumed[1] = dy;
             }
+            //处理refreshView的滑动
+            Log.e("TAG", " RecyclerView  &&&&&&  SwipeRefreshLayout onNestedPreScroll 调用 moveSpinner-----------mTotalUnconsumed:"+mTotalUnconsumed);
             moveSpinner(mTotalUnconsumed);
         }
 
@@ -783,11 +789,15 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
         // the circle so it isn't exposed if its blocking content is moved
         if (mUsingCustomStart && dy > 0 && mTotalUnconsumed == 0
                 && Math.abs(dy - consumed[1]) > 0) {
+            // refreshView移除屏幕
+            Log.e("TAG", "RecyclerView  &&&&&& SwipeRefreshLayout onNestedPreScroll mCircleView.setVisibility(View.GONE):");
             mCircleView.setVisibility(View.GONE);
         }
 
+        Log.e("TAG", "RecyclerView  &&&&&& SwipeRefreshLayout onNestedPreScroll ***** 子view传的距离dy:"+dy+"  SwipeRefreshLayout消费的距离consumed[1]："+consumed[1]);
         // Now let our nested parent consume the leftovers
         final int[] parentConsumed = mParentScrollConsumed;
+        // 将nestedPreScroll传递到Parent去（SwipeRefreshLayout的parent）
         if (dispatchNestedPreScroll(dx - consumed[0], dy - consumed[1], parentConsumed, null)) {
             consumed[0] += parentConsumed[0];
             consumed[1] += parentConsumed[1];
@@ -817,6 +827,8 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
     public void onNestedScroll(final View target, final int dxConsumed, final int dyConsumed,
             final int dxUnconsumed, final int dyUnconsumed) {
         // Dispatch up to the nested parent first
+        //将nestedScroll传递给Parent(SwipeRefreshLayout的parent)
+        Log.e("TAG", "RecyclerView  &&&&&& SwipeRefreshLayout onNestedScroll dyConsumed:"+dyConsumed+"  dyUnconsumed="+dyUnconsumed);
         dispatchNestedScroll(dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed,
                 mParentOffsetInWindow);
 
@@ -826,8 +838,9 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
         // 'offset in window 'functionality to see if we have been moved from the event.
         // This is a decent indication of whether we should take over the event stream or not.
         final int dy = dyUnconsumed + mParentOffsetInWindow[1];
-        if (dy < 0 && !canChildScrollUp()) {
+        if (dy < 0 && !canChildScrollUp()) { ////注意canChildScrollUp方法,该方法判断RecyclerView是否可以滑动，只有在它不可以滑动时，SwipeRefreshLayout才会来处理refreshView的滑动，这样就可以避免二者同时滑动的问题
             mTotalUnconsumed += Math.abs(dy);
+            Log.e("TAG", "RecyclerView  &&&&&& SwipeRefreshLayout onNestedScroll 调用 moveSpinner dy:"+dy+" mTotalUnconsumed="+mTotalUnconsumed);
             moveSpinner(mTotalUnconsumed);
         }
     }
@@ -899,6 +912,7 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
     }
 
     private void moveSpinner(float overscrollTop) {
+        Log.e("TAG", " RecyclerView  &&&&&& SwipeRefreshLayout moveSpinner 》》》》》》》overscrollTop:"+overscrollTop);
         mProgress.setArrowEnabled(true);
         float originalDragPercent = overscrollTop / mTotalDragDistance;
 
@@ -944,6 +958,7 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
 
         float rotation = (-0.25f + .4f * adjustedPercent + tensionPercent * 2) * .5f;
         mProgress.setProgressRotation(rotation);
+        Log.d("TAG", "RecyclerView  &&&&&& SwipeRefreshLayout moveSpinner setTargetOffsetTopAndBottom:"+(targetY - mCurrentTargetOffsetTop));
         setTargetOffsetTopAndBottom(targetY - mCurrentTargetOffsetTop);
     }
 

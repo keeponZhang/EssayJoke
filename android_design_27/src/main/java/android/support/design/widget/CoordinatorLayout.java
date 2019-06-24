@@ -1799,6 +1799,8 @@ public class CoordinatorLayout extends ViewGroup implements NestedScrollingParen
     @Override
     public void onNestedScroll(View target, int dxConsumed, int dyConsumed,
             int dxUnconsumed, int dyUnconsumed, int type) {
+        Log.e(TAG2, "<<<   CoordinatorLayout onNestedScrollAccepted dyConsumed:" +dyConsumed+"  dyUnconsumed="+dyUnconsumed);
+
         final int childCount = getChildCount();
         boolean accepted = false;
 
@@ -1834,7 +1836,6 @@ public class CoordinatorLayout extends ViewGroup implements NestedScrollingParen
 
     @Override
     public void onNestedPreScroll(View target, int dx, int dy, int[] consumed, int  type) {
-        Log.e(TAG2, "<<<    CoordinatorLayout onNestedPreScroll type:" );
         int xConsumed = 0;
         int yConsumed = 0;
         boolean accepted = false;
@@ -1868,7 +1869,7 @@ public class CoordinatorLayout extends ViewGroup implements NestedScrollingParen
 
         consumed[0] = xConsumed;
         consumed[1] = yConsumed;
-
+        Log.e(TAG2, "<<<     CoordinatorLayout onNestedPreScroll 我要消费 consumed[1]:"+consumed[1]);
         if (accepted) {
             onChildViewsChanged(EVENT_NESTED_SCROLL);
         }
@@ -1900,6 +1901,8 @@ public class CoordinatorLayout extends ViewGroup implements NestedScrollingParen
         if (handled) {
             onChildViewsChanged(EVENT_NESTED_SCROLL);
         }
+        Log.e(TAG2, "<<<     CoordinatorLayout onNestedFling  handled:"+handled);
+
         return handled;
     }
 
@@ -1925,6 +1928,8 @@ public class CoordinatorLayout extends ViewGroup implements NestedScrollingParen
                 handled |= viewBehavior.onNestedPreFling(this, view, target, velocityX, velocityY);
             }
         }
+        Log.e(TAG2, "<<<     CoordinatorLayout onNestedPreFling  handled:"+handled);
+
         return handled;
     }
 

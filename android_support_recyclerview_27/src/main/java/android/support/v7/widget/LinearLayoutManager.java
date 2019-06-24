@@ -16,10 +16,6 @@
 
 package android.support.v7.widget;
 
-import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
-import static android.support.v7.widget.RecyclerView.NO_POSITION;
-import static android.support.v7.widget.RecyclerView.VERBOSE_TRACING;
-
 import android.content.Context;
 import android.graphics.PointF;
 import android.os.Parcel;
@@ -36,6 +32,10 @@ import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 
 import java.util.List;
+
+import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
+import static android.support.v7.widget.RecyclerView.NO_POSITION;
+import static android.support.v7.widget.RecyclerView.VERBOSE_TRACING;
 
 /**
  * A {@link android.support.v7.widget.RecyclerView.LayoutManager} implementation which provides
@@ -1073,7 +1073,9 @@ public class LinearLayoutManager extends RecyclerView.LayoutManager implements
         if (mOrientation == HORIZONTAL) {
             return 0;
         }
-        return scrollBy(dy, recycler, state);
+        int i = scrollBy(dy, recycler, state);
+        Log.e("TAG", "[[ RecyclerView  ]]  LinearLayoutManager scrollVerticallyBy dy:"+dy+" returnDy:"+i);
+        return i;
     }
 
     @Override

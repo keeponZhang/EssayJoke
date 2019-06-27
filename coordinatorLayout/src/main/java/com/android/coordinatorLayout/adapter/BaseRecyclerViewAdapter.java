@@ -1,4 +1,4 @@
-package com.zhang.support.sample.adapter;
+package com.android.coordinatorLayout.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

@@ -29,6 +29,10 @@
 		    android:name="com.android.coordinatorLayout.CoordinatorLayoutCollapsingToolbarLayoutActivity"
 		    android:theme="@style/Theme.AppCompat.NoActionBar">
 	    </activity>
+		<activity
+			android:name="com.android.coordinatorLayout.CoordinatorLayoutAppBarLayoutExituntilCollapsedRecyclerviewActivity"
+			android:theme="@style/Theme.AppCompat.NoActionBar">
+		</activity>
 	    <activity android:name="com.android.coordinatorLayout.darren.DarrenBehaviorActivity"></activity>
 	    <activity android:name=".jump.JumpActivity">
 		    <intent-filter>
@@ -37,6 +41,7 @@
 			    <category android:name="android.intent.category.LAUNCHER" />
 		    </intent-filter>
 	    </activity>
+
     </application>
 
 </manifest>

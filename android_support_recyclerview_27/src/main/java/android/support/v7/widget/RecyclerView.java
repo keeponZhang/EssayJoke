@@ -2890,7 +2890,8 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
                 cancelTouch();
             }
         }
-        return mScrollState == SCROLL_STATE_DRAGGING;
+        Log.e("TAG", "RecyclerView onInterceptTouchEvent return:"+ (mScrollState == SCROLL_STATE_DRAGGING));
+        return  mScrollState == SCROLL_STATE_DRAGGING;
     }
 
     @Override

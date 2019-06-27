@@ -1,6 +1,9 @@
 package com.zhang.support.sample.jump;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,34 +12,42 @@ import android.widget.TextView;
 import com.android.coordinatorLayout.CoordinatorLayoutActivity;
 import com.android.coordinatorLayout.CoordinatorLayoutAppBarLayoutEnterAlwaysCollapsedActivity;
 import com.android.coordinatorLayout.CoordinatorLayoutAppBarLayoutExituntilCollapsedActivity;
+import com.android.coordinatorLayout.CoordinatorLayoutAppBarLayoutExituntilCollapsedRecyclerviewActivity;
 import com.android.coordinatorLayout.CoordinatorLayoutAppBarLayoutNoBehaviorActivity;
 import com.android.coordinatorLayout.CoordinatorLayoutCollapsingToolbarLayoutActivity;
 import com.android.coordinatorLayout.CoordinatorLayoutToolBarActivity;
+import com.android.coordinatorLayout.adapter.BaseRecyclerViewAdapter;
 import com.android.coordinatorLayout.darren.DarrenBehaviorActivity;
 import com.zhang.support.sample.R;
 import com.zhang.support.sample.SwipeRefreshActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class JumpAdapter extends RecyclerView.Adapter<JumpAdapter.MainViewHolder> {
-
-    private List<String> mTitles = new ArrayList<>();
+public class JumpAdapter extends BaseRecyclerViewAdapter<String,JumpAdapter.MainViewHolder> {
 
 
-    public JumpAdapter(List<String> titles) {
-        mTitles = titles;
+    public JumpAdapter(Context context) {
+        super(context);
     }
 
+    public JumpAdapter(Context context, List<String> datas) {
+        super(context, datas);
+    }
+
+    private static final String TAG = "JumpAdapter";
+    private int mCreatedHolder=0;
     @Override
-    public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MainViewHolder onCreateMyViewHolder(@NonNull ViewGroup parent, int viewType) {
+        mCreatedHolder++;
+        Log.d(TAG, "onCreateViewHolder  num:"+mCreatedHolder);
         View rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_news_item, parent, false);
         return new MainViewHolder(rootView);
     }
 
     @Override
-    public void onBindViewHolder(final MainViewHolder holder, int position) {
-        final String title = mTitles.get(position);
+    public void onBindMyViewHolder(@NonNull final MainViewHolder holder, int position) {
+        Log.d(TAG, "onBindViewHolder");
+        final String title = mDatas.get(position);
         TextView titleView = holder.mTvTitle;
         titleView.setText(title);
         titleView.setOnClickListener(new View.OnClickListener() {
@@ -49,6 +60,7 @@ public class JumpAdapter extends RecyclerView.Adapter<JumpAdapter.MainViewHolder
                         Utils.startActivity(v.getContext(), SwipeRefreshActivity.class);
                         break;
                     case 1:
+                        Utils.startActivity(v.getContext(), CoordinatorLayoutAppBarLayoutExituntilCollapsedRecyclerviewActivity.class);
                         break;
                     case 2:
                         break;
@@ -93,11 +105,6 @@ public class JumpAdapter extends RecyclerView.Adapter<JumpAdapter.MainViewHolder
                 }
             }
         });
-    }
-
-    @Override
-    public int getItemCount() {
-        return mTitles.size();
     }
 
     public static class MainViewHolder extends RecyclerView.ViewHolder {

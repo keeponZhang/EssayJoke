@@ -1,4 +1,4 @@
-package com.android.recyclerview.itemdecoration;
+package com.zhang.recyclerview.itemdecoration;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

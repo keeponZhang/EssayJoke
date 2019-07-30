@@ -1,4 +1,4 @@
-package com.android.recyclerview.itemdecoration;
+package com.zhang.recyclerview.itemdecoration;
 
 import android.os.Bundle;
 import android.os.Handler;

@@ -1,4 +1,4 @@
-package com.android.recyclerview.itemdecoration;
+package com.zhang.recyclerview.itemdecoration;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

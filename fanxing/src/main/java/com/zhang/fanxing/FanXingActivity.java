@@ -1,4 +1,4 @@
-package com.android.fanxing;
+package com.zhang.fanxing;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

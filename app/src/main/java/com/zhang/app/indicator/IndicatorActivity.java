@@ -1,4 +1,4 @@
-package com.android.app.indicator;
+package com.zhang.app.indicator;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,13 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.android.indicator.IndicatorAdapter;
 import com.example.administrator.framelibrary.ItemFragment;
 import com.hc.baselibrary.ioc.ViewById;
 import com.hc.baselibrary.ioc.ViewUtils;
-import com.android.app.R;
-import com.android.indicator.ColorTrackTextView;
-import com.android.indicator.IndicatorAdapter;
-import com.android.indicator.TrackIndicatorView;
+import com.zhang.app.R;
+import com.zhang.indicator.ColorTrackTextView;
+import com.zhang.indicator.TrackIndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ import java.util.List;
 public class IndicatorActivity extends AppCompatActivity {
 	private String[]                 items = {"直播", "推荐", "视频", "图片", "段子", "精华","同城","游戏"};
 	@ViewById(R.id.indicator_view)
-	private TrackIndicatorView       mIndicatorContainer;
+	private TrackIndicatorView mIndicatorContainer;
 	private List<ColorTrackTextView> mIndicators;
 	@ViewById(R.id.view_pager)
 	private ViewPager                mViewPager;

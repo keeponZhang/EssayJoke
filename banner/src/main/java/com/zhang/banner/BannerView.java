@@ -1,4 +1,4 @@
-package com.android.designsample;
+package com.zhang.banner;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -26,13 +26,13 @@ import android.widget.TextView;
 public class BannerView extends RelativeLayout {
     private static final String          TAG = "BannerView";
     // 4.自定义BannerView - 轮播的ViewPager
-    private              BannerViewPager mBannerVp;
+    private BannerViewPager mBannerVp;
     // 4.自定义BannerView - 轮播的描述
     private              TextView        mBannerDescTv;
     // 4.自定义BannerView - 点的容器
     private              LinearLayout    mDotContainerView;
     // 4.自定义BannerView - 自定义的BannerAdapter
-    private              BannerAdapter   mAdapter;
+    private BannerAdapter mAdapter;
 
     private Context mContext;
 
@@ -167,7 +167,7 @@ public class BannerView extends RelativeLayout {
      */
     private void pageSelect(int position) {
         // 6.1 把之前亮着的点 设置为默认
-        DotIndicatorView oldIndicatorView = (DotIndicatorView)
+       DotIndicatorView oldIndicatorView = (DotIndicatorView)
                 mDotContainerView.getChildAt(mCurrentPosition);
         oldIndicatorView.setImageDrawable(mIndicatorNormalDrawable);
 

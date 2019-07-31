@@ -10,14 +10,14 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 
+import com.android.recyclerview.itemdecoration.bean.FollowerBean;
+import com.android.recyclerview.itemdecoration.bean.FollowerInfos;
+import com.android.recyclerview.itemhelper.DragCallBack;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hc.essay.joke.http.HttpCallBack;
 import com.hc.essay.joke.http.HttpUtils;
-import com.android.recyclerview.R;
-import com.android.recyclerview.itemdecoration.bean.FollowerBean;
-import com.android.recyclerview.itemdecoration.bean.FollowerInfos;
-import com.android.recyclerview.itemhelper.DragCallBack;
+import com.zhang.recyclerview.R;
 
 import java.lang.reflect.Type;
 import java.util.List;

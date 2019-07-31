@@ -1,16 +1,16 @@
-package com.android.fanshe;
+package com.zhang.fanshe;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
-import com.android.fanshe.bean.PointImpl;
 import com.android.fanshe.interfaces.PointArrayImpl;
-import com.android.fanshe.interfaces.PointGenericityImpl;
-import com.android.fanshe.interfaces.PointImpl2;
-import com.android.fanshe.interfaces.PointWildcardImpl;
-import com.android.fanxing.R;
+import com.zhang.fanshe.bean.PointImpl;
+import com.zhang.fanshe.interfaces.PointGenericityImpl;
+import com.zhang.fanshe.interfaces.PointImpl2;
+import com.zhang.fanshe.interfaces.PointWildcardImpl;
+import com.zhang.fanxing.R;
 
 import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.ParameterizedType;

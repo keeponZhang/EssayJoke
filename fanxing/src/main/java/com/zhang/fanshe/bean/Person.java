@@ -1,4 +1,4 @@
-package com.android.fanshe.bean;
+package com.zhang.fanshe.bean;
 
 /**
  * @创建者 keepon

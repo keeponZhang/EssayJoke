@@ -1,4 +1,4 @@
-package com.android.fanshe.interfaces;
+package com.zhang.fanshe.interfaces;
 
 public interface PointInterface<T,U> {
 }

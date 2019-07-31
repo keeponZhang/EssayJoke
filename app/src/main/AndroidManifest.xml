@@ -11,12 +11,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name=".jump.MainApp">
-        <!--<activity android:name=".indicator.IndicatorActivity"></activity>-->
-        <!--<activity android:name=".banner.BannerActivity"></activity>-->
-        <!--<activity android:name="com.zhang.recyclerview.itemdecoration.ItemDecorationActivity">-->
+        <activity android:name=".indicator.IndicatorActivity"></activity>
+        <activity android:name=".banner.BannerActivity"></activity>
+        <activity android:name="com.zhang.recyclerview.itemdecoration.ItemDecorationActivity">
+        </activity>
+        <activity android:name="com.zhang.banner.WebViewActivity">
 
-        <!--</activity>-->
+        </activity>
+        <activity android:name=".jump.JumpActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

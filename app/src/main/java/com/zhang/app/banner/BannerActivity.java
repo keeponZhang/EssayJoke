@@ -1,4 +1,4 @@
-package com.android.app.banner;
+package com.zhang.app.banner;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +11,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.recyclerview.itemdecoration.bean.FollowerBean;
+import com.android.recyclerview.itemdecoration.bean.FollowerInfos;
+import com.android.recyclerview.view.WrapRecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -18,15 +21,12 @@ import com.hc.baselibrary.ioc.ViewById;
 import com.hc.baselibrary.ioc.ViewUtils;
 import com.hc.essay.joke.http.HttpCallBack;
 import com.hc.essay.joke.http.HttpUtils;
-import com.android.app.R;
-import com.android.designsample.BannerAdapter;
-import com.android.designsample.BannerView;
-import com.android.designsample.BannerViewPager;
-import com.android.recyclerview.itemdecoration.CategoryItemDecoration;
-import com.android.recyclerview.itemdecoration.CategoryListAdapter;
-import com.android.recyclerview.itemdecoration.bean.FollowerBean;
-import com.android.recyclerview.itemdecoration.bean.FollowerInfos;
-import com.android.recyclerview.view.WrapRecyclerView;
+import com.zhang.app.R;
+import com.zhang.banner.BannerAdapter;
+import com.zhang.banner.BannerView;
+import com.zhang.banner.BannerViewPager;
+import com.zhang.recyclerview.itemdecoration.CategoryItemDecoration;
+import com.zhang.recyclerview.itemdecoration.CategoryListAdapter;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ public class BannerActivity extends AppCompatActivity implements BannerViewPager
 		setContentView(R.layout.activity_banner);
 		ViewUtils.inject(this);
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-		mRecyclerView.addItemDecoration(new CategoryItemDecoration(getResources().getColor(com.android.recyclerview.R.color.blue)));
+		mRecyclerView.addItemDecoration(new CategoryItemDecoration(getResources().getColor(R.color.blue)));
 		mCategoryListAdapter = new CategoryListAdapter(this,mList);
 		mRecyclerView.setAdapter(mCategoryListAdapter);
 		setBanner();
@@ -90,7 +90,7 @@ public class BannerActivity extends AppCompatActivity implements BannerViewPager
 	}
 	private void updateData(List<FollowerBean> followerBeans ) {
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-		mRecyclerView.addItemDecoration(new CategoryItemDecoration(getResources().getColor(com.android.recyclerview.R.color.blue)));
+		mRecyclerView.addItemDecoration(new CategoryItemDecoration(getResources().getColor(R.color.blue)));
 		CategoryListAdapter categoryListAdapter = new CategoryListAdapter(this, followerBeans);
 		mRecyclerView.setAdapter(categoryListAdapter);
 	}

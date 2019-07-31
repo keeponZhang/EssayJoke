@@ -26,6 +26,7 @@ dependencies {
     compile project(':baselibrary')
     compile project(':banner')
     compile project(':recyclerview')
+//    implementation "com.android.support:recyclerview-v7:${rootProject.ext.SUPPORT_LIBRARY_VERSION}"
     compile project(':ioc')
     compile project(':http')
     compile project(':indicator')

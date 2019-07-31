@@ -1,4 +1,4 @@
-package com.android.indicator;
+package com.zhang.indicator;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -18,7 +18,7 @@ import android.widget.HorizontalScrollView;
  */
 public class TrackIndicatorView extends HorizontalScrollView implements ViewPager.OnPageChangeListener {
     // Adapter适配器设计模式 - Adapter
-    private IndicatorAdapter mAdapter;
+    private com.android.indicator.IndicatorAdapter mAdapter;
 
     // 3. 动态的添加View - 指示器条目的容器
     private IndicatorGroupView mIndicatorGroup;
@@ -70,7 +70,7 @@ public class TrackIndicatorView extends HorizontalScrollView implements ViewPage
     /**
      * 1.设置一个适配器
      */
-    public void setAdapter(IndicatorAdapter adapter) {
+    public void setAdapter(com.android.indicator.IndicatorAdapter adapter) {
         if (adapter == null) {
             throw new NullPointerException("adapter is null!");
         }
@@ -130,14 +130,14 @@ public class TrackIndicatorView extends HorizontalScrollView implements ViewPage
     /**
      * 5.设置适配器
      */
-    public void setAdapter(IndicatorAdapter adapter, ViewPager viewPager) {
+    public void setAdapter(com.android.indicator.IndicatorAdapter adapter, ViewPager viewPager) {
         setAdapter(adapter,viewPager,true);
     }
 
     /**
      * 5.设置适配器
      */
-    public void setAdapter(IndicatorAdapter adapter, ViewPager viewPager, boolean smoothScroll) {
+    public void setAdapter(com.android.indicator.IndicatorAdapter adapter, ViewPager viewPager, boolean smoothScroll) {
         this.mSmoothScroll= smoothScroll;
         if (viewPager == null) {
             throw new NullPointerException("viewPager is null!");

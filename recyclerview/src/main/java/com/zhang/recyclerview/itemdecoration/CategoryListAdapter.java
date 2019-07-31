@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.android.recyclerview.R;
 import com.android.recyclerview.itemdecoration.bean.FollowerBean;
+import com.bumptech.glide.Glide;
+import com.zhang.recyclerview.R;
 
 import java.util.ArrayList;
 import java.util.List;

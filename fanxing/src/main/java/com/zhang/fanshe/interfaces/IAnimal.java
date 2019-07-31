@@ -1,4 +1,4 @@
-package com.android.fanshe.interfaces;
+package com.zhang.fanshe.interfaces;
 
 public interface IAnimal {
     void setName(String name);

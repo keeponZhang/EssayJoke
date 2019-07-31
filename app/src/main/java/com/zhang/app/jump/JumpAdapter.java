@@ -1,4 +1,4 @@
-package com.android.app.jump;
+package com.zhang.app.jump;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,17 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.android.app.R;
-import com.android.app.banner.BannerActivity;
-import com.android.app.indicator.IndicatorActivity;
-import com.android.coordinatorLayout.CoordinatorLayoutActivity;
-import com.android.coordinatorLayout.CoordinatorLayoutAppBarLayoutEnterAlwaysCollapsedActivity;
-import com.android.coordinatorLayout.CoordinatorLayoutAppBarLayoutExituntilCollapsedActivity;
-import com.android.coordinatorLayout.CoordinatorLayoutAppBarLayoutNoBehaviorActivity;
-import com.android.coordinatorLayout.CoordinatorLayoutCollapsingToolbarLayoutActivity;
-import com.android.coordinatorLayout.CoordinatorLayoutToolBarActivity;
-import com.android.coordinatorLayout.darren.DarrenBehaviorActivity;
-import com.android.recyclerview.itemdecoration.ItemDecorationActivity;
+import com.zhang.app.R;
+import com.zhang.app.banner.BannerActivity;
+import com.zhang.app.indicator.IndicatorActivity;
+import com.zhang.banner.WebViewActivity;
+import com.zhang.recyclerview.itemdecoration.ItemDecorationActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +51,7 @@ public class JumpAdapter extends RecyclerView.Adapter<JumpAdapter.MainViewHolder
                         Utils.startActivity(v.getContext(), ItemDecorationActivity.class);
                         break;
                     case 3:
+                        Utils.startActivity(v.getContext(), WebViewActivity.class);
                         break;
                     case 4:
                         break;

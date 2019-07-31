@@ -1,4 +1,4 @@
-package com.android.designsample;
+package com.zhang.banner;
 
 import android.content.Context;
 import android.view.animation.Interpolator;

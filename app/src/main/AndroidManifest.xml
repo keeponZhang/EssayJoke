@@ -15,10 +15,10 @@
         <activity android:name=".banner.BannerActivity"></activity>
         <activity android:name="com.zhang.recyclerview.itemdecoration.ItemDecorationActivity">
         </activity>
-        <activity android:name="com.zhang.banner.WebViewActivity">
+        <activity android:name="com.zhang.webview.WebViewActivity">
 
         </activity>
-        <activity android:name=".jump.JumpActivity">
+        <activity android:name="com.zhang.app.jump.JumpActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

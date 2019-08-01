@@ -1,9 +1,11 @@
-package com.zhang.banner;
+package com.zhang.webview;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 
 public class WebViewActivity extends AppCompatActivity {
@@ -13,16 +15,27 @@ public class WebViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
-        mWebView = (WebView)findViewById(R.id.webview);
+
+        findViewById(R.id.websetting).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(WebViewActivity.this,WebviewSettingActivity.class));
+            }
+        });
+        findViewById(R.id.webhudiao).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(WebViewActivity.this,WebViewHudiaoActivity.class));
+            }
+        });
+        mWebView = findViewById(R.id.webview);
         mBtn = (Button)findViewById(R.id.btn);
 //        test1();
-//        test2();
-        test3();
+        test2();
+//        test3();
     }
 
     private void test3() {
-
-
         mBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,10 +71,11 @@ public class WebViewActivity extends AppCompatActivity {
 //            @Override
 //            public boolean shouldOverrideUrlLoading(WebView view, String url) {
 //                //有重定向的话，下面这个不能注释
-//               view.loadUrl(url);
+//                mWebView.loadUrl(url);
 //                return true;
 //            }
 //        });
+        mWebView.setWebViewClient(new WebViewClient());
 //        在线网址中，如果要使用webview打开，记得设置WebViewClient
         mBtn.setOnClickListener(new View.OnClickListener() {
             @Override

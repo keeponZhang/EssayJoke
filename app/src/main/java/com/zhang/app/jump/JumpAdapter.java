@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.zhang.app.R;
 import com.zhang.app.banner.BannerActivity;
 import com.zhang.app.indicator.IndicatorActivity;
-import com.zhang.banner.WebViewActivity;
+import com.zhang.webview.WebViewActivity;
 import com.zhang.recyclerview.itemdecoration.ItemDecorationActivity;
 
 import java.util.ArrayList;

@@ -11,6 +11,8 @@ import com.zhang.app.banner.BannerActivity;
 import com.zhang.app.indicator.IndicatorActivity;
 import com.zhang.webview.WebViewActivity;
 import com.zhang.recyclerview.itemdecoration.ItemDecorationActivity;
+import com.zhang.webview.WebviewLoudongActivity;
+import com.zhang.webview.WebviewLoudongFixActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,8 +56,10 @@ public class JumpAdapter extends RecyclerView.Adapter<JumpAdapter.MainViewHolder
                         Utils.startActivity(v.getContext(), WebViewActivity.class);
                         break;
                     case 4:
+                        Utils.startActivity(v.getContext(), WebviewLoudongActivity.class);
                         break;
                     case 5:
+                        Utils.startActivity(v.getContext(), WebviewLoudongFixActivity.class);
                         break;
                     case 6:
                         break;

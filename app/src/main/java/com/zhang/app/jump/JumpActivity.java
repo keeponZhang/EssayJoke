@@ -25,10 +25,13 @@ public class JumpActivity extends AppCompatActivity {
         titles.add("BannerActivity");
         titles.add("ItemDecorationActivity");
         titles.add("WebviewActivity");
+        titles.add("LouDongWebviewActivity");
+        titles.add("LouDongWebviewFixActivity");
 
 
         JumpAdapter mainAdapter = new JumpAdapter(titles);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(mainAdapter);
+
     }
 }

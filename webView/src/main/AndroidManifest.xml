@@ -3,9 +3,11 @@
     package="com.zhang.webview">
 
     <application>
-        <activity android:name="com.zhang.webview.WebViewActivity" />
-        <activity android:name="com.zhang.webview.WebviewSettingActivity" />
-        <activity android:name="com.zhang.webview.WebViewHudiaoActivity"></activity>
+        <activity android:name=".WebViewActivity" />
+        <activity android:name=".WebviewSettingActivity" />
+        <activity android:name=".WebViewHudiaoActivity" />
+        <activity android:name=".WebviewLoudongActivity"></activity>
+        <activity android:name=".WebviewLoudongFixActivity"></activity>
     </application>
 
 </manifest>

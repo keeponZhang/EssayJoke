@@ -5,15 +5,23 @@
     android:layout_height="fill_parent"
     >
     <Button
+        android:textAllCaps="false"
         android:id="@+id/websetting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="websetting"/>
     <Button
-        android:id="@+id/webhudiao"
+        android:textAllCaps="false"
+        android:id="@+id/webdiaojava"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="webhudiao"/>
+        android:text="js_diao_java"/>
+    <Button
+        android:textAllCaps="false"
+        android:id="@+id/webdiaojs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="java_diao_js"/>
     <Button
         android:id="@+id/btn"
         android:layout_width="match_parent"

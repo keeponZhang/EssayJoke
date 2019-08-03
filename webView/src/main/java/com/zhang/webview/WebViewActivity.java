@@ -22,10 +22,16 @@ public class WebViewActivity extends AppCompatActivity {
                 startActivity(new Intent(WebViewActivity.this,WebviewSettingActivity.class));
             }
         });
-        findViewById(R.id.webhudiao).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.webdiaojava).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(WebViewActivity.this,WebViewHudiaoActivity.class));
+                startActivity(new Intent(WebViewActivity.this,WebViewDiaoJavaActivity.class));
+            }
+        });
+        findViewById(R.id.webdiaojs).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(WebViewActivity.this,WebviewDiaoJsActivity.class));
             }
         });
         mWebView = findViewById(R.id.webview);

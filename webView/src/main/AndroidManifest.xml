@@ -5,9 +5,10 @@
     <application>
         <activity android:name=".WebViewActivity" />
         <activity android:name=".WebviewSettingActivity" />
-        <activity android:name=".WebViewHudiaoActivity" />
-        <activity android:name=".WebviewLoudongActivity"></activity>
-        <activity android:name=".WebviewLoudongFixActivity"></activity>
+        <activity android:name=".WebViewDiaoJavaActivity" />
+        <activity android:name=".WebviewLoudongActivity" />
+        <activity android:name=".WebviewLoudongFixActivity" />
+        <activity android:name=".WebviewDiaoJsActivity"></activity>
     </application>
 
 </manifest>

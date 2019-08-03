@@ -9,7 +9,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="加载URL"/>
-
+    <Button
+        android:textAllCaps="false"
+        android:onClick="getReturnFromJsBefore19"
+        android:id="@+id/getReturnFromJsBefore19"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="getReturnFromJsBefore19"/>
+    <Button
+        android:textAllCaps="false"
+        android:onClick="getReturnFromJsAfter19"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="getReturnFromJsAfter19"/>
     <WebView
         android:id="@+id/webview"
         android:layout_width="match_parent"

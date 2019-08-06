@@ -9,8 +9,10 @@ import android.widget.TextView;
 import com.zhang.app.R;
 import com.zhang.app.banner.BannerActivity;
 import com.zhang.app.indicator.IndicatorActivity;
+import com.zhang.webview.WebChromeClientActivity;
 import com.zhang.webview.WebViewActivity;
 import com.zhang.recyclerview.itemdecoration.ItemDecorationActivity;
+import com.zhang.webview.WebviewClientActivity;
 import com.zhang.webview.WebviewLoudongActivity;
 import com.zhang.webview.WebviewLoudongFixActivity;
 
@@ -62,9 +64,10 @@ public class JumpAdapter extends RecyclerView.Adapter<JumpAdapter.MainViewHolder
                         Utils.startActivity(v.getContext(), WebviewLoudongFixActivity.class);
                         break;
                     case 6:
+                        Utils.startActivity(v.getContext(), WebviewClientActivity.class);
                         break;
                     case 7:
-
+                        Utils.startActivity(v.getContext(), WebChromeClientActivity.class);
                         break;
                     case 8:
                         break;

@@ -27,6 +27,8 @@ public class JumpActivity extends AppCompatActivity {
         titles.add("WebviewActivity");
         titles.add("LouDongWebviewActivity");
         titles.add("LouDongWebviewFixActivity");
+        titles.add("WebviewClientActivity");
+        titles.add("WebChromeClientActivity");
 
 
         JumpAdapter mainAdapter = new JumpAdapter(titles);

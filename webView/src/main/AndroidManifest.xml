@@ -8,7 +8,9 @@
         <activity android:name=".WebViewDiaoJavaActivity" />
         <activity android:name=".WebviewLoudongActivity" />
         <activity android:name=".WebviewLoudongFixActivity" />
-        <activity android:name=".WebviewDiaoJsActivity"></activity>
+        <activity android:name=".WebviewDiaoJsActivity" />
+        <activity android:name=".WebviewClientActivity" />
+        <activity android:name=".WebChromeClientActivity"></activity>
     </application>
 
 </manifest>

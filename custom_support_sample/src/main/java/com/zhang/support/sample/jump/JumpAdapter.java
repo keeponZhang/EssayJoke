@@ -46,7 +46,7 @@ public class JumpAdapter extends BaseRecyclerViewAdapter<String,JumpAdapter.Main
 
     @Override
     public void onBindMyViewHolder(@NonNull final MainViewHolder holder, int position) {
-        Log.d(TAG, "onBindViewHolder");
+        Log.d(TAG, "onBindViewHolder position ="+position);
         final String title = mDatas.get(position);
         TextView titleView = holder.mTvTitle;
         titleView.setText(title);

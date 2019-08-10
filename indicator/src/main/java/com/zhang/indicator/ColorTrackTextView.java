@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 
 /**
  * Email 240336124@qq.com
@@ -104,8 +105,10 @@ public class ColorTrackTextView extends android.support.v7.widget.AppCompatTextV
     private void drawChangeText(Canvas canvas, String text, int middle) {
         // 判断当前的朝向
         if(mDirection == Direction.LEFT_TO_RIGHT){
+            Log.e("TAG", "ColorTrackTextView LEFT_TO_RIGHT drawChangeText:"+text+"  mCurrentProgress ="+mCurrentProgress);
             drawText(text, canvas, mChangePaint, 0, middle);
         }else{
+            Log.e("TAG", "ColorTrackTextView  RIGHT_TO_LEFT drawChangeText:"+text+"  mCurrentProgress ="+mCurrentProgress);
             drawText(text, canvas, mChangePaint, getWidth() - middle, getWidth());
         }
     }
@@ -115,8 +118,11 @@ public class ColorTrackTextView extends android.support.v7.widget.AppCompatTextV
      */
     private void drawOriginText(Canvas canvas,String text, int middle) {
         if(mDirection == Direction.LEFT_TO_RIGHT){
+            Log.w("TAG", "ColorTrackTextView LEFT_TO_RIGHT drawOriginText:"+text+"  mCurrentProgress ="+mCurrentProgress);
             drawText(text, canvas, mOriginPaint, middle, getWidth());
         }else{
+//            drawText(text, canvas, mOriginPaint, middle, getWidth());
+            Log.w("TAG", "ColorTrackTextView  RIGHT_TO_LEFT drawOriginText:"+text+"  mCurrentProgress ="+mCurrentProgress);
             drawText(text, canvas, mOriginPaint, 0, getWidth() - middle);
         }
     }

@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import com.android.recyclerview.itemdecoration.bean.FollowerBean;
 import com.android.recyclerview.itemdecoration.bean.FollowerInfos;
-import com.android.recyclerview.view.WrapRecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -27,6 +26,7 @@ import com.zhang.banner.BannerView;
 import com.zhang.banner.BannerViewPager;
 import com.zhang.recyclerview.itemdecoration.CategoryItemDecoration;
 import com.zhang.recyclerview.itemdecoration.CategoryListAdapter;
+import com.zhang.recyclerview.view.WrapRecyclerView;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;

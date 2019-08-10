@@ -35,6 +35,8 @@ public class CustomLayoutManager extends RecyclerView.LayoutManager {
             offsetY += height;
 
         }
+//        这里只所以取最offsetY和getVerticalSpace()的最大值是因为，offsetY是所有item的总高度，
+//        而当item填不满RecyclerView时，offsetY应该是比RecyclerView的真正高度小的，而此时的真正的高度应该是RecyclerView本身所设置的高度。
         mTotalHeight = Math.max(offsetY, getVerticalSpace());
         Log.e("TAG", "CustomLayoutManager onLayoutChildren mTotalHeight:"+mTotalHeight);
     }

@@ -11,12 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.android.indicator.IndicatorAdapter;
 import com.example.administrator.framelibrary.ItemFragment;
 import com.hc.baselibrary.ioc.ViewById;
 import com.hc.baselibrary.ioc.ViewUtils;
 import com.zhang.app.R;
 import com.zhang.indicator.ColorTrackTextView;
+import com.zhang.indicator.IndicatorAdapter;
 import com.zhang.indicator.TrackIndicatorView;
 
 import java.util.ArrayList;

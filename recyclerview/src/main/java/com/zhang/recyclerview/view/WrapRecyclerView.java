@@ -1,4 +1,4 @@
-package com.android.recyclerview.view;
+package com.zhang.recyclerview.view;
 
 import android.content.Context;
 import android.support.annotation.Nullable;

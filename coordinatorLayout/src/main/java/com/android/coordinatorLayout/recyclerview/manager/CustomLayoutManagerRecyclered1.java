@@ -5,11 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.LayoutManager;
 import android.support.v7.widget.RecyclerView.LayoutParams;
 import android.util.SparseArray;
-import android.util.SparseBooleanArray;
 import android.view.View;
 
 //https://blog.csdn.net/harvic880925/article/details/84866486
-public class CustomLayoutManagerRecyclered2 extends LayoutManager {
+public class CustomLayoutManagerRecyclered1 extends LayoutManager {
     private int mSumDy = 0;
     private int mTotalHeight = 0;
 
@@ -35,7 +34,6 @@ public class CustomLayoutManagerRecyclered2 extends LayoutManager {
             detachAndScrapAttachedViews(recycler);
             return;
         }
-        mHasAttachedItems.clear();
         mItemRects.clear();
 
         detachAndScrapAttachedViews(recycler);
@@ -54,7 +52,6 @@ public class CustomLayoutManagerRecyclered2 extends LayoutManager {
         for (int i = 0; i < getItemCount(); i++) {
             Rect rect = new Rect(0, offsetY, mItemWidth, offsetY + mItemHeight);
             mItemRects.put(i, rect);
-            mHasAttachedItems.put(i, false);
             offsetY += mItemHeight;
         }
 
@@ -95,34 +92,35 @@ public class CustomLayoutManagerRecyclered2 extends LayoutManager {
             //如果滑动到最底部
             travel = mTotalHeight - getVerticalSpace() - mSumDy;
         }
-        //CustomLayoutManagerRecyclered是到了最后才叠加
-        mSumDy += travel;
 
-        //  这里需要注意的是，我们在所有的布局操作前，先将移动距离mSumDy进行了累加。因为后面我们在布局item时，
-        // 会弃用offsetChildrenVertical(-travel)移动item，而是在布局item时，就直接把item布局在新位置。最后，因为我们已经累加了mSumDy，
-        // 所以我们需要改造getVisibleArea()，将原来getVisibleArea(int dy)中累加dy的操作去掉：
-        Rect visibleRect = getVisibleArea();
-        //回收越界子View
+
+
+        //回收越界子View(原来的到顶、到底判断和回收越界item的代码都不变)
         for (int i = getChildCount() - 1; i >= 0; i--) {
             View child = getChildAt(i);
-            int position = getPosition(child);
-            Rect rect = mItemRects.get(position);
-
-            if (!Rect.intersects(rect, visibleRect)) {
-                removeAndRecycleView(child, recycler);
-                mHasAttachedItems.put(position,false);
-            } else {
-                layoutDecoratedWithMargins(child, rect.left, rect.top - mSumDy, rect.right, rect.bottom - mSumDy);
-                child.setRotationY(child.getRotationY() + 1);
-                //表示对应的item已经在布局中了
-                mHasAttachedItems.put(position, true);
+            if (travel > 0) {//需要回收当前屏幕，上越界的View
+                if (getDecoratedBottom(child) - travel < 0) {
+                    removeAndRecycleView(child, recycler);
+                    continue;
+                }
+            } else if (travel < 0) {//回收当前屏幕，下越界的View
+                if (getDecoratedTop(child) - travel > getHeight() - getPaddingBottom()) {
+                    removeAndRecycleView(child, recycler);
+                    continue;
+                }
             }
-        }
 
-        //先离屏缓存再重新布局原本就可见item效率低
-//        detachAndScrapAttachedViews(recycler);
+        }
+        //在回收越界的holderView之后，我们需要在使用detachAndScrapAttachedViews(recycler);将现在显示的所有item离屏缓存之前，
+        // 先得到当前在显示的第一个item和最后一个item的索引，因为如果在将所有item从屏幕上离屏缓存以后，
+        // 利用getChildAt(int position)是拿不到任何值的，会返回null，因为现在屏幕上已经没有View存在了。
         View lastView = getChildAt(getChildCount() - 1);
         View firstView = getChildAt(0);
+        detachAndScrapAttachedViews(recycler);
+        //CustomLayoutManagerRecyclered是到了最后才叠加
+        mSumDy += travel;
+        Rect visibleRect = getVisibleArea();
+
         if (travel >= 0) {
             int minPos = getPosition(firstView);
             for (int i = minPos; i < getItemCount(); i++) {
@@ -136,23 +134,20 @@ public class CustomLayoutManagerRecyclered2 extends LayoutManager {
         }
         return travel;
     }
-//    我们需要一个变量来保存在这里哪些item已经布局好了
-    private SparseBooleanArray mHasAttachedItems = new SparseBooleanArray();
     private void insertView(int pos, Rect visibleRect, RecyclerView.Recycler recycler, boolean firstPos) {
         Rect rect = mItemRects.get(pos);
-        if (Rect.intersects(visibleRect, rect) && !mHasAttachedItems.get(pos)) {
+        if (Rect.intersects(visibleRect, rect)) {
             View child = recycler.getViewForPosition(pos);
             if (firstPos) {
                 addView(child, 0);
-            } else {
+            }else {
                 addView(child);
             }
             measureChildWithMargins(child, 0, 0);
             layoutDecoratedWithMargins(child, rect.left, rect.top - mSumDy, rect.right, rect.bottom - mSumDy);
 
             //在布局item后，修改每个item的旋转度数
-            child.setRotationY(child.getRotationY() + 1);
-            mHasAttachedItems.put(pos,true);
+//            child.setRotationY(child.getRotationY()+1);
         }
     }
 

@@ -70,6 +70,7 @@ public class JumpAdapter extends RecyclerView.Adapter<JumpAdapter.MainViewHolder
                         Utils.startActivity(v.getContext(), WebChromeClientActivity.class);
                         break;
                     case 8:
+
                         break;
                     case 9:
                         break;

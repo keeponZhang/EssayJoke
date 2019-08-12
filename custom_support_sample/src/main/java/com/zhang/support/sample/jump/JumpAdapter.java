@@ -17,6 +17,7 @@ import com.android.coordinatorLayout.CoordinatorLayoutAppBarLayoutNoBehaviorActi
 import com.android.coordinatorLayout.CoordinatorLayoutCollapsingToolbarLayoutActivity;
 import com.android.coordinatorLayout.CoordinatorLayoutToolBarActivity;
 import com.android.coordinatorLayout.adapter.BaseRecyclerViewAdapter;
+import com.android.coordinatorLayout.adapter.CoverFolowActivity;
 import com.android.coordinatorLayout.darren.DarrenBehaviorActivity;
 import com.zhang.support.sample.R;
 import com.zhang.support.sample.SwipeRefreshActivity;
@@ -63,6 +64,7 @@ public class JumpAdapter extends BaseRecyclerViewAdapter<String,JumpAdapter.Main
                         Utils.startActivity(v.getContext(), CoordinatorLayoutAppBarLayoutExituntilCollapsedRecyclerviewActivity.class);
                         break;
                     case 2:
+                        Utils.startActivity(v.getContext(), CoverFolowActivity.class);
                         break;
                     case 3:
                         Utils.startActivity(v.getContext(), CoordinatorLayoutActivity.class);

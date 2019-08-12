@@ -118,7 +118,7 @@ public class CustomLayoutManagerRecyclered extends LayoutManager {
         //回收越界子View
         for (int i = getChildCount() - 1; i >= 0; i--) {
             View child = getChildAt(i);
-            //向上滑
+            //向上滑（手指向上滑动就是向上滑）
             if (travel > 0) {//需要回收当前屏幕，上越界的View
                 if (getDecoratedBottom(child) - travel < 0) {
                     // 只需要告诉RecyclerView哪些HolderView已经不用了即可（使用removeAndRecycleView(view, recycler)函数）。然后RecyclerView中用两级缓存（mCachedViews和mRecyclerPool）

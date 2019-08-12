@@ -9,9 +9,9 @@ import android.util.SparseBooleanArray;
 import android.view.View;
 
 //https://blog.csdn.net/harvic880925/article/details/84866486
-public class CustomLayoutManagerRecyclered2 extends LayoutManager {
-    private int mSumDy = 0;
-    private int mTotalHeight = 0;
+public class CoverLayoutManagerRecyclered extends LayoutManager {
+    private int mSumDx = 0;
+    private int mTotalWidth = 0;
 
     @Override
     public LayoutParams generateDefaultLayoutParams() {
@@ -46,62 +46,63 @@ public class CustomLayoutManagerRecyclered2 extends LayoutManager {
         mItemWidth = getDecoratedMeasuredWidth(childView);
         mItemHeight = getDecoratedMeasuredHeight(childView);
 
-        int visibleCount = getVerticalSpace() / mItemHeight;
+        int visibleCount = getHorizontalSpace() / mItemWidth+1;
 
-        //定义竖直方向的偏移量
-        int offsetY = 0;
+
+        //定义水平方向的偏移量
+        int offsetX = 0;
 
         for (int i = 0; i < getItemCount(); i++) {
-            Rect rect = new Rect(0, offsetY, mItemWidth, offsetY + mItemHeight);
+            Rect rect = new Rect(offsetX, 0, offsetX + mItemWidth, mItemHeight);
             mItemRects.put(i, rect);
             mHasAttachedItems.put(i, false);
-            offsetY += mItemHeight;
+            offsetX += mItemWidth;
         }
 
+        Rect visibleRect = getVisibleArea();
         for (int i = 0; i < visibleCount; i++) {
-            Rect rect = mItemRects.get(i);
-            View view = recycler.getViewForPosition(i);
-            addView(view);
-            //addView后一定要measure，先measure再layout
-            measureChildWithMargins(view, 0, 0);
-            layoutDecorated(view, rect.left, rect.top, rect.right, rect.bottom);
+            insertView(i, visibleRect, recycler, false);
         }
 
-        //如果所有子View的高度和没有填满RecyclerView的高度，
-        // 则将高度设置为RecyclerView的高度
-        mTotalHeight = Math.max(offsetY, getVerticalSpace());
+        //如果所有子View的宽度和没有填满RecyclerView的宽度，
+        // 则将宽度设置为RecyclerView的宽度
+        mTotalWidth = Math.max(offsetX, getHorizontalSpace());
     }
 
-    private int getVerticalSpace() {
-        return getHeight() - getPaddingBottom() - getPaddingTop();
+    private int getHorizontalSpace() {
+        return getWidth() - getPaddingLeft() - getPaddingRight();
     }
+
 
     @Override
-    public boolean canScrollVertically() {
+    public boolean canScrollHorizontally() {
         return true;
     }
 
     @Override
-    public int scrollVerticallyBy(int dy, RecyclerView.Recycler recycler, RecyclerView.State state) {
+    public boolean canScrollVertically() {
+        return false;
+    }
+
+    @Override
+    public int scrollHorizontallyBy(int dx, RecyclerView.Recycler recycler, RecyclerView.State state) {
         if (getChildCount() <= 0) {
-            return dy;
+            return dx;
         }
 
-        int travel = dy;
+        int travel = dx;
         //如果滑动到最顶部
-        if (mSumDy + dy < 0) {
-            travel = -mSumDy;
-        } else if (mSumDy + dy > mTotalHeight - getVerticalSpace()) {
+        if (mSumDx + dx < 0) {
+            travel = -mSumDx;
+        } else if (mSumDx + dx > mTotalWidth - getHorizontalSpace()) {
             //如果滑动到最底部
-            travel = mTotalHeight - getVerticalSpace() - mSumDy;
+            travel = mTotalWidth - getHorizontalSpace() - mSumDx;
         }
-        //CustomLayoutManagerRecyclered是到了最后才叠加
-        mSumDy += travel;
 
-        //  这里需要注意的是，我们在所有的布局操作前，先将移动距离mSumDy进行了累加。因为后面我们在布局item时，
-        // 会弃用offsetChildrenVertical(-travel)移动item，而是在布局item时，就直接把item布局在新位置。最后，因为我们已经累加了mSumDy，
-        // 所以我们需要改造getVisibleArea()，将原来getVisibleArea(int dy)中累加dy的操作去掉：
+        mSumDx += travel;
+
         Rect visibleRect = getVisibleArea();
+
         //回收越界子View
         for (int i = getChildCount() - 1; i >= 0; i--) {
             View child = getChildAt(i);
@@ -110,17 +111,14 @@ public class CustomLayoutManagerRecyclered2 extends LayoutManager {
 
             if (!Rect.intersects(rect, visibleRect)) {
                 removeAndRecycleView(child, recycler);
-                mHasAttachedItems.put(position,false);
+                mHasAttachedItems.put(position, false);
             } else {
-                layoutDecoratedWithMargins(child, rect.left, rect.top - mSumDy, rect.right, rect.bottom - mSumDy);
-                child.setRotationY(child.getRotationY() + 1);
-                //表示对应的item已经在布局中了
+                layoutDecoratedWithMargins(child, rect.left - mSumDx, rect.top, rect.right - mSumDx, rect.bottom);
                 mHasAttachedItems.put(position, true);
             }
         }
 
-        //先离屏缓存再重新布局原本就可见item效率低
-//        detachAndScrapAttachedViews(recycler);
+        //填充空白区域
         View lastView = getChildAt(getChildCount() - 1);
         View firstView = getChildAt(0);
         if (travel >= 0) {
@@ -135,6 +133,7 @@ public class CustomLayoutManagerRecyclered2 extends LayoutManager {
             }
         }
         return travel;
+
     }
 //    我们需要一个变量来保存在这里哪些item已经布局好了
     private SparseBooleanArray mHasAttachedItems = new SparseBooleanArray();
@@ -148,11 +147,9 @@ public class CustomLayoutManagerRecyclered2 extends LayoutManager {
                 addView(child);
             }
             measureChildWithMargins(child, 0, 0);
-            layoutDecoratedWithMargins(child, rect.left, rect.top - mSumDy, rect.right, rect.bottom - mSumDy);
+            layoutDecoratedWithMargins(child, rect.left - mSumDx, rect.top, rect.right - mSumDx, rect.bottom);
 
-            //在布局item后，修改每个item的旋转度数
-            child.setRotationY(child.getRotationY() + 1);
-            mHasAttachedItems.put(pos,true);
+            mHasAttachedItems.put(pos, true);
         }
     }
 
@@ -162,8 +159,9 @@ public class CustomLayoutManagerRecyclered2 extends LayoutManager {
      * @return
      */
     private Rect getVisibleArea() {
-        Rect result = new Rect(getPaddingLeft(), getPaddingTop() + mSumDy, getWidth() + getPaddingRight(), getVerticalSpace() + mSumDy);
+        Rect result = new Rect(getPaddingLeft() + mSumDx, getPaddingTop(), getWidth() - getPaddingRight() + mSumDx, getHeight()-getPaddingBottom());
         return result;
     }
+
 
 }

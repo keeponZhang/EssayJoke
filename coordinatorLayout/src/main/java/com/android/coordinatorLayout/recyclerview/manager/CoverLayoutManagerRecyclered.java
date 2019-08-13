@@ -12,6 +12,7 @@ import android.view.View;
 public class CoverLayoutManagerRecyclered extends LayoutManager {
     private int mSumDx = 0;
     private int mTotalWidth = 0;
+    private int mStartX;
 
     @Override
     public LayoutParams generateDefaultLayoutParams() {
@@ -46,17 +47,18 @@ public class CoverLayoutManagerRecyclered extends LayoutManager {
         mItemWidth = getDecoratedMeasuredWidth(childView);
         mItemHeight = getDecoratedMeasuredHeight(childView);
 
+        //定义水平方向的偏移量
+        mIntervalWidth = getIntervalWidth();
 //        int visibleCount = getHorizontalSpace() / mItemWidth + 1;
         int visibleCount = getHorizontalSpace() / mIntervalWidth;
 
-        //定义水平方向的偏移量
-        mIntervalWidth = getIntervalWidth();
 
+        mStartX = getWidth()/2 - mIntervalWidth;
         //定义水平方向的偏移量
         int offsetX = 0;
 
         for (int i = 0; i < getItemCount(); i++) {
-            Rect rect = new Rect(offsetX, 0, offsetX + mItemWidth, mItemHeight);
+            Rect rect = new Rect(mStartX + offsetX, 0, mStartX + offsetX + mItemWidth, mItemHeight);
             mItemRects.put(i, rect);
             mHasAttachedItems.put(i, false);
             offsetX += mIntervalWidth;

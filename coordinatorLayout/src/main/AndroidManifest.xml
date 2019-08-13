@@ -3,7 +3,8 @@
     package="com.android.coordinatorLayout">
 
     <application>
-        <activity android:name=".adapter.CoverFolowActivity"></activity>
+        <activity android:name=".adapter.CoverFolowActivity"
+           ></activity>
     </application>
 
 </manifest>

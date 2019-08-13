@@ -9,7 +9,7 @@ import android.util.SparseBooleanArray;
 import android.view.View;
 
 //https://blog.csdn.net/harvic880925/article/details/84866486
-public class CoverLayoutManagerRecyclered extends LayoutManager {
+public class CoverFlowLayoutManager extends LayoutManager {
     private int mSumDx = 0;
     private int mTotalWidth = 0;
     private int mStartX;
@@ -100,9 +100,9 @@ public class CoverLayoutManagerRecyclered extends LayoutManager {
         //如果滑动到最顶部
         if (mSumDx + dx < 0) {
             travel = -mSumDx;
-        } else if (mSumDx + dx > mTotalWidth - getHorizontalSpace()) {
+        } else  if (mSumDx + dx > getMaxOffset()) {
             //如果滑动到最底部
-            travel = mTotalWidth - getHorizontalSpace() - mSumDx;
+            travel = getMaxOffset()  - mSumDx;
         }
 
         mSumDx += travel;
@@ -120,6 +120,7 @@ public class CoverLayoutManagerRecyclered extends LayoutManager {
                 mHasAttachedItems.put(position, false);
             } else {
                 layoutDecoratedWithMargins(child, rect.left - mSumDx, rect.top, rect.right - mSumDx, rect.bottom);
+                handleChildView(child,rect.left - mStartX - mSumDx);
                 mHasAttachedItems.put(position, true);
             }
         }
@@ -156,7 +157,7 @@ public class CoverLayoutManagerRecyclered extends LayoutManager {
             }
             measureChildWithMargins(child, 0, 0);
             layoutDecoratedWithMargins(child, rect.left - mSumDx, rect.top, rect.right - mSumDx, rect.bottom);
-
+            handleChildView(child,rect.left - mStartX - mSumDx);
             mHasAttachedItems.put(pos, true);
         }
     }
@@ -177,6 +178,37 @@ public class CoverLayoutManagerRecyclered extends LayoutManager {
     private int getIntervalWidth() {
         return mItemWidth / 2;
     }
+    public int getCenterPosition(){
+        int pos = (int) (mSumDx / getIntervalWidth());
+        int more = (int) (mSumDx % getIntervalWidth());
+        if (more > getIntervalWidth() * 0.5f) pos++;
+        return pos;
+    }
+    public int getFirstVisiblePosition() {
+        if (getChildCount() <= 0){
+            return 0;
+        }
 
+        View view = getChildAt(0);
+        int pos = getPosition(view);
+
+        return pos;
+    }
+    private void handleChildView(View child,int moveX){
+        float radio = computeScale(moveX);
+
+        child.setScaleX(radio);
+        child.setScaleY(radio);
+    }
+
+    private float computeScale(int x) {
+        float scale = 1 -Math.abs(x * 1.0f / (8f*getIntervalWidth()));
+        if (scale < 0) scale = 0;
+        if (scale > 1) scale = 1;
+        return scale;
+    }
+    private int getMaxOffset() {
+        return (getItemCount() - 1) * getIntervalWidth();
+    }
 
 }

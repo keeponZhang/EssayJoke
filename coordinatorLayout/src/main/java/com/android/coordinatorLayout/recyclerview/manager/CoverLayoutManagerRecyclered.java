@@ -46,8 +46,11 @@ public class CoverLayoutManagerRecyclered extends LayoutManager {
         mItemWidth = getDecoratedMeasuredWidth(childView);
         mItemHeight = getDecoratedMeasuredHeight(childView);
 
-        int visibleCount = getHorizontalSpace() / mItemWidth+1;
+//        int visibleCount = getHorizontalSpace() / mItemWidth + 1;
+        int visibleCount = getHorizontalSpace() / mIntervalWidth;
 
+        //定义水平方向的偏移量
+        mIntervalWidth = getIntervalWidth();
 
         //定义水平方向的偏移量
         int offsetX = 0;
@@ -56,8 +59,9 @@ public class CoverLayoutManagerRecyclered extends LayoutManager {
             Rect rect = new Rect(offsetX, 0, offsetX + mItemWidth, mItemHeight);
             mItemRects.put(i, rect);
             mHasAttachedItems.put(i, false);
-            offsetX += mItemWidth;
+            offsetX += mIntervalWidth;
         }
+
 
         Rect visibleRect = getVisibleArea();
         for (int i = 0; i < visibleCount; i++) {
@@ -135,8 +139,10 @@ public class CoverLayoutManagerRecyclered extends LayoutManager {
         return travel;
 
     }
-//    我们需要一个变量来保存在这里哪些item已经布局好了
+
+    //    我们需要一个变量来保存在这里哪些item已经布局好了
     private SparseBooleanArray mHasAttachedItems = new SparseBooleanArray();
+
     private void insertView(int pos, Rect visibleRect, RecyclerView.Recycler recycler, boolean firstPos) {
         Rect rect = mItemRects.get(pos);
         if (Rect.intersects(visibleRect, rect) && !mHasAttachedItems.get(pos)) {
@@ -159,8 +165,15 @@ public class CoverLayoutManagerRecyclered extends LayoutManager {
      * @return
      */
     private Rect getVisibleArea() {
-        Rect result = new Rect(getPaddingLeft() + mSumDx, getPaddingTop(), getWidth() - getPaddingRight() + mSumDx, getHeight()-getPaddingBottom());
+        Rect result = new Rect(getPaddingLeft() + mSumDx, getPaddingTop(), getWidth() - getPaddingRight() + mSumDx, getHeight() - getPaddingBottom());
         return result;
+    }
+
+
+    private int mIntervalWidth;
+
+    private int getIntervalWidth() {
+        return mItemWidth / 2;
     }
 
 

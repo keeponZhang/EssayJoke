@@ -14,9 +14,19 @@
 			android:layout_height="wrap_content"
 			app:expandedTitleMarginEnd="64dp"
 			app:expandedTitleMarginStart="48dp"
+			app:contentScrim="@color/colorAccent"
+			app:expandedTitleGravity="left|top"
+			app:collapsedTitleGravity="right"
 			app:layout_scrollFlags="scroll|exitUntilCollapsed">
 <!--CollapsingToolbarLayout是用来对Toolbar进行再次包装的ViewGroup，主要是用于实现折叠（其实就是看起来像伸缩~）的App Bar效果-->
 			<!--它需要放在AppBarLayout布局里面，并且作为AppBarLayout的直接子View-->
+			<!--expandedTitleMarginStart 设置下拉伸缩完成后，ToolBar标题文字左边的margin距离 -->
+			<!--这里一般不要enterAlways-->
+			<!--• app：contentScrim=""，用来设置CollapsingToolbarLayout收缩后最顶部的颜色。-->
+			<!--app：expandedTitleGravity="left|bottom"，表示将此CollapsingToolbarLayout完全展开后，title所处的位-->
+			<!--置，默认的值为left+bottom。-->
+			<!--• app：collapsedTitleGravity="left"，表示当头部的衬图ImageView消失后，此title将回归到Toolbar的位-->
+			<!--置，默认的值为left。-->
 			<ImageView
 				android:id="@+id/main.backdrop"
 				android:layout_width="wrap_content"

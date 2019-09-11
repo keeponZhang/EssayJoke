@@ -14,7 +14,7 @@
 		android:layout_marginTop="300dp"
 		android:background="#FFCC00"
 		android:text="Hello"
-		app:layout_behavior="com.android.coordinatorLayout.MyBehavior" />
+		app:layout_behavior="com.android.coordinatorLayout.behavior.MyBehavior" />
 
 <!--被移动那个view添加behavior-->
 	<com.android.coordinatorLayout.TempView

@@ -1,4 +1,4 @@
-package com.android.coordinatorLayout;
+package com.android.coordinatorLayout.behavior;
 
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
@@ -7,6 +7,9 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import com.android.coordinatorLayout.CustomView;
+import com.android.coordinatorLayout.TempView;
 
 /**
  * Package com.hc.studycoordinatelayout
@@ -27,7 +30,7 @@ public class MyBehavior extends CoordinatorLayout.Behavior<Button> {
     public boolean layoutDependsOn(CoordinatorLayout parent, Button child, View dependency) {
         Log.e("TAG", "MyBehavior layoutDependsOn dependency:" +dependency);
         //如果dependency是TempView的实例，说明它就是我们所需要的Dependency
-        return dependency instanceof TempView||dependency instanceof CustomView;
+        return dependency instanceof TempView ||dependency instanceof CustomView;
     }
     int count=0;
     //每次dependency位置发生变化，都会执行onDependentViewChanged方法

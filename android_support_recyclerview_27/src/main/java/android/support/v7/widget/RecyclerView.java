@@ -3130,33 +3130,42 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
 
     @Override
     protected void onMeasure(int widthSpec, int heightSpec) {
+        //layoutManager没有设置的话，直接走default的方法，所以会为空白
         if (mLayout == null) {
             defaultOnMeasure(widthSpec, heightSpec);
             return;
         }
+        //其实mAutoMeasure这个值LinearLayoutManager还是其他两个Manager，默认值都是true
         if (mLayout.mAutoMeasure) {
             final int widthMode = MeasureSpec.getMode(widthSpec);
             final int heightMode = MeasureSpec.getMode(heightSpec);
             final boolean skipMeasure = widthMode == MeasureSpec.EXACTLY
                     && heightMode == MeasureSpec.EXACTLY;
             mLayout.onMeasure(mRecycler, mState, widthSpec, heightSpec);
+            //如果测量是绝对值，则跳过measure过程直接走layout
+           // 问题1：那这里可能有疑问了，如果没有执行onMeasure方法，那么子View没有绘制，会造成空白的情况，
+            // 但是实际情况是当我们给RecyclerView设置绝对值大小的时候，子View仍可以正常绘制出来（onLayout里会执行子View的绘制）
             if (skipMeasure || mAdapter == null) {
                 return;
             }
             if (mState.mLayoutStep == State.STEP_START) {
+                //mLayoutStep默认值是 State.STEP_START，并且每次绘制流程结束后，会重置为 State.STEP_START
                 dispatchLayoutStep1();
+                //执行完dispatchLayoutStep1()后是State.STEP_LAYOUT
             }
             // set dimensions in 2nd step. Pre-layout should happen with old dimensions for
             // consistency
             mLayout.setMeasureSpecs(widthSpec, heightSpec);
             mState.mIsMeasuring = true;
+            //真正执行LayoutManager绘制的地方
             dispatchLayoutStep2();
-
+            //执行完后是State.STEP_ANIMATIONS
             // now we can get the width and height from the children.
             mLayout.setMeasuredDimensionFromChildren(widthSpec, heightSpec);
 
             // if RecyclerView has non-exact width and height and if there is at least one child
             // which also has non-exact width & height, we have to re-measure.
+            //宽高都不确定的时候，会绘制两次
             if (mLayout.shouldMeasureTwice()) {
                 mLayout.setMeasureSpecs(
                         MeasureSpec.makeMeasureSpec(getMeasuredWidth(), MeasureSpec.EXACTLY),
@@ -3212,6 +3221,8 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
     /**
      * Used when onMeasure is called before layout manager is set
      */
+// 可以看到这里的chooseSize方法其实就是更加宽高的Mode得到相应的值后直接调用setMeasuredDimension(width, height)设置宽高了，
+// 可以发现这里其实是没有进行child的测量就直接return结束了onMeasure过程的，这也就解释了为什么我们没有设置LayoutManager会导致显示空白了。
     void defaultOnMeasure(int widthSpec, int heightSpec) {
         // calling LayoutManager here is not pretty but that API is already public and it is better
         // than creating another method since this is internal.
@@ -3632,6 +3643,12 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
      * - save information about current views
      * - If necessary, run predictive layout and save its information
      */
+    /**
+     * 1.处理Adapter的更新
+     * 2.决定哪些动画需要执行
+     * 3.保存当前View的信息
+     * 4.如果必要的话，执行上一个Layout的操作并且保存他的信息
+     */
     private void dispatchLayoutStep1() {
         mState.assertLayoutStep(State.STEP_START);
         fillRemainingScrollValues(mState);
@@ -3729,11 +3746,14 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
         onEnterLayoutOrScroll();
         mState.assertLayoutStep(State.STEP_LAYOUT | State.STEP_ANIMATIONS);
         mAdapterHelper.consumeUpdatesInOnePass();
+        //重写的getItemCount方法
         mState.mItemCount = mAdapter.getItemCount();
         mState.mDeletedInvisibleItemCountSincePreviousLayout = 0;
 
         // Step 2: Run layout
         mState.mInPreLayout = false;
+        //可以看到mLayout.onLayoutChildren(mRecycler, mState);这个方法，为什么说RecyclerView将View的绘制交给了LayoutManager，
+        // 这里就是最有力的体现，可以看到，这里将RecycleView内部持有的Recycler和state传给了LayoutManager的onLayoutChildren方法，单从方法的名字其实就可以看出
         mLayout.onLayoutChildren(mRecycler, mState);
 
         mState.mStructureChanged = false;
@@ -4696,6 +4716,9 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
                 view.getBottom() + insets.bottom + lp.bottomMargin);
     }
 
+    //其实可以看到这里在测量子View的时候是将我们实现自定义分割线重写的getItemOffsets方法。
+    // 这里其实也就可以理解了自定义分割线的原理就是在子View的测量过程前给上下左右加上自定义分割线所对应设置给这个child的边距。
+    //测量完成后，紧接着就调用了layoutDecoratedWithMargins(view, left, top, right, bottom)对子View完成了layout。
     Rect getItemDecorInsetsForChild(View child) {
         final LayoutParams lp = (LayoutParams) child.getLayoutParams();
         if (!lp.mInsetsDirty) {
@@ -5625,6 +5648,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
          *
          * @return ViewHolder for requested position
          */
+        //注释写的很清楚，从Recycler的scrap，cache，RecyclerViewPool,或者直接create创建
         @Nullable
         ViewHolder tryGetViewHolderForPositionByDeadline(int position,
                 boolean dryRun, long deadlineNs) {
@@ -5721,6 +5745,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
                         // abort - we have a deadline we can't meet
                         return null;
                     }
+                    //一堆判断之后，如果不成立
                     holder = mAdapter.createViewHolder(RecyclerView.this, type);
                     if (ALLOW_THREAD_GAP_WORK) {
                         // only bother finding nested RV if prefetching
@@ -8792,8 +8817,9 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
          */
         public void measureChildWithMargins(View child, int widthUsed, int heightUsed) {
             final LayoutParams lp = (LayoutParams) child.getLayoutParams();
-
+            //设置分割线中的回调方法
             final Rect insets = mRecyclerView.getItemDecorInsetsForChild(child);
+            //这里是分割线的真正原理
             widthUsed += insets.left + insets.right;
             heightUsed += insets.top + insets.bottom;
 
@@ -8806,6 +8832,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
                             + lp.topMargin + lp.bottomMargin + heightUsed, lp.height,
                     canScrollVertically());
             if (shouldMeasureChild(child, widthSpec, heightSpec, lp)) {
+                //子View的测量
                 child.measure(widthSpec, heightSpec);
             }
         }

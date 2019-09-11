@@ -31,6 +31,7 @@ public class JumpActivity extends AppCompatActivity {
         titles.add(" CoordinatorLayoutAppBarLayoutEnterAlwaysCollapsedActivity");
         titles.add("CoordinatorLayoutCollapsingToolbarLayoutActivity");
         titles.add("DarrenBehaviorActivity");
+        titles.add("DetailActivity");
 
         for (int i = 0; i < 50; i++) {
             titles.add("test=" + i);

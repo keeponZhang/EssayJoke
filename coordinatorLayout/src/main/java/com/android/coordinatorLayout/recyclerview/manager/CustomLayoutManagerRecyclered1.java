@@ -27,7 +27,7 @@ public class CustomLayoutManagerRecyclered1 extends LayoutManager {
 //    所以获取顺序其实就是mCachedViews > mRecyclerPool，在下面的讲述中，我也将不再牵涉mViewCacheExtension，大家这里知道即可。
 //    其实，mCachedViews是不参与回收复用的，它的作用就是保存最新被移除的HolderView（通过removeAndRecycleView(view, recycler)方法），它的作用是在需要新的HolderView时，精确匹配是不是刚移除的那个，如果是，就直接返回给RecyclerView展示，如果不是它，那么即使这里有HolderView实例，也不会返回给RecyclerView，而是到mRecyclerPool中去找一个HolderView实例，返回给RecyclerView，让它重新绑定数据使用。
 //    所以，在mAttachedScrap、mCachedViews中的holderView都是精确匹配的，真正被标识为废弃的是存放在mRecyclerPool中的holderView，当我们向RecyclerView申请一个HolderView来使用的时，如果在mAttachedScrap、mCachedViews精确匹配不到，即使他们中有HolderView也不会返回给我们使用，而是会到mRecyclerPool中去拿一个废弃的HolderView返回给我们。
-
+    //onLayoutChildren 在滑动的时候不会调用
     @Override
     public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
         if (getItemCount() == 0) {//没有Item，界面空着吧

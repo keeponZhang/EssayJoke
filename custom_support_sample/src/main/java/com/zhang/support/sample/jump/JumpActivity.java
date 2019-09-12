@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 
-import com.android.coordinatorLayout.recyclerview.manager.CustomLayoutManagerRecyclered1;
+import com.android.coordinatorLayout.recyclerview.manager.CustomLayoutManagerRecyclered;
 import com.zhang.support.sample.R;
 
 import java.util.ArrayList;
@@ -39,8 +39,8 @@ public class JumpActivity extends AppCompatActivity {
         JumpAdapter mainAdapter = new JumpAdapter(this,titles);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 //        recyclerView.setLayoutManager(new CustomLayoutManager());
-//        recyclerView.setLayoutManager(new CustomLayoutManagerRecyclered());
-        recyclerView.setLayoutManager(new CustomLayoutManagerRecyclered1());
+           recyclerView.setLayoutManager(new CustomLayoutManagerRecyclered());
+//        recyclerView.setLayoutManager(new CustomLayoutManagerRecyclered1());
 //        recyclerView.setLayoutManager(new CustomLayoutManagerRecyclered2());
 //        recyclerView.addItemDecoration(new LinearItemDecoration2());
         recyclerView.setAdapter(mainAdapter);

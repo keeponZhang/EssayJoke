@@ -65,7 +65,7 @@ public class CustomLayoutManagerRecyclered extends LayoutManager {
         mItemHeight = getDecoratedMeasuredHeight(childView);
 
         int visibleCount = getVerticalSpace() / mItemHeight;
-
+        Log.e("TAG", "CustomLayoutManagerRecyclered onLayoutChildren:");
 
         //定义竖直方向的偏移量
         int offsetY = 0;
@@ -102,6 +102,7 @@ public class CustomLayoutManagerRecyclered extends LayoutManager {
 
     @Override
     public int scrollVerticallyBy(int dy, RecyclerView.Recycler recycler, RecyclerView.State state) {
+        Log.w("TAG", "CustomLayoutManagerRecyclered scrollVerticallyBy ------------:");
         if (getChildCount() <= 0) {
             return dy;
         }
@@ -131,6 +132,11 @@ public class CustomLayoutManagerRecyclered extends LayoutManager {
             } else if (travel < 0) {//回收当前屏幕，下越界的View
                 if (getDecoratedTop(child) - travel > getHeight() - getPaddingBottom()) {
                     Log.w("TAG", "CustomLayoutManagerRecyclered scrollVerticallyBy 向下滑动 回收下越界:");
+                    //在滚动时，所有移除的View都是使用removeAndRecycleView(child, recycler),千万不要将它与detachAndScrapAttachedViews(recycler)搞混了。
+                    // 在滚动时，已经超出边界的HolderView是需要被回收的，而不是被detach。detach的意思是暂时存放，立马使用。
+                    // 很显然，我们这里在越界之后，立马使用的可能性不大，所以必须回收。如果立马使用，它会从mCachedViews中去取。
+                    // 大家也可以简单的记忆，在onLayoutChildren函数中（布局时），就使用detachAndScrapAttachedViews(recycler)，
+                    // 在scrollVerticallyBy函数中（滚动时），就使用removeAndRecycleView(child, recycler)，当然能理解就更好啦
                     removeAndRecycleView(child, recycler);
                     continue;
                 }
@@ -144,6 +150,9 @@ public class CustomLayoutManagerRecyclered extends LayoutManager {
             //同样，如果要得到当前屏幕上在显示的最后一个item的View，应该用getChildAt(getChildCount()-1)
             //首先找到当前屏幕上在显示的最后一个item的View
             View lastView = getChildAt(getChildCount() - 1);
+
+            // 这个函数用于得到某个View在Adapter中的索引位置，我们经常将它与getChildAt(int position)联合使用，得到某个当前屏幕上在显示的View在Adapter中的位置，
+            //比如我们要拿到屏幕上在显示的最后一个View在Adapter中的索引：View lastView = getChildAt(getChildCount() - 1);int pos = getPosition(lastView);
             int minPos = getPosition(lastView) + 1;//从最后一个View+1开始吧
 
             //顺序addChildView
@@ -173,7 +182,12 @@ public class CustomLayoutManagerRecyclered extends LayoutManager {
                     Log.w("TAG", "CustomLayoutManagerRecyclered scrollVerticallyBy 向下滑动 添加view:");
                     View child = recycler.getViewForPosition(i);
                     addView(child, 0);//将View添加至RecyclerView中，childIndex为1，但是View的位置还是由layout的位置决定
-                    measureChildWithMargins(child, 0, 0);
+                    //measureCh需要注意的是，我们的item的位置rect是包含有滚动距离的，而在layout到屏幕上时，屏幕坐标是从(0,0)开始的，
+                    // 所以我们需要把高度减去移动距离。需要注意的是，这个移动距离是不包含最新的移动距离travel的，
+                    // 虽然我们在判断哪些item是新增的显示的，是假设已经移动了travel，但这只是识别哪些item将要显示出来的策略，
+                    // 到目前为止，所有的item并未真正的移动，(或者说屏幕上的item是整体移动的，即调用offsetChildrenVertical(-travel);)所以我们在布局时，仍然需要按上次的移动距离来进行布局，
+                    // 所以这里在布局时使用是layoutDecorated(child, rect.left, rect.top - mSumDy, rect.right, rect.bottom - mSumDy),
+                    // 单纯只是减去了mSumDy,并没有同时减去mSumDy和travel，最后才调用offsetChildrenVertical(-travel)来整体移动布局好的item。这时才会把我们刚才新增布局上的item显示出来
                     layoutDecoratedWithMargins(child, rect.left, rect.top - mSumDy, rect.right, rect.bottom - mSumDy);
                 } else {
                     break;

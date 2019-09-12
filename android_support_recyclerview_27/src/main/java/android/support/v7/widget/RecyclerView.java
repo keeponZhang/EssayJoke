@@ -3459,6 +3459,9 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
             return;
         }
         mState.mIsMeasuring = false;
+        //这里解释了：我们给RecyclerView设置固定的宽高的时候，onMeasure是直接跳过了执行，那么为什么子View仍然能绘制出来
+        //原因：这里可以看到，如果onMeasure没有执行，mState.mLayoutStep == State.STEP_START就成立，
+        // 所以仍然会执行 dispatchLayoutStep1()， dispatchLayoutStep2();也就对应的会绘制子View
         if (mState.mLayoutStep == State.STEP_START) {
             dispatchLayoutStep1();
             mLayout.setExactMeasureSpecsFrom(this);
@@ -3473,6 +3476,8 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
             // always make sure we sync them (to ensure mode is exact)
             mLayout.setExactMeasureSpecsFrom(this);
         }
+        //如果上面情况都没有，那么onLayout的作用就仅仅是dispatchLayoutStep3()，而 dispatchLayoutStep3()方法的作用除了重置一些参数，
+        // 外还和执行动画有关
         dispatchLayoutStep3();
     }
 
@@ -3741,6 +3746,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
      * The second layout step where we do the actual layout of the views for the final state.
      * This step might be run multiple times if necessary (e.g. measure).
      */
+    //真正执行LayoutManager绘制的地方
     private void dispatchLayoutStep2() {
         eatRequestLayout();
         onEnterLayoutOrScroll();
@@ -3779,6 +3785,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
             // Step 3: Find out where things are now, and process change animations.
             // traverse list in reverse because we may call animateChange in the loop which may
             // remove the target view holder.
+            // 需要动画的情况。找出ViewHolder现在的位置，并且处理改变动画。最后触发动画。
             for (int i = mChildHelper.getChildCount() - 1; i >= 0; i--) {
                 ViewHolder holder = getChildViewHolderInt(mChildHelper.getChildAt(i));
                 if (holder.shouldIgnore()) {
@@ -5202,6 +5209,8 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
             long mCreateRunningAverageNs = 0;
             long mBindRunningAverageNs = 0;
         }
+        //可以看到RecyclerdViewPool内部使用到了Google推荐的数据结构类型SparseArray，而SparseArray内部的key就是我们的ViewType，
+        // 而value存放的是ArrayList<ViewHolder>,而默认的每个ArrayList<ViewHolder>的大小是5个
         SparseArray<ScrapData> mScrap = new SparseArray<>();
 
         private int mAttachCount = 0;
@@ -5230,7 +5239,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
         public int getRecycledViewCount(int viewType) {
             return getScrapDataForType(viewType).mScrapHeap.size();
         }
-
+        //这里还有一个要注意的点就是getRecycledView这个方法可以看到拿到viewholder其实是通过remove拿到的，也就是通过remove拿到的
         public ViewHolder getRecycledView(int viewType) {
             final ScrapData scrapData = mScrap.get(viewType);
             if (scrapData != null && !scrapData.mScrapHeap.isEmpty()) {
@@ -5408,6 +5417,11 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
      * Clean views that have not {@link android.view.View#isLayoutRequested() requested layout}
      * may be repositioned by a LayoutManager without remeasurement.</p>
      */
+//    类的结构也比较清楚，这里可以清楚的看到我们后面讲到的四级缓存机制所用到的类都在这里可以看到：
+//    * 1.一级缓存：mAttachedScrap
+//    * 2.二级缓存：mCacheViews
+//    * 3.三级缓存：mViewCacheExtension
+//    * 4.四级缓存：mRecyclerPool
     public final class Recycler {
         final ArrayList<ViewHolder> mAttachedScrap = new ArrayList<>();
         ArrayList<ViewHolder> mChangedScrap = null;
@@ -5649,6 +5663,10 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
          * @return ViewHolder for requested position
          */
         //注释写的很清楚，从Recycler的scrap，cache，RecyclerViewPool,或者直接create创建
+        //1.RecyclerView内部大体可以分为四级缓存：mAttachedScrap,mCacheViews,ViewCacheExtension,RecycledViewPool.
+        //2.mAttachedScrap,mCacheViews在第一次尝试的时候只是对View的复用，并且不区分type，但在第二次尝试的时候是区分了Type，
+        // 是对于ViewHolder的复用，ViewCacheExtension,RecycledViewPool是对于ViewHolder的复用，而且区分type。
+        //3.如果缓存ViewHolder时发现超过了mCachedView的限制，会将最老的ViewHolder(也就是mCachedView缓存队列的第一个ViewHolder)移到RecycledViewPool中。
         @Nullable
         ViewHolder tryGetViewHolderForPositionByDeadline(int position,
                 boolean dryRun, long deadlineNs) {
@@ -5660,28 +5678,37 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
             boolean fromScrapOrHiddenOrCache = false;
             ViewHolder holder = null;
             // 0) If there is a changed scrap, try to find from there
+            //preLayout默认是false，只有有动画的时候才为true
             if (mState.isPreLayout()) {
+                //其实是从Recycler类中的mChangedScrap获取ViewHolder
                 holder = getChangedScrapViewForPosition(position);
                 fromScrapOrHiddenOrCache = holder != null;
             }
             // 1) Find by position from scrap/hidden list/cache
+            // 第一次尝试（从mAttachedScrap和mCacheView中）
             if (holder == null) {
                 holder = getScrapOrHiddenOrCachedHolderForPosition(position, dryRun);
+                //这里通过getScrapOrHiddenOrCachedHolderForPosition方法来获取ViewHolder，并检验holder的有效性，如果无效，则从mAttachedScrap中移除，
+                //并加入到mCacheViews或者Pool中，并且将holder至null，走下一级缓存判断
                 if (holder != null) {
+                    //如果检查发现这个holder不是当前position的
                     if (!validateViewHolderForOffsetPosition(holder)) {
                         // recycle holder (and unscrap if relevant) since it can't be used
                         if (!dryRun) {
                             // we would like to recycle this but need to make sure it is not used by
                             // animation logic etc.
                             holder.addFlags(ViewHolder.FLAG_INVALID);
+                            //从scrap中移除
                             if (holder.isScrap()) {
                                 removeDetachedView(holder.itemView, false);
                                 holder.unScrap();
                             } else if (holder.wasReturnedFromScrap()) {
                                 holder.clearReturnedFromScrapFlag();
                             }
+                            //放到ViewCache或者Pool中
                             recycleViewHolderInternal(holder);
                         }
+                        //至空继续寻找
                         holder = null;
                     } else {
                         fromScrapOrHiddenOrCache = true;
@@ -5695,9 +5722,11 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
                             + "position " + position + "(offset:" + offsetPosition + ")."
                             + "state:" + mState.getItemCount() + exceptionLabel());
                 }
-
+                //这里首先先看一个重点：mAdapter.getItemViewType(offsetPosition);熟悉的方法有木有，可以看到这里调用了我们平常使用RecyclerView进行多样式item的方法，
+                // 也就是说前面对于一级缓存mAttachedScrap和mCacheViews是不区分type的，从现在开始的判断是区分type的缓存。这里对于我们研究多type类型的RecyclerView很有帮助。
                 final int type = mAdapter.getItemViewType(offsetPosition);
                 // 2) Find from scrap/cache via stable ids, if exists
+                //第二次尝试(对应hasStablelds情况)
                 if (mAdapter.hasStableIds()) {
                     holder = getScrapOrCachedViewForId(mAdapter.getItemId(offsetPosition),
                             type, dryRun);
@@ -5707,6 +5736,8 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
                         fromScrapOrHiddenOrCache = true;
                     }
                 }
+                //自定义缓存
+                //第三次尝试(对应于自定义缓存)
                 if (holder == null && mViewCacheExtension != null) {
                     // We are NOT sending the offsetPosition because LayoutManager does not
                     // know it.
@@ -5730,6 +5761,11 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
                         Log.d(TAG, "tryGetViewHolderForPositionByDeadline("
                                 + position + ") fetching from shared pool");
                     }
+                    // 第四次尝试(对应于Pool),从mRecyclerPool获取
+                    //终于到了最后一次的尝试，这个缓存是针对Pool的，可以说RecyclerView内部提供的Pool是RecyclerView的一大特性，
+                    // 这也是和ListView不同的地方，RecyclerView提供了这种缓存形式，支持多个RecyclerView之间复用View，
+                    // 也就是说通过自定义Pool我们甚至可以实现整个应用内的RecyclerView的View的复用
+
                     holder = getRecycledViewPool().getRecycledView(type);
                     if (holder != null) {
                         holder.resetInternal();
@@ -6145,11 +6181,34 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
          * @param dryRun  Does a dry run, finds the ViewHolder but does not remove
          * @return a ViewHolder that can be re-used for this position.
          */
+        //1.函数1：
+        // 可以知道，我们在自定义的LayoutManager中只需要告诉RecyclerView哪些HolderView已经不用了即可（使用removeAndRecycleView(view, recycler)函数）
+        //mCachedViews是第一级缓存，它的size为2，只能保存两个HolderView。这里保存的始终是最新鲜被移除的HolderView，
+        // 当mCachedViews满了以后，会利用先进先出原则，把老的HolderView存放在mRecyclerPool中。在mRecyclerPool中，
+        // 它的默认size是5。这就是RecyclerView的回收原则
+        //2.函数2：detachAndScrapAttachedViews
+        //detachAndScrapAttachedViews(recycler);的作用就是把当前屏幕上所有的HolderView与屏幕分离，
+        // 将它们从RecyclerView的布局中拿下来，然后存放在一个列表中，在重新布局时，像搭积木一样，
+        // 把这些HolderView重新一个个放在新位置上去。将屏幕上的HolderView从RecyclerView的布局中拿下来后，
+        // 存放的列表叫mAttachedScrap，它依然是一个List，就是用来保存从RecyclerView的布局中拿下来的HolderView列表
+
+        // 所以，大家可以查看所有自定义的LayoutManager，detachAndScrapAttachedViews(recycler);只会被用在onLayoutChildren函数中。
+        // 就是因为onLayoutChildren函数是用来布局新的Item的，只有在布局时，才会先把HolderView detach掉然后再add进来重新布局。
+        // 但大家需要注意的是mAttachedScrap中存储的就是新布局前从RecyclerView中剥离下来的当前在显示的Item的holderView。
+        // 这些holderView并不参与回收复用。单纯只是为了先从RecyclerView中拿下来，再重新布局上去。对于新布局中没有用到的HolderView，
+        // 会从mAttachedScrap移到mCachedViews中，让它参与复用。
+
+        /**这里可以看到也分了三个步骤：
+            1.从mAttachedScrap中获取
+            2.从HiddenView中获取
+            3.从CacheView获取
+         */
         ViewHolder getScrapOrHiddenOrCachedHolderForPosition(int position, boolean dryRun) {
             final int scrapCount = mAttachedScrap.size();
 
             // Try first for an exact, non-invalid match from scrap.
             for (int i = 0; i < scrapCount; i++) {
+                //先从scrap中寻找
                 final ViewHolder holder = mAttachedScrap.get(i);
                 if (!holder.wasReturnedFromScrap() && holder.getLayoutPosition() == position
                         && !holder.isInvalid() && (mState.mInPreLayout || !holder.isRemoved())) {
@@ -6157,13 +6216,16 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
                     return holder;
                 }
             }
-
+            //dryRun为false
             if (!dryRun) {
+                //从HiddenView中获得，这里获得是View
                 View view = mChildHelper.findHiddenNonRemovedView(position);
                 if (view != null) {
                     // This View is good to be used. We just need to unhide, detach and move to the
                     // scrap list.
+                    //通过View的LayoutParam获得ViewHolder
                     final ViewHolder vh = getChildViewHolderInt(view);
+                    //从HiddenView中移除
                     mChildHelper.unhide(view);
                     int layoutIndex = mChildHelper.indexOfChild(view);
                     if (layoutIndex == RecyclerView.NO_POSITION) {
@@ -6171,6 +6233,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
                                 + "unhiding a view:" + vh + exceptionLabel());
                     }
                     mChildHelper.detachViewFromParent(layoutIndex);
+                    //添加到Scrap中，其实这里既然已经拿到了ViewHolder，可以直接传vh进去
                     scrapView(view);
                     vh.addFlags(ViewHolder.FLAG_RETURNED_FROM_SCRAP
                             | ViewHolder.FLAG_BOUNCED_FROM_HIDDEN_LIST);
@@ -6179,11 +6242,13 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
             }
 
             // Search in our first-level recycled view cache.
+            //从CacheView中拿
             final int cacheSize = mCachedViews.size();
             for (int i = 0; i < cacheSize; i++) {
                 final ViewHolder holder = mCachedViews.get(i);
                 // invalid view holders may be in cache if adapter has stable ids as they can be
                 // retrieved via getScrapOrCachedViewForId
+                //holder是有效的，并且position相同
                 if (!holder.isInvalid() && holder.getLayoutPosition() == position) {
                     if (!dryRun) {
                         mCachedViews.remove(i);
@@ -6197,12 +6262,14 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
             }
             return null;
         }
-
+        //可以看到这里的判断其实和上面那一次差不多，需要注意的是多了对于id的判断和对于type的判断，也就是当我们将hasStableIds()设为true后
+        // 需要重写holder.getItemId() 方法，来为每一个item设置一个单独的id
         ViewHolder getScrapOrCachedViewForId(long id, int type, boolean dryRun) {
             // Look in our attached views first
             final int count = mAttachedScrap.size();
             for (int i = count - 1; i >= 0; i--) {
                 final ViewHolder holder = mAttachedScrap.get(i);
+                //id相同并且不是从scrap中返回的
                 if (holder.getItemId() == id && !holder.wasReturnedFromScrap()) {
                     if (type == holder.getItemViewType()) {
                         holder.addFlags(ViewHolder.FLAG_RETURNED_FROM_SCRAP);
@@ -6225,24 +6292,29 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
                         // if we are running animations, it is actually better to keep it in scrap
                         // but this would force layout manager to lay it out which would be bad.
                         // Recycle this scrap. Type mismatch.
+                        //从scrap中移除
                         mAttachedScrap.remove(i);
                         removeDetachedView(holder.itemView, false);
+                        //加入cacheView或者pool
                         quickRecycleScrapView(holder.itemView);
                     }
                 }
             }
 
             // Search the first-level cache
+            //从cacheView中找
             final int cacheSize = mCachedViews.size();
             for (int i = cacheSize - 1; i >= 0; i--) {
                 final ViewHolder holder = mCachedViews.get(i);
                 if (holder.getItemId() == id) {
                     if (type == holder.getItemViewType()) {
+                        //从cache中移除
                         if (!dryRun) {
                             mCachedViews.remove(i);
                         }
                         return holder;
                     } else if (!dryRun) {
+                        //从cacheView中移除，但是放到pool中
                         recycleCachedViewAt(i);
                         return null;
                     }
@@ -6440,6 +6512,9 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
      * responsibility to decide whether they want to keep their Views in this custom cache or let
      * the default recycling policy handle it.
      */
+    //可以看到这里类很恐怖，为什么这样说哪？
+    // 1.首先这个类基本上没有什么限制，也就是说无论是缓存使用的数据结构还有缓存算法(LRU还是什么)完全自定义，都由开发者自己决定，这一点可以说既给了开发者很大的便利，也给开发者带来了很大的隐患。
+    // 2.对于平常的缓存，我们的理解在怎么说至少get-add|push-pop都是成对出现，为什么这样说的，也就是缓存至少有进也有出。而这里可以看到这里的抽象类只定义了出的方法，也就是只出不进，进的时机，大小，时效等完全没有规定。
     public abstract static class ViewCacheExtension {
 
         /**
@@ -8639,8 +8714,10 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
          * @param recycler Recycler to scrap views into
          */
         public void detachAndScrapAttachedViews(Recycler recycler) {
+            //得到的是当前RecyclerView在显示的item的个数，所以这就是getChildCount()与 getItemCount()的区别
             final int childCount = getChildCount();
             for (int i = childCount - 1; i >= 0; i--) {
+                //获取某个可见位置的View，需要非常注意的是，它的位置索引并不是Adapter中的位置索引，而是当前在屏幕上的位置的索引
                 final View v = getChildAt(i);
                 scrapOrRecycleView(recycler, i, v);
             }

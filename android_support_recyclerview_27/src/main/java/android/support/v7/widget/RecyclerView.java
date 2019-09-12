@@ -157,7 +157,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
 
     static final String TAG = "RecyclerView";
 
-    static final boolean DEBUG = false;
+    public static  boolean DEBUG = false;
 
     static final boolean VERBOSE_TRACING = false;
 
@@ -5687,6 +5687,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
             // 1) Find by position from scrap/hidden list/cache
             // 第一次尝试（从mAttachedScrap和mCacheView中）
             if (holder == null) {
+                Log.e("TAG", "RcyLog Recycler tryGetViewHolderForPositionByDeadline 第一次尝试 mAttachedScrap.size():"+mAttachedScrap.size());
                 holder = getScrapOrHiddenOrCachedHolderForPosition(position, dryRun);
                 //这里通过getScrapOrHiddenOrCachedHolderForPosition方法来获取ViewHolder，并检验holder的有效性，如果无效，则从mAttachedScrap中移除，
                 //并加入到mCacheViews或者Pool中，并且将holder至null，走下一级缓存判断
@@ -5715,6 +5716,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
                     }
                 }
             }
+            Log.e("TAG", "RcyLog Recycler tryGetViewHolderForPositionByDeadline 第一次尝试后 holder != null:"+(holder != null));
             if (holder == null) {
                 final int offsetPosition = mAdapterHelper.findPositionOffset(position);
                 if (offsetPosition < 0 || offsetPosition >= mAdapter.getItemCount()) {
@@ -5728,6 +5730,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
                 // 2) Find from scrap/cache via stable ids, if exists
                 //第二次尝试(对应hasStablelds情况)
                 if (mAdapter.hasStableIds()) {
+                    Log.e("TAG", "Recycler tryGetViewHolderForPositionByDeadline 第二次尝试:");
                     holder = getScrapOrCachedViewForId(mAdapter.getItemId(offsetPosition),
                             type, dryRun);
                     if (holder != null) {
@@ -5765,7 +5768,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
                     //终于到了最后一次的尝试，这个缓存是针对Pool的，可以说RecyclerView内部提供的Pool是RecyclerView的一大特性，
                     // 这也是和ListView不同的地方，RecyclerView提供了这种缓存形式，支持多个RecyclerView之间复用View，
                     // 也就是说通过自定义Pool我们甚至可以实现整个应用内的RecyclerView的View的复用
-
+                    Log.e("TAG", "Recycler tryGetViewHolderForPositionByDeadline 第四次尝试:");
                     holder = getRecycledViewPool().getRecycledView(type);
                     if (holder != null) {
                         holder.resetInternal();
@@ -6020,6 +6023,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
                         }
                         targetCacheIndex = cacheIndex + 1;
                     }
+                    Log.w("TAG", "RcyLog Recycler recycleViewHolderInternal 放入 mCachedViews:");
                     mCachedViews.add(targetCacheIndex, holder);
                     cached = true;
                 }
@@ -6213,6 +6217,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
                 if (!holder.wasReturnedFromScrap() && holder.getLayoutPosition() == position
                         && !holder.isInvalid() && (mState.mInPreLayout || !holder.isRemoved())) {
                     holder.addFlags(ViewHolder.FLAG_RETURNED_FROM_SCRAP);
+                    Log.e("TAG", "mAttachedScrap 找到了holder  Recycler getScrapOrHiddenOrCachedHolderForPosition-----------------:");
                     return holder;
                 }
             }
@@ -6254,7 +6259,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
                         mCachedViews.remove(i);
                     }
                     if (DEBUG) {
-                        Log.d(TAG, "getScrapOrHiddenOrCachedHolderForPosition(" + position
+                        Log.d(TAG, "RcyLog getScrapOrHiddenOrCachedHolderForPosition(" + position
                                 + ") found match in cache: " + holder);
                     }
                     return holder;

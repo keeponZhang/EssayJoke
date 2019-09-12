@@ -1529,6 +1529,7 @@ public class LinearLayoutManager extends RecyclerView.LayoutManager implements
     int fill(RecyclerView.Recycler recycler, LayoutState layoutState,
             RecyclerView.State state, boolean stopOnFocusable) {
         // max offset we should set is mFastScroll + available
+        Log.d("TAG", "RcyLog LinearLayoutManager fill--->>>>:");
         final int start = layoutState.mAvailable;
         if (layoutState.mScrollingOffset != LayoutState.SCROLLING_OFFSET_NaN) {
             // TODO ugly bug fix. should not happen

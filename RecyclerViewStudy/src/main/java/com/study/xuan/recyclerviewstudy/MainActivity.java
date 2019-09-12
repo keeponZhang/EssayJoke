@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         initOperate();
         rcy = findViewById(R.id.rcy);
+        RecyclerView.DEBUG = BuildConfig.DEBUG;
         tvCacheView = findViewById(R.id.tv_cache_view);
         tvCreateAndBind = findViewById(R.id.tv_create_and_bind);
         scrollView = findViewById(R.id.scroll);

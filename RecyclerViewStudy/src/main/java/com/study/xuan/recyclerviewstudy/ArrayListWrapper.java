@@ -13,6 +13,9 @@ public class ArrayListWrapper<T> extends ArrayList<T> {
     @Override
     public boolean remove(Object o) {
         RecyclerView.ViewHolder vh = (RecyclerView.ViewHolder) o;
+//        if(true){
+//            throw new RuntimeException("keeon");
+//        }
         RcyLog.log(key + "移除---【position=" + vh.getAdapterPosition() + "】");
         if (size() > maxSize) {
             maxSize = size();

@@ -4,8 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
@@ -125,7 +123,7 @@ public class RcyLog {
             Class<?> recyclerPoolClass = Class.forName(mRecyclerPool.getType().getName());
 
             StringBuilder builder = new StringBuilder();
-            builder.append("当前Attached数量：").append(mAttached.maxSize).append("\n")
+            builder.append("当前Attached数量：").append(mAttached.size()).append("\n")
 //                    .append("当前Changed数量：").append(mChanged.size()).append("\n")
                     .append("当前Cache的数量：").append(mCached.size()).append("\n");
             if (mCached.size() > 0) {

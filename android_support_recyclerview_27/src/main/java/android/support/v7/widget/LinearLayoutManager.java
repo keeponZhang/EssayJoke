@@ -589,6 +589,9 @@ public class LinearLayoutManager extends RecyclerView.LayoutManager implements
         }
 
         onAnchorReady(recycler, state, mAnchorInfo, firstLayoutDirection);
+        //detachAndScrapAttachedViews(recycler);的作用就是把当前屏幕上所有的HolderView与屏幕分离，将它们从RecyclerView的布局中拿下来，
+        // 然后存放在一个列表中，在重新布局时，像搭积木一样，把这些HolderView重新一个个放在新位置上去。将屏幕上的HolderView从RecyclerView的布局中拿下来后，
+        // 存放的列表叫mAttachedScrap，它依然是一个List，就是用来保存从RecyclerView的布局中拿下来的HolderView列表
         detachAndScrapAttachedViews(recycler);
         mLayoutState.mInfinite = resolveIsInfinite();
         mLayoutState.mIsPreLayout = state.isPreLayout();
@@ -1356,6 +1359,7 @@ public class LinearLayoutManager extends RecyclerView.LayoutManager implements
         final int layoutDirection = dy > 0 ? LayoutState.LAYOUT_END : LayoutState.LAYOUT_START;
         final int absDy = Math.abs(dy);
         updateLayoutState(layoutDirection, absDy, true, state);
+        //调用了fill方法
         final int consumed = mLayoutState.mScrollingOffset
                 + fill(recycler, mLayoutState, state, false);
         if (consumed < 0) {

@@ -17,6 +17,7 @@ package android.support.v7.widget;
 
 import android.support.annotation.Nullable;
 import android.support.v4.os.TraceCompat;
+import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -289,6 +290,7 @@ final class GapWorker implements Runnable {
                 if (holder.isBound() && !holder.isInvalid()) {
                     // Only give the view a chance to go into the cache if binding succeeded
                     // Note that we must use public method, since item may need cleanup
+                    Log.w("TAG", "RcyLog GapWorker prefetchPositionWithDeadline 方法准备回收啦-----------:");
                     recycler.recycleView(holder.itemView);
                 } else {
                     // Didn't bind, so we can't cache the view, but it will stay in the pool until
@@ -361,6 +363,7 @@ final class GapWorker implements Runnable {
     }
 
     void prefetch(long deadlineNs) {
+        Log.e("TAG", "RcyLog GapWorker prefetch--------------------------------------:");
         buildTaskList();
         flushTasksWithDeadline(deadlineNs);
     }

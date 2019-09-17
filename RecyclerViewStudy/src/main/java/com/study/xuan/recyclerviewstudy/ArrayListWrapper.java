@@ -16,7 +16,7 @@ public class ArrayListWrapper<T> extends ArrayList<T> {
 //        if(true){
 //            throw new RuntimeException("keeon");
 //        }
-        RcyLog.log(key + "移除---【position=" + vh.getAdapterPosition() + "】");
+        RcyLog.log(key + "ArrayListWrapper移除---【position=" + vh.getAdapterPosition() + "】");
         if (size() > maxSize) {
             maxSize = size();
             canReset = false;
@@ -30,7 +30,7 @@ public class ArrayListWrapper<T> extends ArrayList<T> {
     @Override
     public boolean add(T t) {
         RecyclerView.ViewHolder vh = (RecyclerView.ViewHolder) t;
-        RcyLog.log(key + "添加---【position=" + vh.getAdapterPosition() + "】");
+        RcyLog.log(key + "ArrayListWrapper添加---【position=" + vh.getAdapterPosition() + "】");
         if (canReset) {
             if (size() + 1 > lastSize) {
                 maxSize = size() + 1;

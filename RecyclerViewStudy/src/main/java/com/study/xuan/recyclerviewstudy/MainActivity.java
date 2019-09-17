@@ -1,9 +1,11 @@
 package com.study.xuan.recyclerviewstudy;
 
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -17,7 +19,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tvCacheView;
     private TextView tvCreateAndBind;
     private ScrollView scrollView;
-    private boolean isText;
+    private boolean isText = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tvCreateAndBind = findViewById(R.id.tv_create_and_bind);
         scrollView = findViewById(R.id.scroll);
         mData = new ArrayList<>();
+
         mAdapter = new RcyAdapter(mData, this, rcy, tvCreateAndBind);
         rcy.setAdapter(mAdapter);
         rcy.setOnLayoutListener(new SRecyclerView.onLayoutListener() {
@@ -40,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void afterLayout() {
+                Log.e("TAG", "MainActivity afterLayout:");
                 RcyLog.loaAllCache(tvCacheView, rcy);
             }
         });
@@ -54,6 +58,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
         rcy.setLayoutManager(new LinearLayoutManager(this));
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                isText = false;
+                packData();
+                mAdapter.notifyDataSetChanged();
+            }
+        }, 1000);
+
+        Log.e("TAG", "MainActivity onCreate:");
     }
 
     private void packData() {

@@ -89,6 +89,7 @@ class AdapterHelper implements OpReorderer.Callback {
     }
 
     void preProcess() {
+        Log.e("TAG", "AdapterHelper RecyclerViewDataObserver preProcess mPendingUpdates:"+mPendingUpdates.size());
         mOpReorderer.reorderOps(mPendingUpdates);
         final int count = mPendingUpdates.size();
         for (int i = 0; i < count; i++) {
@@ -224,6 +225,7 @@ class AdapterHelper implements OpReorderer.Callback {
     }
 
     private void dispatchAndUpdateViewHolders(UpdateOp op) {
+        Log.e("TAG", "AdapterHelper RecyclerViewDataObserver dispatchAndUpdateViewHolders:");
         // tricky part.
         // traverse all postpones and revert their changes on this op if necessary, apply updated
         // dispatch to them since now they are after this op.

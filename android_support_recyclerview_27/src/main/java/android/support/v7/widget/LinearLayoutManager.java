@@ -592,6 +592,7 @@ public class LinearLayoutManager extends RecyclerView.LayoutManager implements
         //detachAndScrapAttachedViews(recycler);的作用就是把当前屏幕上所有的HolderView与屏幕分离，将它们从RecyclerView的布局中拿下来，
         // 然后存放在一个列表中，在重新布局时，像搭积木一样，把这些HolderView重新一个个放在新位置上去。将屏幕上的HolderView从RecyclerView的布局中拿下来后，
         // 存放的列表叫mAttachedScrap，它依然是一个List，就是用来保存从RecyclerView的布局中拿下来的HolderView列表
+        Log.e("TAG", "LinearLayoutManager onLayoutChildren 准备调用detachAndScrapAttachedViews:");
         detachAndScrapAttachedViews(recycler);
         mLayoutState.mInfinite = resolveIsInfinite();
         mLayoutState.mIsPreLayout = state.isPreLayout();
@@ -1103,7 +1104,7 @@ public class LinearLayoutManager extends RecyclerView.LayoutManager implements
             return 0;
         }
         int i = scrollBy(dy, recycler, state);
-        Log.e("TAG", "[[ RecyclerView  ]]  LinearLayoutManager scrollVerticallyBy dy:"+dy+" returnDy:"+i);
+        Log.d("TAG", "[[ RecyclerView  ]]  LinearLayoutManager scrollVerticallyBy dy:"+dy+" returnDy:"+i);
         return i;
     }
 

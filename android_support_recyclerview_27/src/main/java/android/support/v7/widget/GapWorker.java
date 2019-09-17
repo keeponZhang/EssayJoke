@@ -224,6 +224,7 @@ final class GapWorker implements Runnable {
 
         // Populate task list from prefetch data...
         mTasks.ensureCapacity(totalTaskCount);
+        Log.e("TAG", "------------这里是 Recycler GapWorker buildTaskList viewCount: "+viewCount+"  mTasks.size="+mTasks.size());
         int totalTaskIndex = 0;
         for (int i = 0; i < viewCount; i++) {
             RecyclerView view = mRecyclerViews.get(i);
@@ -252,9 +253,11 @@ final class GapWorker implements Runnable {
                 task.position = prefetchRegistry.mPrefetchArray[j];
 
                 totalTaskIndex++;
+                Log.e("TAG", "for 循环 GapWorker Recycler buildTaskList task.position:"+task.position);
             }
         }
 
+        Log.w("TAG", "GapWorker Recycler after buildTaskList mTasks.size():"+mTasks.size());
         // ... and priority sort
         Collections.sort(mTasks, sTaskComparator);
     }
@@ -290,7 +293,7 @@ final class GapWorker implements Runnable {
                 if (holder.isBound() && !holder.isInvalid()) {
                     // Only give the view a chance to go into the cache if binding succeeded
                     // Note that we must use public method, since item may need cleanup
-                    Log.w("TAG", "RcyLog GapWorker prefetchPositionWithDeadline 方法准备回收啦-----------:");
+                    Log.w("TAG", "RcyLog Recycler GapWorker prefetchPositionWithDeadline 方法准备回收啦-----------:");
                     recycler.recycleView(holder.itemView);
                 } else {
                     // Didn't bind, so we can't cache the view, but it will stay in the pool until
@@ -331,6 +334,7 @@ final class GapWorker implements Runnable {
                     // Note that we ignore immediate flag for inner items because
                     // we have lower confidence they're needed next frame.
                     final int innerPosition = innerPrefetchRegistry.mPrefetchArray[i];
+                    Log.e("TAG", "Recycler GapWorker prefetchInnerRecyclerViewWithDeadline innerPosition:"+innerPosition);
                     prefetchPositionWithDeadline(innerView, innerPosition, deadlineNs);
                 }
             } finally {
@@ -341,6 +345,7 @@ final class GapWorker implements Runnable {
 
     private void flushTaskWithDeadline(Task task, long deadlineNs) {
         long taskDeadlineNs = task.immediate ? RecyclerView.FOREVER_NS : deadlineNs;
+        Log.e("TAG", "GapWorker Recycler flushTaskWithDeadline task.position:"+task.position);
         RecyclerView.ViewHolder holder = prefetchPositionWithDeadline(task.view,
                 task.position, taskDeadlineNs);
         if (holder != null
@@ -363,7 +368,7 @@ final class GapWorker implements Runnable {
     }
 
     void prefetch(long deadlineNs) {
-        Log.e("TAG", "RcyLog GapWorker prefetch--------------------------------------:");
+        Log.e("TAG", "RcyLog Recycler GapWorker prefetch deadlineNs--------------------------------------:"+deadlineNs);
         buildTaskList();
         flushTasksWithDeadline(deadlineNs);
     }

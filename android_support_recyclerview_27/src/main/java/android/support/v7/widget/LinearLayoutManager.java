@@ -130,6 +130,7 @@ public class LinearLayoutManager extends RecyclerView.LayoutManager implements
 
     private boolean mRecycleChildrenOnDetach;
 
+    //本次Layout结束后(onLayoutCompleted), mPendingSavedState会被设置为null，因为Layout已经完成，mPendingSavedState承载的要求已经被满足，不需要进行暂存了。
     SavedState mPendingSavedState = null;
 
     /**
@@ -241,7 +242,8 @@ public class LinearLayoutManager extends RecyclerView.LayoutManager implements
             event.setToIndex(findLastVisibleItemPosition());
         }
     }
-
+    //如果mPendingSavedState已经指向了一个SavedState实例，那么直接基于mPendingSavedState构造一个SavedState返回进行保存。
+    // 否则,说明当前并没有明确的Anchor，要new一个空白SavedState并根据当前的ChildView分布情况得出合适的mAnchorLayoutFromEnd/mAnchorOffset/mAnchorPosition(*getChildClosestToEnd()/getChildClosestToStart())。*
     @Override
     public Parcelable onSaveInstanceState() {
         if (mPendingSavedState != null) {
@@ -268,7 +270,8 @@ public class LinearLayoutManager extends RecyclerView.LayoutManager implements
         }
         return state;
     }
-
+    //取出被保存的SavedState并存在mPendingSavedState中
+    //发起一次requestLayout来使得SavedState中暂存的信息得以恢复(恢复到销毁前的列表滑动状态)
     @Override
     public void onRestoreInstanceState(Parcelable state) {
         if (state instanceof SavedState) {
@@ -587,7 +590,7 @@ public class LinearLayoutManager extends RecyclerView.LayoutManager implements
             firstLayoutDirection = mShouldReverseLayout ? LayoutState.ITEM_DIRECTION_HEAD
                     : LayoutState.ITEM_DIRECTION_TAIL;
         }
-
+        //在锚点就绪后，会回调onAnchorReady为扩展者提供一次修改AnchorInfo的机会
         onAnchorReady(recycler, state, mAnchorInfo, firstLayoutDirection);
         //detachAndScrapAttachedViews(recycler);的作用就是把当前屏幕上所有的HolderView与屏幕分离，将它们从RecyclerView的布局中拿下来，
         // 然后存放在一个列表中，在重新布局时，像搭积木一样，把这些HolderView重新一个个放在新位置上去。将屏幕上的HolderView从RecyclerView的布局中拿下来后，
@@ -670,6 +673,7 @@ public class LinearLayoutManager extends RecyclerView.LayoutManager implements
                 int fixOffset = fixLayoutEndGap(endOffset, recycler, state, true);
                 startOffset += fixOffset;
                 endOffset += fixOffset;
+                //在上面的填充完毕后，可能会在界面呈现出gap,需要进行修复: fixLayoutStart/EndGap
                 fixOffset = fixLayoutStartGap(startOffset, recycler, state, false);
                 startOffset += fixOffset;
                 endOffset += fixOffset;
@@ -682,13 +686,16 @@ public class LinearLayoutManager extends RecyclerView.LayoutManager implements
                 endOffset += fixOffset;
             }
         }
+        //随后进行layoutForPredictiveAnimations，这一步和PredictiveAnimation有关，先不介绍。
         layoutForPredictiveAnimations(recycler, state, startOffset, endOffset);
         //完成后重置参数
         if (!state.isPreLayout()) {
+            //如果这次Layout不是PreLayout，那么可以视为Layout完成: 回调mOrientationHelper.onLayoutComplete()来在OrientationHelper中记录当前的一些信息留待下次Layout做参考
             mOrientationHelper.onLayoutComplete();
         } else {
             mAnchorInfo.reset();
         }
+        //mLastStackFromEnd会记录本次的mStackFromEnd值，为下一次Layout做参考。
         mLastStackFromEnd = mStackFromEnd;
         if (DEBUG) {
             validateChildOrder();
@@ -2166,6 +2173,7 @@ public class LinearLayoutManager extends RecyclerView.LayoutManager implements
      * Helper class that keeps temporary state while {LayoutManager} is filling out the empty
      * space.
      */
+    //layoutState: 记录了在布局过程中需要使用的状态信息，并提供了一些功能函数,LayoutState中的某些状态甚至是为某一次View布局而记录的，可能每布局一个View，都会被更新, 挑一些重要的说:
     static class LayoutState {
 
         static final String TAG = "LLM#LayoutState";
@@ -2190,6 +2198,7 @@ public class LinearLayoutManager extends RecyclerView.LayoutManager implements
         /**
          * Pixel offset where layout should start
          */
+        //mOffset: 填充过程中下一个View的layout开始位置
         int mOffset;
 
         /**
@@ -2200,6 +2209,7 @@ public class LinearLayoutManager extends RecyclerView.LayoutManager implements
         /**
          * Current position on the adapter to get the next item.
          */
+        //mCurrentPosition: 下一个要填充的位置(注意，这个位置不是ViewGroup中的位置，而是Data中的位置)。
         int mCurrentPosition;
 
         /**
@@ -2212,6 +2222,7 @@ public class LinearLayoutManager extends RecyclerView.LayoutManager implements
          * Defines the direction in which the layout is filled.
          * Should be {@link #LAYOUT_START} or {@link #LAYOUT_END}
          */
+        //mLayoutDirection: 当前layout方向: LAYOUT_START/LAYOUT_END
         int mLayoutDirection;
 
         /**
@@ -2219,6 +2230,7 @@ public class LinearLayoutManager extends RecyclerView.LayoutManager implements
          * It should be set the amount of scrolling we can make without creating a new view.
          * Settings this is required for efficient view recycling.
          */
+        //当LayoutState在滑动状态下被构造时，会被用到，代表在不创建新的ChildView的前提下，最多可以滑动的距离。
         int mScrollingOffset;
 
         /**
@@ -2267,6 +2279,9 @@ public class LinearLayoutManager extends RecyclerView.LayoutManager implements
          */
         //这里其实还存在一级的缓存mScrapList，mScrapList是被LayoutManager持有，recycler是被RecyclerView持有。但是mScrapList其实一定程度上和动画有关，这里就不做分析了
         //第一个mSrapList其实默认是空的，只有执行layoutForPredictiveAnimations前不为空，执行完后又变为空，所以这里暂时不需要考虑
+
+        //next(): 获取下一个要填充位置(也就是mCurrentPosition)对应的View(关键的View提供者)，
+        // 同时还会基于mItemDirection**更新mCurrentPosition. 其最终会调到Recycler的getViewForPosition根据Position和ViewType从Recycler中获取一个View(可能是缓存复用的，也可能是新建的，onCreateViewHolder/onBindViewHolder都会在这一步被调用)**。
         View next(RecyclerView.Recycler recycler) {
             if (mScrapList != null) {
                 return nextViewFromScrapList();

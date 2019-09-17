@@ -11901,6 +11901,9 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
      * data between your components without needing to manage their lifecycles.</p>
      */
     public static class State {
+        //STEP_START: 初始状态，第一阶段还没有进行, 也作为这一轮Layout结束的标志状态。
+        // STEP_LAYOUT: 第一阶段完毕，等待第二阶段开始(真正的布局: LAYOUT)。
+        //STEP_ANIMATIONS: 第二阶段完毕，等待第三阶段开始(开始处理动画: ANIMATIONS)
         static final int STEP_START = 1;
         static final int STEP_LAYOUT = 1 << 1;
         static final int STEP_ANIMATIONS = 1 << 2;
@@ -11915,8 +11918,11 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
 
 
         /** Owned by SmoothScroller */
+        //mTargetPosition: RecyclerView**当前滑动的终点Position**, 如果当前没有在滑动，那么值为NO_POSITION。
         private int mTargetPosition = RecyclerView.NO_POSITION;
 
+        //State内部还维护了一个Object SparseArray来支持扩展通信
+        // State的使用者之间约定在SparseArray的某个特定位置(约定好一个int key)存取对象来传递附加信息。
         private SparseArray<Object> mData;
 
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -11926,12 +11932,14 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
         /**
          * Number of items adapter had in the previous layout.
          */
+        //mPreviousLayoutItemCount: 上一次Layout结束时Data的item数量(Layout结束，界面和数据就同步了)
         int mPreviousLayoutItemCount = 0;
 
         /**
          * Number of items that were NOT laid out but has been deleted from the adapter after the
          * previous layout.
          */
+        //mDeletedInvisibleItemCountSincePreviousLayout: 和PreLayout有关，代表在PreLayout阶段就被remove的item的数量
         int mDeletedInvisibleItemCountSincePreviousLayout = 0;
 
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -11950,20 +11958,22 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
         /**
          * Number of items adapter has.
          */
+        //mItemCount: 当前Data的item数量(有可能和界面上呈现的不一致，因为界面正在刷新同步中)
         int mItemCount = 0;
 
+        //mStructureChanged: 本次发生的变化是否导致了结构上的变化(比如增加/删除都算结构上的改变，但是如果只有更新，就不算)
         boolean mStructureChanged = false;
-
+        //mInPreLayout: 当前是否在PreLayout阶段
         boolean mInPreLayout = false;
-
+        //mTrackOldChangeHolders: 主要为了支持Animation, 这里不介绍
         boolean mTrackOldChangeHolders = false;
-
+        //mIsMeasuring: 当前是否正在测量中。
         boolean mIsMeasuring = false;
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         // Fields below are always reset outside of the pass (or passes) that use them
         ////////////////////////////////////////////////////////////////////////////////////////////
-
+       // mRunSimpleAnimations/mRunPredictiveAnimations: 标识这次Layout支持的动画模式。
         boolean mRunSimpleAnimations = false;
 
         boolean mRunPredictiveAnimations = false;
@@ -11973,6 +11983,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
          * if the previously focused view has been replaced with another view for the same item, we
          * move the focus to the new item automatically.
          */
+        //mFocusedItemPosition/mFocusedItemId/mFocusedSubChildId: 焦点相关，这里不介绍。
         int mFocusedItemPosition;
         long mFocusedItemId;
         // when a sub child has focus, record its id and see if we can directly request focus on

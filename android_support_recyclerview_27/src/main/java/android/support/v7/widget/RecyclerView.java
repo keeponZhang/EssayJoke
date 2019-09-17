@@ -1464,6 +1464,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
                     + " layout");
         }
         if (mItemDecorations.isEmpty()) {
+            //因为RecyclerView**继承自ViewGroup，默认其willNoDraw是true(意味着其onDraw函数不会被调用)，但是ItemDecoration的onDraw需要在RecyclerView的onDraw回调点进行，因此添加/删除ItemDecoraton时会根据情况改变willNotDraw属性**
             setWillNotDraw(false);
         }
         if (index < 0) {
@@ -1472,6 +1473,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
             mItemDecorations.add(index, decor);
         }
         markItemDecorInsetsDirty();
+        //因为ItemDecoration会影响ChildView的测量，进而影响布局，还影响绘制，因此ItemDecoration的添加/删除/Invalidate会触发requestLayout来重新测量布局绘制.
         requestLayout();
     }
 
@@ -3151,6 +3153,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
            // 问题1：那这里可能有疑问了，如果没有执行onMeasure方法，那么子View没有绘制，会造成空白的情况，
             // 但是实际情况是当我们给RecyclerView设置绝对值大小的时候，子View仍可以正常绘制出来（onLayout里会执行子View的绘制）
             if (skipMeasure || mAdapter == null) {
+                Log.e("TAG", "RecyclerView onMeasure skipMeasure-----------------------:");
                 return;
             }
             if (mState.mLayoutStep == State.STEP_START) {
@@ -3163,15 +3166,19 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
             mLayout.setMeasureSpecs(widthSpec, heightSpec);
             mState.mIsMeasuring = true;
             //真正执行LayoutManager绘制的地方
+            //原本应该在onLayout回调中进行的操作，现在因为测量的需求，被提前到了RecyclerView的measure阶段
+            //(RecyclerView会在维护State中维护一个mLayoutStep变量标记Layout已经被进行到哪个阶段，避免在onLayout中重复进行)
             dispatchLayoutStep2();
             //执行完后是State.STEP_ANIMATIONS
             // now we can get the width and height from the children.
+            //ChildView被测量和布局后，RecylcerView终于可以根据ChildView的信息来决定自己的最终尺寸了, setMeasuredDimensionFromChildren函数被调用来完成这个任务
             mLayout.setMeasuredDimensionFromChildren(widthSpec, heightSpec);
 
             // if RecyclerView has non-exact width and height and if there is at least one child
             // which also has non-exact width & height, we have to re-measure.
             //宽高都不确定的时候，会绘制两次
             if (mLayout.shouldMeasureTwice()) {
+                // 在上面测量完成后，如果LayoutManager的shouldMeasureTwice返回true，那么会使用上面测量得到的RecyclerView最终尺寸制作一个EXACTLY的MeasureSpec作为测量约束重新进行一次测量(2+3)
                 mLayout.setMeasureSpecs(
                         MeasureSpec.makeMeasureSpec(getMeasuredWidth(), MeasureSpec.EXACTLY),
                         MeasureSpec.makeMeasureSpec(getMeasuredHeight(), MeasureSpec.EXACTLY));
@@ -3238,7 +3245,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
         final int height = LayoutManager.chooseSize(heightSpec,
                 getPaddingTop() + getPaddingBottom(),
                 ViewCompat.getMinimumHeight(this));
-
+        Log.e("TAG", "RecyclerView defaultOnMeasure widthSize:"+MeasureSpec.getSize(widthSpec)+" width="+width);
         setMeasuredDimension(width, height);
     }
 
@@ -3755,7 +3762,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
      * The second layout step where we do the actual layout of the views for the final state.
      * This step might be run multiple times if necessary (e.g. measure).
      */
-    //真正执行LayoutManager绘制的地方
+    //dispatchLayoutStep2调起LayoutManager的onLayoutChildren开始真正的布局，在布局过程中，一些ChildView需要被测量，其测量约束基于RecyclerView的MeasureSpec
     private void dispatchLayoutStep2() {
         Log.e("TAG", "RecyclerView dispatchLayoutStep2:");
         eatRequestLayout();
@@ -4055,7 +4062,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
             mLayoutRequestEaten = true;
         }
     }
-
+    //markItemDecorInsetsDirty函数可以将当前的ChildView以及Recycler中的ChildView的mInsetsDirty设置为true
     void markItemDecorInsetsDirty() {
         final int childCount = mChildHelper.getUnfilteredChildCount();
         for (int i = 0; i < childCount; i++) {
@@ -4126,6 +4133,10 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
         }
     }
 
+    //RecyclerView的onDraw函数在有ItemDecoration存在的情况下会被调用
+    //遍历调用ItemDecoration的onDraw回调, Canvas会作为参数传入, 同时还有RecyclerView和当前的LayoutState。
+    //由上面可见，onDraw回调的粒度就不是ChildView了，而是整个Canvas，可以在Canvas的任何位置绘制，不过注意，这里绘制的内容可能会被ChildView覆盖
+    //如果不想被ChildView覆盖，就要使用ItemDecoration的onDrawOver回调了, onDrawOver在super.draw调用之后(ChildView已经绘制完毕)。同样的粒度也是整个Canvas。
     @Override
     public void onDraw(Canvas c) {
         super.onDraw(c);
@@ -4740,6 +4751,9 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
     //测量完成后，紧接着就调用了layoutDecoratedWithMargins(view, left, top, right, bottom)对子View完成了layout。
     Rect getItemDecorInsetsForChild(View child) {
         final LayoutParams lp = (LayoutParams) child.getLayoutParams();
+        //出于性能的考虑，如果之前为ChildView生成过DecorInsets，那么会缓存在ChildView的LayoutParam中(mDecorInsets), 同时为了保证mDecorInsets的时效性，
+        //还同步维护了一个mInsetsDirty标记在LayoutParam中:
+        //如果其mInsetsDirty为false，那么代表缓存没有过期，直接返回缓存的mDecorInsets。
         if (!lp.mInsetsDirty) {
             return lp.mDecorInsets;
         }
@@ -4751,6 +4765,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
         final Rect insets = lp.mDecorInsets;
         insets.set(0, 0, 0, 0);
         final int decorCount = mItemDecorations.size();
+        //遍历ItemDecoration数组，调用其getItemOffsets获得该ItemDecoration在四个方向上的偏移，不断叠加，最终得到一个累加了所有ItemDecortaion的DecorInsets(一个Rect)
         for (int i = 0; i < decorCount; i++) {
             mTempRect.set(0, 0, 0, 0);
             mItemDecorations.get(i).getItemOffsets(mTempRect, child, this, mState);
@@ -7381,6 +7396,13 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
          * @param widthSpec The widthSpec that was passing into RecyclerView's onMeasure
          * @param heightSpec The heightSpec that was passing into RecyclerView's onMeasure
          */
+        //setMeasuredDimensionFromChildren的实现逻辑:
+        //遍历所有的ChildView，对每个ChildView进行这样的操作:
+        //获得ChildView经过ItemDecortion装饰过后的位置坐标
+        //根据上面的坐标来不断的更新一个长方形，这个长方形满足这样的条件: 可以包含所有被装饰过的ChildView，
+        // 比如对于一个列表来说，这个长方形最终的形态就是这个列表所占据的空间
+        // 遍历完毕得到了可以正好容纳当前所有可视ChildView的长方形空间坐标(childrenBounds)后，
+        // 将其传递给LayoutManager的setMeasuredDimension(Rect childrenBounds, int wSpec, int hSpec)函数
         void setMeasuredDimensionFromChildren(int widthSpec, int heightSpec) {
             final int count = getChildCount();
             if (count == 0) {
@@ -7432,13 +7454,19 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
          *
          * @see #setAutoMeasureEnabled(boolean)
          */
+        //setMeasuredDimension会综合考虑childrenBounds, 测量约束，MinmumWidth/Height得到RecyclerView的最终尺寸
         public void setMeasuredDimension(Rect childrenBounds, int wSpec, int hSpec) {
             int usedWidth = childrenBounds.width() + getPaddingLeft() + getPaddingRight();
             int usedHeight = childrenBounds.height() + getPaddingTop() + getPaddingBottom();
             int width = chooseSize(wSpec, usedWidth, getMinimumWidth());
             int height = chooseSize(hSpec, usedHeight, getMinimumHeight());
+            //得到了最终尺寸后，调用RecyclerView的setMeasuredDimension使尺寸生效。
             setMeasuredDimension(width, height);
         }
+        //上面这种考虑了ChildrenBound的测量方式比ListView之类的要先进，ListView在可拉伸维度被设置为WRAP_CONTENT后，
+        //会出现实际只能显示一个ChildView的问题，究其原因是因为测量时只考虑了单个最大的ChildView。
+        //而RecylcerView通过ChildrenBound实现了ChildView面积的累加，RecyclerView在可拉伸维度被设置为WRAP_CONTENT后是可以正常工作的
+
 
         /**
          * Calls {@code RecyclerView#requestLayout} on the underlying RecyclerView
@@ -8852,7 +8880,10 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
             final int heightSpec = getChildMeasureSpec(getHeight(), getHeightMode(),
                     getPaddingTop() + getPaddingBottom() + heightUsed, lp.height,
                     canScrollVertically());
+            //然后基于生成的MeasureSpec使用shouldMeasureChild来检测有没有必要对ChildView进行测量
+            // (因为有ChildView复用的场景，这种情况下，可能不需要进行测量，直接是上一次的就行)
             if (shouldMeasureChild(child, widthSpec, heightSpec, lp)) {
+                //如果ChildView确实需要再次进行Measure，那么调用ChildView的**measure函数开始测量**ChildView。
                 child.measure(widthSpec, heightSpec);
             }
         }
@@ -8877,6 +8908,12 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
          * Use this method if the View is not yet measured and you need to decide whether to
          * measure this View or not.
          */
+        //shouldMeasureChild的检测逻辑包含四个条件(满足一个即可):
+        //ChildView的isLayoutRequested()是否返回true， 如果返回true，代表ChildView的尺寸和布局信息是无效的，需要重新测量布局。对于被缓存后复用的ChildView，这个检查是必须的。
+        //mMeasurementCacheEnabled没有开启, 表示不缓存测量结果，每次都必须重新测量，即使上一次的结果现在仍是有效的
+        //!isMeasurementUpToDate(child.getWidth(), widthSpec, lp.width):
+        //!isMeasurementUpToDate(child.getHeight(), heightSpec, lp.height):
+        // 3和4将ChildView现在的尺寸和新尺寸进行对比，如果不等，那么需要重新测量(粗略可以这么说，细节逻辑不赘述)。
         boolean shouldMeasureChild(View child, int widthSpec, int heightSpec, LayoutParams lp) {
             return child.isLayoutRequested()
                     || !mMeasurementCacheEnabled
@@ -8939,6 +8976,9 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
          * @param widthUsed Width in pixels currently consumed by other views, if relevant
          * @param heightUsed Height in pixels currently consumed by other views, if relevant
          */
+        //测量ChildView一般使用LayoutManager的measureChildWithMargins函数,measureChildWithMargins**综合考虑ItemDecorInset,
+        // RecyclerView的MeasureSpec，ChildView的Margin，ChildView在LayoutParam中指定的尺寸要求，该维度是否是可以滑动的等因素，
+        // 使用**getChildMeasureSpec函数获得一个适合ChildView的测量约束MeasureSpec。
         public void measureChildWithMargins(View child, int widthUsed, int heightUsed) {
             final LayoutParams lp = (LayoutParams) child.getLayoutParams();
             //设置分割线中的回调方法
@@ -9023,22 +9063,27 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
             int resultSize = 0;
             int resultMode = 0;
             if (canScroll) {
+                //如果ChildView在LayoutParam中指定了具体的尺寸，那么按照ChildView的意愿来，SpecMode设置为EXACTLY
                 if (childDimension >= 0) {
                     resultSize = childDimension;
                     resultMode = MeasureSpec.EXACTLY;
                 } else if (childDimension == LayoutParams.MATCH_PARENT) {
                     switch (parentMode) {
+                        //1.如果RecyclerView的MeasureSpec是AT_MOST/EXACTLY, ChildView的测量约束可以和RecyclerView的保持一致，更多的约束也做不了
                         case MeasureSpec.AT_MOST:
                         case MeasureSpec.EXACTLY:
                             resultSize = size;
                             resultMode = parentMode;
                             break;
+                        //2.如果RecyclerView的MeasureSpec是UNSPECIFIED, RecyclerView没有任何的测量约束，同样也无法对ChildView进行什么有效的约束。SpecMpde设置为UNSPECIFIED
                         case MeasureSpec.UNSPECIFIED:
                             resultSize = 0;
                             resultMode = MeasureSpec.UNSPECIFIED;
                             break;
                     }
                 } else if (childDimension == LayoutParams.WRAP_CONTENT) {
+                    //childView要求WRAP_CONTENT， ChildView要求能包含自己的内容。
+                   // 既然在这个维度(方向)是可以滑动的，那么即使ChildView在这个维度上超过了RecyclerView也没关系，因为可以滑动显示，SpecMode设置为UNSPECIFIED让ChildView自由伸展
                     resultSize = 0;
                     resultMode = MeasureSpec.UNSPECIFIED;
                 }
@@ -9047,13 +9092,19 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
                     resultSize = childDimension;
                     resultMode = MeasureSpec.EXACTLY;
                 } else if (childDimension == LayoutParams.MATCH_PARENT) {
+                    //ChildView要求MATCH_PARENT， ChildView要求和RecyclerView一样大。
+                    //只能给ChildView和RecyclerView一样的约束，更多的也做不了。
                     resultSize = size;
                     resultMode = parentMode;
                 } else if (childDimension == LayoutParams.WRAP_CONTENT) {
+                    //因为在这个方向上不能滑动，因此要满足ChildView**最好不要超出RecyclerView(是最好而不是必须，因为我们无法做到这种约束程度)**.
                     resultSize = size;
+                    // 1如果RecyclerView的SpecMode是AT_MOST, 那么ChildView的SpecMode也只能设置为AT_MOST来尽量使ChildView小于RecyclerView
+                    //如果RecyclerView的SpecMode是EXACTLY, 那么ChildView的SpecMode应该设置为AT_MOST来保证ChildView小于RecyclerView
                     if (parentMode == MeasureSpec.AT_MOST || parentMode == MeasureSpec.EXACTLY) {
                         resultMode = MeasureSpec.AT_MOST;
                     } else {
+                     //如果RecyclerView的SpecMode是UNSPECIFIED, RecyclerView在这种情况下提供不了什么约束，那么也不能约束ChildView了，SpecMode设置为UNSPECIFIED
                         resultMode = MeasureSpec.UNSPECIFIED;
                     }
 

@@ -2,9 +2,11 @@ package com.zhang.support.sample.jump;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.android.coordinatorLayout.recyclerview.manager.CustomLayoutManagerRecyclered;
+import com.android.coordinatorLayout.recyclerview.itemdecoration.LinearItemDecoration;
+import com.android.coordinatorLayout.recyclerview.itemdecoration.LinearItemDecoration2;
 import com.zhang.support.sample.R;
 
 import java.util.ArrayList;
@@ -37,12 +39,13 @@ public class JumpActivity extends AppCompatActivity {
             titles.add("test=" + i);
         }
         JumpAdapter mainAdapter = new JumpAdapter(this,titles);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 //        recyclerView.setLayoutManager(new CustomLayoutManager());
-           recyclerView.setLayoutManager(new CustomLayoutManagerRecyclered());
+//           recyclerView.setLayoutManager(new CustomLayoutManagerRecyclered());
 //        recyclerView.setLayoutManager(new CustomLayoutManagerRecyclered1());
 //        recyclerView.setLayoutManager(new CustomLayoutManagerRecyclered2());
-//        recyclerView.addItemDecoration(new LinearItemDecoration2());
+        recyclerView.addItemDecoration(new LinearItemDecoration2());
+        recyclerView.addItemDecoration(new LinearItemDecoration());
         recyclerView.setAdapter(mainAdapter);
     }
 }

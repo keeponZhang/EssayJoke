@@ -22,6 +22,6 @@ public class LinearItemDecoration extends RecyclerView.ItemDecoration {
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         outRect.left=50;
         outRect.right=100;
-        outRect.bottom=1;
+        outRect.bottom=5;
     }
 }

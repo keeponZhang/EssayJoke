@@ -50,7 +50,7 @@ class AdapterHelper implements OpReorderer.Callback {
     private static final boolean DEBUG = false;
 
     private static final String TAG = "AHT";
-
+    //封装在了AdapterHelper.UpdateOp类中，并且所有操作由一个大小为30的对象池管理着
     private Pools.Pool<UpdateOp> mUpdateOpPool = new Pools.SimplePool<UpdateOp>(UpdateOp.POOL_SIZE);
 
     final ArrayList<UpdateOp> mPendingUpdates = new ArrayList<UpdateOp>();
@@ -529,6 +529,7 @@ class AdapterHelper implements OpReorderer.Callback {
         if (itemCount < 1) {
             return false;
         }
+        //从这个对象池中取出一个UpdateOp对象，放入一个等待队列中
         mPendingUpdates.add(obtainUpdateOp(UpdateOp.REMOVE, positionStart, itemCount, null));
         mExistingUpdateTypes |= UpdateOp.REMOVE;
         return mPendingUpdates.size() == 1;

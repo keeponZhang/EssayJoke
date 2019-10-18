@@ -101,6 +101,7 @@ class ChildHelper {
             offset = getOffset(index);
         }
         mBucket.insert(offset, hidden);
+
         if (hidden) {
             hideViewInternal(child);
         }

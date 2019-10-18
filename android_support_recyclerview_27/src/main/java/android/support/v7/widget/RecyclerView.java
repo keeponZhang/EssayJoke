@@ -1331,6 +1331,8 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
             // re-attach
             mChildHelper.attachViewToParent(view, -1, view.getLayoutParams(), true);
         } else if (!alreadyParented) {
+            //这里最终会向ChildHelper中的一个名为mHiddenViews的集合添加给定的ItemView，那么这个mHiddenViews又是什么东西？
+            //上节中的getViewForPosition()方法中有个getScrapViewForPosition()，作用是从scrapped集合中获取ItemView：
             mChildHelper.addView(view, true);
         } else {
             mChildHelper.hide(view);
@@ -2175,6 +2177,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
 
                 velocityX = Math.max(-mMaxFlingVelocity, Math.min(velocityX, mMaxFlingVelocity));
                 velocityY = Math.max(-mMaxFlingVelocity, Math.min(velocityY, mMaxFlingVelocity));
+                //mViewFlinger是一个Runnable的实现ViewFlinger的对象，就是它来控件着ReyclerView的fling过程的算法的
                 mViewFlinger.fling(velocityX, velocityY);
                 return true;
             }
@@ -2998,6 +3001,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
                         startScroll = true;
                     }
 //                    Log.w("TAG", "RecyclerView onTouchEvent Actino_move canScrollVertically:"+canScrollVertically);
+                    //会先计算出手指移动距离（dy），并与滑动阀值（mTouchSlop）比较，当大于此阀值时将滑动状态设置为SCROLL_STATE_DRAGGING
                     if (canScrollVertically && Math.abs(dy) > mTouchSlop) {
                         if (dy > 0) {
                             dy -= mTouchSlop;
@@ -3016,6 +3020,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
                     mLastTouchX = x - mScrollOffset[0];
                     mLastTouchY = y - mScrollOffset[1];
                     Log.d("TAG", "RcyLog RecyclerView mScrollOffset onTouchEvent ACTION_MOVE 调用>>>>>>> scrollByInternal mLastTouchY:"+mLastTouchY+" y="+y);
+                    //而后调用scrollByInternal()方法，使RecyclerView滑动，这样RecyclerView的滑动的第一阶段scroll就完成了
                     if (scrollByInternal(
                             canScrollHorizontally ? dx : 0,
                             canScrollVertically ? dy : 0,
@@ -3041,6 +3046,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
                         ? -mVelocityTracker.getXVelocity(mScrollPointerId) : 0;
                 final float yvel = canScrollVertically
                         ? -mVelocityTracker.getYVelocity(mScrollPointerId) : 0;
+                //当接收到ACTION_UP事件时，会根据之前的滑动距离与时间计算出一个初速度yvel，这步计算是由VelocityTracker实现的，然后再以此初速度，调用方法fling()
                 if (!((xvel != 0 || yvel != 0) && fling((int) xvel, (int) yvel))) {
                     setScrollState(SCROLL_STATE_IDLE);
                 }
@@ -3476,6 +3482,14 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
         //这里解释了：我们给RecyclerView设置固定的宽高的时候，onMeasure是直接跳过了执行，那么为什么子View仍然能绘制出来
         //原因：这里可以看到，如果onMeasure没有执行，mState.mLayoutStep == State.STEP_START就成立，
         // 所以仍然会执行 dispatchLayoutStep1()， dispatchLayoutStep2();也就对应的会绘制子View
+
+        //可以看出，这里也会执行子控件的measure及layout过程。结合onMeasure方法对skipMeasure的判断可以看出，
+        //如果要支持WRAP_CONTENT，那么子控件的measure及layout就会提前在RecyclerView的测量方法中执行完成，也就是说，
+        //先确定了子控件的大小及位置后，再由此设置RecyclerView的大小；如果是其它情况(测量模式为EXACTLY)，
+        //子控件的measure及layout过程就会延迟至RecyclerView的layout过程（RecyclerView.onLayout()）中执行。
+        //再看onMeasure方法中的mLayout.mAutoMeasure，它表示，RecyclerView的measure及layout过程是否要委托给RecyclerView.LayoutManager，
+        // 在兼容包中提供的３种RecyclerView.LayoutManager的这个属性默认都是为true的。好了，以上就是RecyclerView的measure及layout过程.
+
         if (mState.mLayoutStep == State.STEP_START) {
             Log.e("TAG", "RecyclerView mState.mLayoutStep == State.STEP_START dispatchLayout dispatchLayoutStep1 :");
             dispatchLayoutStep1();
@@ -3849,6 +3863,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
             }
 
             // Step 4: Process view info lists and trigger animations
+            // process()方法最终会执行到RecyclerView.animateDisappearance()方法：
             mViewInfoStore.process(mViewInfoProcessCallback);
         }
 
@@ -4012,7 +4027,8 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
             postAnimationRunner();
         }
     }
-
+    //这里的animateDisappearance()会把一个动画与ItemView绑定，并添加到待执行队列中，
+    //postAnimationRunner()调用后就会执行这个队列中的动画，注意方法addAnimatingView()：
     void animateDisappearance(@NonNull ViewHolder holder,
             @NonNull ItemHolderInfo preLayoutInfo, @Nullable ItemHolderInfo postLayoutInfo) {
         addAnimatingView(holder);
@@ -4072,6 +4088,8 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
         mRecycler.markItemDecorInsetsDirty();
     }
 
+    //RecyclerView的draw过程可以分为２部分来看：RecyclerView负责绘制所有decoration；
+    //ItemView的绘制由ViewGroup处理，这里的绘制是android常规绘制逻辑
     @Override
     public void draw(Canvas c) {
         super.draw(c);
@@ -4935,6 +4953,13 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
                         hresult = mLayout.scrollHorizontallyBy(dx, mRecycler, mState);
                         overscrollX = dx - hresult;
                     }
+                    //跟踪进入你会发现它最终也会走到LinearLayoutManager.scrollBy()，这样虽说RecyclerView的滑动可以分为两阶段，
+                    //但是它们的实现最终其实是一样的。这里我先解释下上段代码。第一，dy表示滑动偏移量，它是由Scroller根据时间偏移量
+                    //（Scroller.fling()开始时间到当前时刻）计算出的，当然如果是RecyclerView的scroll阶段，这个偏移量也就是手指滑动距离。
+                    //第二，上段代码会多次执行，至到Scroller判断滑动结束或已经滑动到边界。再多说一下，postOnAnimation()
+                    //保证了RecyclerView的滑动是流畅，这里涉及到著名的“android 16ms”机制，简单来说理想状态下，
+                    //上段代码会以16毫秒一次的速度执行，这样其实，Scroller每次计算的滑动偏移量是很小的一部分，
+                    //而RecyclerView就会根据这个偏移量，确定是平移ItemView，还是除了平移还需要再创建新ItemView。
                     if (dy != 0) {
                         vresult = mLayout.scrollVerticallyBy(dy, mRecycler, mState);
                         overscrollY = dy - vresult;
@@ -5041,7 +5066,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
                 postOnAnimation();
             }
         }
-
+        //然后postOnAnimation()方法的作用就是在将来的某个时刻会执行我们给定的一个Runnable对象，在这里就是这个mViewFlinger对象
         void postOnAnimation() {
             if (mEatRunOnAnimationRequest) {
                 mReSchedulePostAnimationCallback = true;
@@ -5054,6 +5079,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
         public void fling(int velocityX, int velocityY) {
             setScrollState(SCROLL_STATE_SETTLING);
             mLastFlingX = mLastFlingY = 0;
+            //可以看到，其实RecyclerView的fling是借助Scroller实现的
             mScroller.fling(0, 0, velocityX, velocityY,
                     Integer.MIN_VALUE, Integer.MAX_VALUE, Integer.MIN_VALUE, Integer.MAX_VALUE);
             postOnAnimation();
@@ -5183,6 +5209,8 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
         public void onItemRangeRemoved(int positionStart, int itemCount) {
             assertNotInLayoutOrScroll(null);
             if (mAdapterHelper.onItemRangeRemoved(positionStart, itemCount)) {
+                //triggerUpdateProcessor()方法就是调用View.requestLayout()方法，这会导致界面重新布局，
+                // 也就是说方法RecyclerView.onLayout()会随后调用，这之后的流程就和在绘制流程一节中所描述的一致了
                 triggerUpdateProcessor();
             }
         }

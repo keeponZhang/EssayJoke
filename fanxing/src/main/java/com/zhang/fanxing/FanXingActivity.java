@@ -4,9 +4,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.android.fanxing.bean.CEO;
-import com.android.fanxing.bean.Employee;
-import com.android.fanxing.bean.Manager;
+import com.zhang.fanxing.bean.CEO;
+import com.zhang.fanxing.bean.Employee;
+import com.zhang.fanxing.bean.Manager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +17,9 @@ public class FanXingActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-//		test1();
+		test1();
 //		test2();
-		test3();
+//		test3();
 
 
 	}
@@ -34,12 +34,12 @@ public class FanXingActivity extends AppCompatActivity {
 		Object object = testExtends2.get(0);
 	}
 
-	/*private void test1() {
-		//通配符重点  父类引用指向子类对象
+	private void test1() {
+		//通配符重点  父类引用指向子类对象（要理解<? super Manager>，? extends Employee这句话是重点）
 		List<? super Manager> list;
 		list = new ArrayList<>();
-		//super 可以存，存Manager或者Manager的子类对象
-		list.add(new Employee()); //编译错误
+		//super 可以存，存Manager或者Manager的子类对象,因为存Manager或者Manager的子类对象，肯定是满足父类引用指向子类对象的
+//		list.add(new Employee()); //编译错误,因为这里不满足父类引用指向子类对象
 		list.add(new Manager());
 		list.add(new CEO());
 		//不可以取,因为取出来的是object类型，没有意义
@@ -50,24 +50,25 @@ public class FanXingActivity extends AppCompatActivity {
 		List<? extends Employee> list2;
 		list2 = new ArrayList<>();
 		//extends 不可以存，List<? extends Employee>是未知类型，可能是很低级的子类，所以不能往里面存
-		list2.add(new Employee());//编译错误
-		list2.add(new Manager());//编译错误
-		list2.add(new CEO());//编译错误
+//		list2.add(new Employee());//编译错误
+//		list2.add(new Manager());//编译错误
+//		list2.add(new CEO());//编译错误
 		//可以取，因为存的都是Employee的子类，用Employee来接，符合父类引用指向子类对象
 		Employee employee = list2.get(0);
-
-		*//*PECS原则
-		最后看一下什么是PECS（Producer Extends Consumer Super）原则，已经很好理解了：
-
-		频繁往外读取内容的，适合用上界Extends。
-		经常往里插入的，适合用下界Super。
-		总结
-		extends 可用于返回类型限定，不能用于参数类型限定（换句话说：? extends xxx 只能用于方法返回类型限定，jdk能够确定此类的最小继承边界为xxx，只要是这个类的父类都能接收，但是传入参数无法确定具体类型，只能接受null的传入）。
-		super 可用于参数类型限定，不能用于返回类型限定（换句话说：? supper xxx 只能用于方法传参，因为jdk能够确定传入为xxx的子类，返回只能用Object类接收）。
-		? 既不能用于方法参数传入，也不能用于方法返回。*//*
+		List<? extends Employee> employees = testExtend();
+		Employee employee1 = employees.get(0);
+//		PECS原则
+//		最后看一下什么是PECS（Producer Extends Consumer Super）原则，已经很好理解了：
+//
+//		频繁往外读取内容的，适合用上界Extends。
+//		经常往里插入的，适合用下界Super。
+//		总结
+//		extends 可用于返回类型限定，不能用于参数类型限定（换句话说：? extends xxx 只能用于方法返回类型限定，jdk能够确定此类的最小继承边界为xxx，只要是这个类的父类都能接收，但是传入参数无法确定具体类型，只能接受null的传入）。
+//		super 可用于参数类型限定，不能用于返回类型限定（换句话说：? supper xxx 只能用于方法传参，因为jdk能够确定传入为xxx的子类，返回只能用Object类接收）。
+//		? 既不能用于方法参数传入，也不能用于方法返回。
 
 		//如果你既想存，又想取，那就别用通配符
-	}*/
+	}
 
 	private List<? extends Employee> testExtend(){
 		List<CEO> list2 = new ArrayList<>();

@@ -5,8 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
-import com.android.fanshe.interfaces.PointArrayImpl;
 import com.zhang.fanshe.bean.PointImpl;
+import com.zhang.fanshe.interfaces.PointArrayImpl;
 import com.zhang.fanshe.interfaces.PointGenericityImpl;
 import com.zhang.fanshe.interfaces.PointImpl2;
 import com.zhang.fanshe.interfaces.PointWildcardImpl;

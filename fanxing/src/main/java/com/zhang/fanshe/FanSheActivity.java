@@ -1,14 +1,14 @@
-package com.android.fanshe;
+package com.zhang.fanshe;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
-import com.android.fanshe.bean.Animal;
-import com.android.fanshe.bean.AnimalImpl;
-import com.android.fanshe.bean.Person;
-import com.android.fanxing.R;
+import com.zhang.fanshe.bean.Animal;
+import com.zhang.fanshe.bean.AnimalImpl;
+import com.zhang.fanshe.bean.Person;
+import com.zhang.fanxing.R;
 
 import java.lang.reflect.Modifier;
 

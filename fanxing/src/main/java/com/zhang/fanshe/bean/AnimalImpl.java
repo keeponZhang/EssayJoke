@@ -1,4 +1,4 @@
-package com.android.fanshe.bean;
+package com.zhang.fanshe.bean;
 
 public class AnimalImpl extends Animal {
 }

@@ -1,4 +1,4 @@
-package com.android.fanxing.bean;
+package com.zhang.fanxing.bean;
 
 public class Employee {
 }

@@ -41,7 +41,11 @@ dependencies {
 
     implementation "com.android.support.constraint:constraint-layout:${rootProject.ext.CONTRANT_LAYOUT_VERSION}"
     testCompile 'junit:junit:4.12'
-    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation ('com.github.bumptech.glide:glide:3.7.0')
+            { exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'support-compat'
+        exclude group: 'com.android.support', module: 'support-core-ui'
+    }
     implementation 'com.google.code.gson:gson:2.2.4'
     implementation project(':framelibrary')
     implementation project(':webview')

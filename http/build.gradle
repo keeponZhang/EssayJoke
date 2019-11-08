@@ -44,7 +44,11 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:+', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    implementation 'com.squareup.okhttp3:okhttp:3.4.1'
+
+    implementation ('com.squareup.okhttp3:okhttp:3.4.1'){ exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'support-compat'
+        exclude group: 'com.android.support', module: 'support-core-ui'
+    }
     implementation 'com.google.code.gson:gson:2.2.4'
 
 }

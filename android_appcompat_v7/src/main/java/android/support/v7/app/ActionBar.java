@@ -28,6 +28,7 @@ import android.support.annotation.RestrictTo;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.appcompat.R;
 import android.support.v7.view.ActionMode;
 import android.util.AttributeSet;

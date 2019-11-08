@@ -31,10 +31,10 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    api project(path: ':android_appcompat_v4_27')
+//    api project(path: ':android_appcompat_v4_27')
     implementation "com.android.support.constraint:constraint-layout:${rootProject.ext.CONTRANT_LAYOUT_VERSION}"
     testImplementation 'junit:junit:4.12'
-//    api project(path: ':android_appcompat_v7')
+    api project(path: ':android_appcompat_v7')
     implementation("com.android.support:appcompat-v7:${rootProject.ext.SUPPORT_LIBRARY_VERSION}",
             {
                 exclude group: 'com.android.support', module: 'support-v4'

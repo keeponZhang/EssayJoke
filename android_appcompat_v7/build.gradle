@@ -48,5 +48,6 @@ dependencies {
             { exclude group: 'com.android.support', module: 'support-v4'
                 exclude group: 'com.android.support', module: 'support-compat'
             })
-
+    implementation project(path: ':android_appcompat_v4_27')
+    implementation "android.arch.lifecycle:runtime:1.0.0"
 }

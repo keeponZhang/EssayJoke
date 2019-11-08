@@ -24,10 +24,13 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    api ("com.android.support:appcompat-v7:${rootProject.ext.SUPPORT_LIBRARY_VERSION}",
+    implementation ("com.android.support:appcompat-v7:${rootProject.ext.SUPPORT_LIBRARY_VERSION}",
             { exclude group: 'com.android.support', module: 'support-v4'
                 exclude group: 'com.android.support', module: 'support-compat'
                 exclude group: 'com.android.support', module: 'support-core-ui'
             })
     implementation project(path: ':android_appcompat_v4')
+    implementation project(path: ':android_support_core_ui')
+    implementation "android.arch.lifecycle:runtime:1.0.0"
+
 }

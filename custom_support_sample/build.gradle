@@ -44,6 +44,8 @@ dependencies {
     implementation project(path: ':android_support_recyclerview')
     implementation project(path: ':android_support_core_ui')
     implementation project(path: ':android_support_fragment')
+
+
     implementation project(path: ':coordinatorLayout')
 
 

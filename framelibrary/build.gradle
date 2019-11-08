@@ -19,19 +19,29 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile "com.android.support:appcompat-v7:${rootProject.ext.SUPPORT_LIBRARY_VERSION}"
-    compile "com.android.support.constraint:constraint-layout:${rootProject.ext.CONTRANT_LAYOUT_VERSION}"
-    compile project(':baselibrary')
-    compile project(':banner')
-    compile project(':recyclerview')
+//    compile "com.android.support:appcompat-v7:${rootProject.ext.SUPPORT_LIBRARY_VERSION}"
+    implementation ("com.android.support:support-core-utils:${rootProject.ext.SUPPORT_LIBRARY_VERSION}",
+            { exclude group: 'com.android.support', module: 'support-v4'
+                exclude group: 'com.android.support', module: 'support-compat'
+                exclude group: 'com.android.support', module: 'support-core-ui'
+            })
+    implementation project(path: ':android_support_v4')
+    implementation project(path: ':android_appcompat_v7')
+    implementation project(path: ':android_support_recyclerview')
+    implementation project(path: ':android_support_core_ui')
+    implementation project(path: ':android_support_fragment')
+    implementation "com.android.support.constraint:constraint-layout:${rootProject.ext.CONTRANT_LAYOUT_VERSION}"
+    api project(':baselibrary')
+    api project(':banner')
+    api project(':recyclerview')
 //    implementation "com.android.support:recyclerview-v7:${rootProject.ext.SUPPORT_LIBRARY_VERSION}"
-    compile project(':ioc')
-    compile project(':http')
-    compile project(':indicator')
-    compile 'com.alipay.euler:andfix:0.5.0@aar'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.google.code.gson:gson:2.2.4'
+    api project(':ioc')
+    api project(':http')
+    api project(':indicator')
+    implementation 'com.alipay.euler:andfix:0.5.0@aar'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.google.code.gson:gson:2.2.4'
 
 }

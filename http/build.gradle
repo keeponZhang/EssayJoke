@@ -25,14 +25,26 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile "com.android.support:appcompat-v7:${rootProject.ext.SUPPORT_LIBRARY_VERSION}"
-    compile "com.android.support.constraint:constraint-layout:${rootProject.ext.CONTRANT_LAYOUT_VERSION}"
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+//    implementation "com.android.support:appcompat-v7:${rootProject.ext.SUPPORT_LIBRARY_VERSION}"
+    implementation ("com.android.support:support-core-utils:${rootProject.ext.SUPPORT_LIBRARY_VERSION}",
+            { exclude group: 'com.android.support', module: 'support-v4'
+                exclude group: 'com.android.support', module: 'support-compat'
+                exclude group: 'com.android.support', module: 'support-core-ui'
+            })
+    implementation project(path: ':android_support_v4')
+    implementation project(path: ':android_appcompat_v7')
+    implementation project(path: ':android_support_recyclerview')
+    implementation project(path: ':android_support_core_ui')
+    implementation project(path: ':android_support_fragment')
+
+
+    implementation "com.android.support.constraint:constraint-layout:${rootProject.ext.CONTRANT_LAYOUT_VERSION}"
     testCompile 'junit:junit:4.12'
     androidTestCompile('com.android.support.test.espresso:espresso-core:+', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.squareup.okhttp3:okhttp:3.4.1'
-    compile 'com.google.code.gson:gson:2.2.4'
+    implementation 'com.squareup.okhttp3:okhttp:3.4.1'
+    implementation 'com.google.code.gson:gson:2.2.4'
 
 }

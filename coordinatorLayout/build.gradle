@@ -37,7 +37,7 @@ dependencies {
             }
     )
     implementation project(path: ':android_design_27')
-    implementation project(path: ':android_support_recyclerview_27')
+    implementation project(path: ':android_support_recyclerview')
     implementation "android.arch.lifecycle:runtime:1.0.0"
 
 }

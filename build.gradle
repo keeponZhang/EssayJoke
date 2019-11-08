@@ -46,6 +46,7 @@ ext {
     supportMinSdkVersion = 18
     supportTargetSdkVersion = 26
     CUSTOM_SUPPORT_LIBRARY_VERSION = '27.0.0'
+    LIFECYCLE_RUNTIME_VERSION = '1.0.0'
 
 }
 

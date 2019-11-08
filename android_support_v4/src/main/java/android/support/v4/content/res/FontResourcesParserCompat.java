@@ -16,8 +16,6 @@
 
 package android.support.v4.content.res;
 
-import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
-
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.support.annotation.ArrayRes;
@@ -25,7 +23,7 @@ import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RestrictTo;
-import android.support.compat.R;
+import android.support.v4.R;
 import android.support.v4.provider.FontRequest;
 import android.util.AttributeSet;
 import android.util.Base64;
@@ -40,6 +38,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
 
 /**
  * Parser for xml type font resources.

@@ -19,7 +19,7 @@ package android.support.v4.view;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
-import android.support.compat.R;
+import android.support.v4.R;
 import android.support.v4.view.ViewCompat.ScrollAxis;
 import android.view.View;
 import android.view.ViewGroup;

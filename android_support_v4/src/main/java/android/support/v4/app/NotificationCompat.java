@@ -16,10 +16,6 @@
 
 package android.support.v4.app;
 
-import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
-
-import static java.lang.annotation.RetentionPolicy.SOURCE;
-
 import android.app.Activity;
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -44,7 +40,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.annotation.RestrictTo;
-import android.support.compat.R;
+import android.support.v4.R;
 import android.support.v4.text.BidiFormatter;
 import android.support.v4.view.GravityCompat;
 import android.text.SpannableStringBuilder;
@@ -64,6 +60,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
+import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 /**
  * Helper for accessing features in {@link Notification}.

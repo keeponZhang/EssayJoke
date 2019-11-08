@@ -24,33 +24,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    implementation ('com.android.support:support-core-utils:27.0.0',
-            { exclude group: 'com.android.support', module: 'support-v4'
-                exclude group: 'com.android.support', module: 'support-compat'
-                exclude group: 'com.android.support', module: 'support-core-ui'
-            })
-    implementation ('com.android.support:support-fragment:27.0.0',
-            { exclude group: 'com.android.support', module: 'support-v4'
-                exclude group: 'com.android.support', module: 'support-compat'
-                exclude group: 'com.android.support', module: 'support-core-ui'
-            })
-    implementation ('com.android.support:transition:27.0.0',
-            { exclude group: 'com.android.support', module: 'support-v4'
-                exclude group: 'com.android.support', module: 'support-compat'
-                exclude group: 'com.android.support', module: 'support-core-ui'
-            })
-    implementation ('com.android.support:support-vector-drawable:27.0.0',
-            { exclude group: 'com.android.support', module: 'support-v4'
-                exclude group: 'com.android.support', module: 'support-compat'
-                exclude group: 'com.android.support', module: 'support-core-ui'
-            })
-    implementation ('com.android.support:animated-vector-drawable:27.0.0',
-            {  exclude group: 'com.android.support', module: 'support-v4'
-                exclude group: 'com.android.support', module: 'support-compat'
-                exclude group: 'com.android.support', module: 'support-core-ui'
-            })
-    api project(path: ':android_support_v4')
-    api project(path: ':android_support_core_ui')
+    implementation project(path: ':android_support_compat')
+    implementation project(path: ':android_support_core_ui')
+    implementation project(path: ':android_support_v4')
 
 }

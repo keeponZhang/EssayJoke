@@ -42,6 +42,7 @@
 		    </intent-filter>
 	    </activity>
 		<activity android:name="com.android.coordinatorLayout.DetailActivity"></activity>
+        <activity android:name=".TestFragmentActivity" />
 
     </application>
 

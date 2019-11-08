@@ -50,7 +50,7 @@ dependencies {
                 exclude group: 'com.android.support', module: 'support-compat'
                 exclude group: 'com.android.support', module: 'support-core-ui'
             })
-    api project(path: ':android_appcompat_v4_27')
+    api project(path: ':android_appcompat_v4')
     api project(path: ':android_support_core_ui')
 
 }

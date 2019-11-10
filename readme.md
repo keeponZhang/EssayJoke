@@ -9,5 +9,6 @@
 8. support-core-ui 依赖 com.android.support：support-annotations；support-compat；support-core-utils；customview；viewpager；coordinatorlayout；drawerlayout
 9. recyclerview-v7 依赖 com.android.support：support-annotations；support-compat；support-core-utils；support-core-ui
 10. design 依赖 com.android.support：support-v4；appcompat-v7；recyclerview-v7；transition；
-11. support-compat里面又分support-v4和v13
-gradlew -q :custom_support_sample:dependencies > dependencies.txt
+11. support-compat里面又分support-v4和v13 
+12.  gradlew -q :custom_support_sample:dependencies > dependencies.txt
+13. support-v4 没有引用support-fragment；support-core-ui编译通过

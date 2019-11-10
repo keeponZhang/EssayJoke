@@ -34,46 +34,45 @@ dependencies {
 //    api project(path: ':android_appcompat_v4')
     implementation "com.android.support.constraint:constraint-layout:${rootProject.ext.CONTRANT_LAYOUT_VERSION}"
     testImplementation 'junit:junit:4.12'
-    implementation ("com.android.support:support-core-utils:${rootProject.ext.SUPPORT_LIBRARY_VERSION}",
-            { exclude group: 'com.android.support', module: 'support-v4'
-                exclude group: 'com.android.support', module: 'support-compat'
-                exclude group: 'com.android.support', module: 'support-core-ui'
-            })
-    implementation (project(path: ':android_support_v4')){
-        exclude group: 'com.android.support', module: 'support-compat'
-        exclude group: 'com.android.support', module: 'support-core-ui'
-    }
-    implementation (project(path: ':android_appcompat_v7')){
-        exclude group: 'com.android.support', module: 'support-v4'
-        exclude group: 'com.android.support', module: 'support-compat'
-        exclude group: 'com.android.support', module: 'support-core-ui'
-    }
-    implementation (project(path: ':android_support_recyclerview')){
-        exclude group: 'com.android.support', module: 'support-v4'
-        exclude group: 'com.android.support', module: 'support-compat'
-        exclude group: 'com.android.support', module: 'support-core-ui'
-    }
-    implementation (project(path: ':android_support_core_ui')){
-        exclude group: 'com.android.support', module: 'support-v4'
-            exclude group: 'com.android.support', module: 'support-compat'
-    }
-    implementation (project(path: ':android_support_fragment')){
-        exclude group: 'com.android.support', module: 'support-v4'
-        exclude group: 'com.android.support', module: 'support-compat'
-        exclude group: 'com.android.support', module: 'support-core-ui'
-    }
+
+    implementation (project(path: ':android_support_v4'))
+    implementation (project(path: ':android_appcompat_v7'))
+    implementation (project(path: ':android_support_recyclerview'))
+    implementation (project(path: ':android_support_core_ui'))
+    implementation (project(path: ':android_support_core_utils'))
+    implementation (project(path: ':android_support_fragment'))
+    implementation (project(path: ':coordinatorLayout'))
 
 
 
-    implementation (project(path: ':coordinatorLayout')){
-        exclude group: 'com.android.support', module: 'support-v4'
-        exclude group: 'com.android.support', module: 'support-compat'
-        exclude group: 'com.android.support', module: 'support-core-ui'
-    }
+//    implementation (project(path: ':android_support_v4')){
+//        exclude group: 'com.android.support', module: 'support-compat'
+//        exclude group: 'com.android.support', module: 'support-core-ui'
+//    }
+//    implementation (project(path: ':android_appcompat_v7')){
+//        exclude group: 'com.android.support', module: 'support-v4'
+//        exclude group: 'com.android.support', module: 'support-compat'
+//        exclude group: 'com.android.support', module: 'support-core-ui'
+//    }
+//    implementation (project(path: ':android_support_recyclerview')){
+//        exclude group: 'com.android.support', module: 'support-v4'
+//        exclude group: 'com.android.support', module: 'support-compat'
+//        exclude group: 'com.android.support', module: 'support-core-ui'
+//    }
+//    implementation (project(path: ':android_support_core_ui')){
+//        exclude group: 'com.android.support', module: 'support-v4'
+//            exclude group: 'com.android.support', module: 'support-compat'
+//    }
+//    implementation (project(path: ':android_support_fragment')){
+//        exclude group: 'com.android.support', module: 'support-v4'
+//        exclude group: 'com.android.support', module: 'support-compat'
+//        exclude group: 'com.android.support', module: 'support-core-ui'
+//    }
+//    implementation (project(path: ':coordinatorLayout')){
+//        exclude group: 'com.android.support', module: 'support-v4'
+//        exclude group: 'com.android.support', module: 'support-compat'
+//        exclude group: 'com.android.support', module: 'support-core-ui'
+//    }
 
 
-}
-subprojects {
-    //Note: 打印项目所有依赖项 ./gradlew allDependencies > dependencies.log
-    task allDependencies(type: DependencyReportTask) {}
 }

@@ -24,11 +24,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation ("com.android.support:support-core-utils:${rootProject.ext.SUPPORT_LIBRARY_VERSION}",
-            { exclude group: 'com.android.support', module: 'support-v4'
-                exclude group: 'com.android.support', module: 'support-compat'
-                exclude group: 'com.android.support', module: 'support-core-ui'
-            })
+//
 //    implementation ("com.android.support:support-fragment:${rootProject.ext.SUPPORT_LIBRARY_VERSION}",
 //            { exclude group: 'com.android.support', module: 'support-v4'
 //                exclude group: 'com.android.support', module: 'support-compat'
@@ -46,6 +42,5 @@ dependencies {
                 exclude group: 'com.android.support', module: 'support-compat'
                 exclude group: 'com.android.support', module: 'support-core-ui'
             })
-
     implementation project(path: ':android_support_compat')
 }

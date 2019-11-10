@@ -10,3 +10,4 @@
 9. recyclerview-v7 依赖 com.android.support：support-annotations；support-compat；support-core-utils；support-core-ui
 10. design 依赖 com.android.support：support-v4；appcompat-v7；recyclerview-v7；transition；
 11. support-compat里面又分support-v4和v13
+gradlew -q :custom_support_sample:dependencies > dependencies.txt

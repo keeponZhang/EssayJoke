@@ -29,30 +29,23 @@ dependencies {
                 exclude group: 'com.android.support', module: 'support-compat'
                 exclude group: 'com.android.support', module: 'support-core-ui'
             })
-    implementation ("com.android.support:support-fragment:${rootProject.ext.SUPPORT_LIBRARY_VERSION}",
-            { exclude group: 'com.android.support', module: 'support-v4'
-                exclude group: 'com.android.support', module: 'support-compat'
-                exclude group: 'com.android.support', module: 'support-core-ui'
-            })
-    implementation ("com.android.support:transition:${rootProject.ext.SUPPORT_LIBRARY_VERSION}",
-            { exclude group: 'com.android.support', module: 'support-v4'
-                exclude group: 'com.android.support', module: 'support-compat'
-                exclude group: 'com.android.support', module: 'support-core-ui'
-            })
-    implementation ("com.android.support:support-vector-drawable:${rootProject.ext.SUPPORT_LIBRARY_VERSION}",
-            { exclude group: 'com.android.support', module: 'support-v4'
-                exclude group: 'com.android.support', module: 'support-compat'
-                exclude group: 'com.android.support', module: 'support-core-ui'
-            })
-    implementation ("com.android.support:animated-vector-drawable:${rootProject.ext.SUPPORT_LIBRARY_VERSION}",
+//    implementation ("com.android.support:support-fragment:${rootProject.ext.SUPPORT_LIBRARY_VERSION}",
+//            { exclude group: 'com.android.support', module: 'support-v4'
+//                exclude group: 'com.android.support', module: 'support-compat'
+//                exclude group: 'com.android.support', module: 'support-core-ui'
+//            })
+//    implementation ("com.android.support:support-core-ui:${rootProject.ext.SUPPORT_LIBRARY_VERSION}",
+//            {  exclude group: 'com.android.support', module: 'support-v4'
+//                exclude group: 'com.android.support', module: 'support-compat'
+//                exclude group: 'com.android.support', module: 'support-core-ui'
+//            })
+
+
+    implementation ("com.android.support:support-media-compat:${rootProject.ext.SUPPORT_LIBRARY_VERSION}",
             {  exclude group: 'com.android.support', module: 'support-v4'
                 exclude group: 'com.android.support', module: 'support-compat'
                 exclude group: 'com.android.support', module: 'support-core-ui'
             })
-    implementation ("com.android.support:appcompat-v7:${rootProject.ext.SUPPORT_LIBRARY_VERSION}",
-            { exclude group: 'com.android.support', module: 'support-v4'
-                exclude group: 'com.android.support', module: 'support-compat'
-                exclude group: 'com.android.support', module: 'support-core-ui'
-            })
+
     implementation project(path: ':android_support_compat')
 }

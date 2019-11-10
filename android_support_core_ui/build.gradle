@@ -31,5 +31,4 @@ dependencies {
             })
     implementation project(path: ':android_support_v4')
     implementation project(path: ':android_support_compat')
-
 }

@@ -774,6 +774,7 @@ final class BackStackRecord extends FragmentTransaction implements
             if (f != null) {
                 f.setNextTransition(mTransition, mTransitionStyle);
             }
+            //根据Op类型，调用FragmentManager相关方法，改变Fragment状态
             switch (op.cmd) {
                 case OP_ADD:
                     f.setNextAnim(op.enterAnim);
@@ -833,6 +834,7 @@ final class BackStackRecord extends FragmentTransaction implements
                 f.setNextTransition(FragmentManagerImpl.reverseTransit(mTransition),
                         mTransitionStyle);
             }
+            //根据Op类型，调用FragmentManager相关方法，改变Fragment状态
             switch (op.cmd) {
                 case OP_ADD:
                     f.setNextAnim(op.popExitAnim);

@@ -54,6 +54,7 @@ public class Fragment2 extends BaseTestFragment {
                 //回退到Fragment1
                 FragmentManager fm = getFragmentManager();
             //将当前的事务退出回退栈
+
                 fm.popBackStack();
                 break;
             case R.id.jumpFragment3:

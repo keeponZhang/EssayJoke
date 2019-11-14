@@ -50,7 +50,18 @@ public class Fragment3 extends BaseTestFragment {
             case R.id.backFragment1:
                 //回退到Fragment2
                 FragmentManager fm = getFragmentManager();
-                fm.popBackStack("fragment1", POP_BACK_STACK_INCLUSIVE);
+//                popBackStack(String tag,int flags)：
+//                tag可以为null或者相对应的tag，flags只有0和1(POP_BACK_STACK_INCLUSIVE)两种情况
+//                如果tag为null，flags为0时，弹出回退栈中最上层的那个fragment。
+//                如果tag为null ，flags为1时，弹出回退栈中所有fragment。
+//                如果tag不为null，那就会找到这个tag所对应的fragment，flags为0时，弹出该
+//                fragment以上的Fragment，如果是1，弹出该fragment（包括该fragment）以
+//                上的fragment。
+//                原文链接：https://blog.csdn.net/qq_20280683/article/details/79641182
+//                fm.popBackStack("fragment1", POP_BACK_STACK_INCLUSIVE);
+                //有待验证
+//                fm.popBackStack(null, 0);
+//                fm.popBackStack(null, 1);
                 break;
             case R.id.backFragment2:
                 //回退到Fragment2

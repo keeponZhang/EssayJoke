@@ -364,6 +364,7 @@ final class BackStackRecord extends FragmentTransaction implements
     }
     //把操作添加到集合之中。
     void addOp(Op op) {
+        //其中mOps是一个列表，这个方法就将保存了Fragment的op对象放入到列表中：
         mOps.add(op);
         op.enterAnim = mEnterAnim;
         op.exitAnim = mExitAnim;
@@ -389,7 +390,7 @@ final class BackStackRecord extends FragmentTransaction implements
         return this;
     }
 
-    //新建一个操作，并给操作赋值。
+    //新建一个操作，并给操作赋值。 //replace 也是走这个方法，opcmd  =  OP_REPLACE
     private void doAddOp(int containerViewId, Fragment fragment, String tag, int opcmd) {
         final Class fragmentClass = fragment.getClass();
         final int modifiers = fragmentClass.getModifiers();
@@ -551,6 +552,7 @@ final class BackStackRecord extends FragmentTransaction implements
             throw new IllegalStateException(
                     "This FragmentTransaction is not allowed to be added to the back stack.");
         }
+        //是否加入返回堆栈
         mAddToBackStack = true;
         mName = name;
         return this;
@@ -684,7 +686,9 @@ final class BackStackRecord extends FragmentTransaction implements
             dump("  ", null, pw, null);
             pw.close();
         }
+        //将mCommitted设置为true，也就是说已经提交了
         mCommitted = true;
+        //mAddToBackStack是判断是否可以添加，在初始化的时候设置为true.
         if (mAddToBackStack) {
             mIndex = mManager.allocBackStackIndex(this);
         } else {

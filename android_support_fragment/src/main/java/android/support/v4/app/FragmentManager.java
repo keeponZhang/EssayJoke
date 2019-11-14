@@ -2054,6 +2054,8 @@ final class FragmentManagerImpl extends FragmentManager implements LayoutInflate
     }
 
     private void checkStateLoss() {
+//        只是进行了一个isStateSaved的判断处理，如果isStateSaved()返回的是true的话，就报异常
+        //saveAllState方法会赋值为true，saveAllState在Actvitiy的onSaveInstanceState()方法中调用
         if (mStateSaved) {
             throw new IllegalStateException(
                     "Can not perform this action after onSaveInstanceState");
@@ -2076,7 +2078,9 @@ final class FragmentManagerImpl extends FragmentManager implements LayoutInflate
      * @param allowStateLoss whether to allow loss of state information
      * @throws IllegalStateException if the activity has been destroyed
      */
+//    这个方法的目的就是添加活动到列表中，然后进行一次检测。
     public void enqueueAction(OpGenerator action, boolean allowStateLoss) {
+        //commit 时 传过来的allowStateLoss是false
         if (!allowStateLoss) {
             checkStateLoss();
         }
@@ -2108,8 +2112,10 @@ final class FragmentManagerImpl extends FragmentManager implements LayoutInflate
      */
     private void scheduleCommit() {
         synchronized (this) {
+            // 是否有延时的事务
             boolean postponeReady =
                     mPostponedTransactions != null && !mPostponedTransactions.isEmpty();
+            // 是否有待执行的事务
             boolean pendingReady = mPendingActions != null && mPendingActions.size() == 1;
             //当其大小为1时，会通过主线程的Handler post一个Runnable mExecCommit出去，当这个Runnable执行时调用execPendingActions()方法。
             if (postponeReady || pendingReady) {
@@ -2118,7 +2124,7 @@ final class FragmentManagerImpl extends FragmentManager implements LayoutInflate
             }
         }
     }
-
+    //这个方法中，我们将FragmentTranscation的子类BackStackRecord添加到了一个存放的队列中。
     public int allocBackStackIndex(BackStackRecord bse) {
         synchronized (this) {
             if (mAvailBackStackIndices == null || mAvailBackStackIndices.size() <= 0) {
@@ -2247,13 +2253,17 @@ final class FragmentManagerImpl extends FragmentManager implements LayoutInflate
         while (generateOpsForPendingActions(mTmpRecords, mTmpIsPop)) {
             mExecutingActions = true;
             try {
+                //优化执行事务，里面的处理逻辑相当复杂
+                //Redundant多余的
                 removeRedundantOperationsAndExecute(mTmpRecords, mTmpIsPop);
             } finally {
+                //清空缓存事务队列
                 cleanupExec();
             }
             didSomething = true;
         }
 
+        //判断FragmentList是否需要延时，进而调用moveToState修改Fragment的状态，根据状态来触发Fragment的不同生命周期
         doPendingDeferredStart();
         burpActive();
 
@@ -2346,6 +2356,7 @@ final class FragmentManagerImpl extends FragmentManager implements LayoutInflate
             }
         }
         if (startIndex != numRecords) {
+            //这个方法很重要
             executeOpsTogether(records, isRecordPop, startIndex, numRecords);
         }
     }
@@ -2358,6 +2369,7 @@ final class FragmentManagerImpl extends FragmentManager implements LayoutInflate
      * @param startIndex The index of the first record in <code>records</code> to be executed
      * @param endIndex One more than the final record index in <code>records</code> to executed.
      */
+    //这个方法很重要，会调用executeOps，从而调用BackStackRecord.executePopOps(moveToState)
     private void executeOpsTogether(ArrayList<BackStackRecord> records,
             ArrayList<Boolean> isRecordPop, int startIndex, int endIndex) {
         final boolean allowReordering = records.get(startIndex).mReorderingAllowed;

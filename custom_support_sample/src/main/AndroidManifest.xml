@@ -42,8 +42,8 @@
 		    </intent-filter>
 	    </activity>
 		<activity android:name="com.android.coordinatorLayout.DetailActivity"></activity>
-        <activity android:name=".TestFragmentActivity" />
+		<activity android:name=".fragment.TestFragmentActivity"></activity>
 
-    </application>
+	</application>
 
 </manifest>

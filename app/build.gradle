@@ -36,6 +36,9 @@ dependencies {
     implementation project(path: ':android_support_core_utils')
     implementation project(path: ':android_support_fragment')
 
+
+
+
     implementation "com.android.support.constraint:constraint-layout:${rootProject.ext.CONTRANT_LAYOUT_VERSION}"
     testCompile 'junit:junit:4.12'
     implementation ('com.github.bumptech.glide:glide:3.7.0')

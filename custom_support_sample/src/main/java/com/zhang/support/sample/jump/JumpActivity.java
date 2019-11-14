@@ -5,8 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.android.coordinatorLayout.recyclerview.itemdecoration.LinearItemDecoration;
-import com.android.coordinatorLayout.recyclerview.itemdecoration.LinearItemDecoration2;
 import com.zhang.support.sample.R;
 
 import java.util.ArrayList;
@@ -34,6 +32,7 @@ public class JumpActivity extends AppCompatActivity {
         titles.add("CoordinatorLayoutCollapsingToolbarLayoutActivity");
         titles.add("DarrenBehaviorActivity");
         titles.add("DetailActivity");
+        titles.add("TestFragmentActivity");
 
         for (int i = 0; i < 50; i++) {
             titles.add("test=" + i);
@@ -44,8 +43,8 @@ public class JumpActivity extends AppCompatActivity {
 //           recyclerView.setLayoutManager(new CustomLayoutManagerRecyclered());
 //        recyclerView.setLayoutManager(new CustomLayoutManagerRecyclered1());
 //        recyclerView.setLayoutManager(new CustomLayoutManagerRecyclered2());
-        recyclerView.addItemDecoration(new LinearItemDecoration2());
-        recyclerView.addItemDecoration(new LinearItemDecoration());
+//        recyclerView.addItemDecoration(new LinearItemDecoration2());
+//        recyclerView.addItemDecoration(new LinearItemDecoration());
         recyclerView.setAdapter(mainAdapter);
     }
 }

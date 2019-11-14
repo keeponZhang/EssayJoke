@@ -170,6 +170,7 @@ final class BackStackState implements Parcelable {
 /**
  * Entry of an operation on the fragment back stack.
  */
+//BackStackRecord其实是BackStackState的一个内部类，我们平时就是通过它来进行add、remove、replace、attach、detach、hide、show等操作的
 final class BackStackRecord extends FragmentTransaction implements
         FragmentManager.BackStackEntry, FragmentManagerImpl.OpGenerator {
     static final String TAG = FragmentManagerImpl.TAG;
@@ -361,7 +362,7 @@ final class BackStackRecord extends FragmentTransaction implements
         }
         return mBreadCrumbShortTitleText;
     }
-
+    //把操作添加到集合之中。
     void addOp(Op op) {
         mOps.add(op);
         op.enterAnim = mEnterAnim;
@@ -388,6 +389,7 @@ final class BackStackRecord extends FragmentTransaction implements
         return this;
     }
 
+    //新建一个操作，并给操作赋值。
     private void doAddOp(int containerViewId, Fragment fragment, String tag, int opcmd) {
         final Class fragmentClass = fragment.getClass();
         final int modifiers = fragmentClass.getModifiers();
@@ -402,6 +404,7 @@ final class BackStackRecord extends FragmentTransaction implements
 
         if (tag != null) {
             if (fragment.mTag != null && !tag.equals(fragment.mTag)) {
+                //如果这个 fragment 之前已经有了tag，那么是不允许改变它的。
                 throw new IllegalStateException("Can't change tag of fragment "
                         + fragment + ": was " + fragment.mTag
                         + " now " + tag);
@@ -415,6 +418,7 @@ final class BackStackRecord extends FragmentTransaction implements
                         + fragment + " with tag " + tag + " to container view with no id");
             }
             if (fragment.mFragmentId != 0 && fragment.mFragmentId != containerViewId) {
+                //如果这个fragment已经有了mFragmentId，那么不允许改变它。
                 throw new IllegalStateException("Can't change container ID of fragment "
                         + fragment + ": was " + fragment.mFragmentId
                         + " now " + containerViewId);
@@ -424,6 +428,13 @@ final class BackStackRecord extends FragmentTransaction implements
 
         addOp(new Op(opcmd, fragment));
     }
+
+//    我们调用这些操作之后仅仅是把这个操作添加到了BackStackRecord当中的一个集合。
+//    在进行attach、detach、hide、show、remove这五个操作时是不需要传入containerViewId的，因为在执行这些操作之前这个Fragment必然已经经过了add操作，它的containerId是确定的。
+//    在执行add操作时，需要保证Fragment的mTag和mContainerViewId在不为空时（也就是这个 Fragment实例之前已经执行过add操作），它们和新传入的tag和containerViewId必须是相同的，这是因为在FragmentManager的mActive列表中保存了所有被添加进去的Fragment，而其提供的 findFragmentById/Tag正是通过这两个字段作为判断的标准，因此不允许同一个实例在列表当中重复出现两次。
+//    replace操作和add类似，它增加了一个额外条件，就是containerViewId不为空，因为replace需要知道它是对哪个container进行操作，后面我们会看到replace其实是一个先remove再add的过程，因此`add 的那些判断条件同样适用。
+
+
 
     @Override
     public FragmentTransaction replace(int containerViewId, Fragment fragment) {
@@ -660,8 +671,12 @@ final class BackStackRecord extends FragmentTransaction implements
         return setReorderingAllowed(allowOptimization);
     }
 
+    //那么这个链表中的操作什么时候被执行呢，看一下commit()操作：
     int commitInternal(boolean allowStateLoss) {
-        if (mCommitted) throw new IllegalStateException("commit already called");
+        if (mCommitted) {
+            //已经有事务处理，抛出异常。
+            throw new IllegalStateException("commit already called");
+        }
         if (FragmentManagerImpl.DEBUG) {
             Log.v(TAG, "Commit: " + this);
             LogWriter logw = new LogWriter(TAG);
@@ -675,6 +690,7 @@ final class BackStackRecord extends FragmentTransaction implements
         } else {
             mIndex = -1;
         }
+        //它最后调用了FragmentManager的enqueueAction方法，我们进去看一下里面做了什么：
         mManager.enqueueAction(this, allowStateLoss);
         return mIndex;
     }
@@ -903,6 +919,7 @@ final class BackStackRecord extends FragmentTransaction implements
                     boolean alreadyAdded = false;
                     for (int i = added.size() - 1; i >= 0; i--) {
                         final Fragment old = added.get(i);
+                        //遍历 mAdded列表，找到 containerId 相同的 old Fragment.
                         if (old.mContainerId == containerId) {
                             if (old == f) {
                                 alreadyAdded = true;

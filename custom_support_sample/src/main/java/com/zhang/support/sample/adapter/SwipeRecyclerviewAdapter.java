@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.android.coordinatorLayout.adapter.BaseRecyclerViewAdapter;
+import com.hc.baselibrary.base.BaseRecyclerViewAdapter;
 import com.zhang.support.sample.R;
 
 import java.util.List;

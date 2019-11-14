@@ -16,8 +16,6 @@
 
 package android.support.v4.app;
 
-import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
-
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorListenerAdapter;
@@ -70,6 +68,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
 
 /**
  * Static library support version of the framework's {@link android.app.FragmentManager}.
@@ -1886,9 +1886,11 @@ final class FragmentManagerImpl extends FragmentManager implements LayoutInflate
 
     public void addFragment(Fragment fragment, boolean moveToStateNow) {
         if (DEBUG) Log.v(TAG, "add: " + fragment);
+        //加入到mActive列表中。
         makeActive(fragment);
         if (!fragment.mDetached) {
             if (mAdded.contains(fragment)) {
+                //已经在mAdded列表，抛出异常。
                 throw new IllegalStateException("Fragment already added: " + fragment);
             }
             synchronized (mAdded) {
@@ -1913,6 +1915,7 @@ final class FragmentManagerImpl extends FragmentManager implements LayoutInflate
         final boolean inactive = !fragment.isInBackStack();
         if (!fragment.mDetached || inactive) {
             synchronized (mAdded) {
+                //从mAdded列表中移除。
                 mAdded.remove(fragment);
             }
             if (fragment.mHasMenu && fragment.mMenuVisible) {
@@ -1979,6 +1982,7 @@ final class FragmentManagerImpl extends FragmentManager implements LayoutInflate
             fragment.mDetached = false;
             if (!fragment.mAdded) {
                 if (mAdded.contains(fragment)) {
+                    //mAdded列表中已经有，抛出异常，
                     throw new IllegalStateException("Fragment already added: " + fragment);
                 }
                 if (DEBUG) Log.v(TAG, "add from attach: " + fragment);
@@ -2082,12 +2086,16 @@ final class FragmentManagerImpl extends FragmentManager implements LayoutInflate
                     // This FragmentManager isn't attached, so drop the entire transaction.
                     return;
                 }
+                //如果Activity已经被销毁，那么抛出异常。
                 throw new IllegalStateException("Activity has been destroyed");
             }
             if (mPendingActions == null) {
                 mPendingActions = new ArrayList<>();
             }
+            //因为BackStackRecord实现了OpGenerator接口，把加入到其中。
+            //对mPendingActions的添加只有这一个地方
             mPendingActions.add(action);
+            //这个方法是重点
             scheduleCommit();
         }
     }
@@ -2103,6 +2111,7 @@ final class FragmentManagerImpl extends FragmentManager implements LayoutInflate
             boolean postponeReady =
                     mPostponedTransactions != null && !mPostponedTransactions.isEmpty();
             boolean pendingReady = mPendingActions != null && mPendingActions.size() == 1;
+            //当其大小为1时，会通过主线程的Handler post一个Runnable mExecCommit出去，当这个Runnable执行时调用execPendingActions()方法。
             if (postponeReady || pendingReady) {
                 mHost.getHandler().removeCallbacks(mExecCommit);
                 mHost.getHandler().post(mExecCommit);
@@ -2173,10 +2182,11 @@ final class FragmentManagerImpl extends FragmentManager implements LayoutInflate
      *                       checked.
      */
     private void ensureExecReady(boolean allowStateLoss) {
+        //已经有操作在执行，抛出异常
         if (mExecutingActions) {
             throw new IllegalStateException("FragmentManager is already executing transactions");
         }
-
+        //不在主线程中执行，抛出异常
         if (Looper.myLooper() != mHost.getHandler().getLooper()) {
             throw new IllegalStateException("Must be called from main thread of fragment host");
         }
@@ -2230,6 +2240,7 @@ final class FragmentManagerImpl extends FragmentManager implements LayoutInflate
      * Only call from main thread!
      */
     public boolean execPendingActions() {
+
         ensureExecReady(true);
 
         boolean didSomething = false;

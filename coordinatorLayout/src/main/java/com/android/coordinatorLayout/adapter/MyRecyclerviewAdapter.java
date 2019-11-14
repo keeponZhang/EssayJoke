@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.coordinatorLayout.R;
+import com.hc.baselibrary.base.BaseRecyclerViewAdapter;
 
 import java.util.List;
 

@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'com.jakewharton.butterknife'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -41,8 +41,15 @@ dependencies {
     implementation (project(path: ':android_support_core_ui'))
     implementation (project(path: ':android_support_core_utils'))
     implementation (project(path: ':android_support_fragment'))
-    implementation (project(path: ':coordinatorLayout'))
+//    implementation (project(path: ':coordinatorLayout'))
+    implementation project(path: ':baselibrary')
 
+    implementation ("com.jakewharton:butterknife:$rootProject.butterKnifeVersion") {
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'support-compat'
+        exclude group: 'com.android.support', module: 'support-core-ui'
+    }
+    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion"
 
 
 //    implementation (project(path: ':android_support_v4')){

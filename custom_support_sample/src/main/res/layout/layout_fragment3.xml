@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:textSize="20dp"
+        android:gravity="center"
+        android:textAllCaps="false"
+        android:layout_marginBottom="50dp"
+        android:text="This is  Fragment3"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+    </TextView>
+    <Button
+        android:id="@+id/backFragment1"
+        android:textAllCaps="false"
+        android:text="backFragment1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"></Button>
+    <Button
+        android:id="@+id/backFragment2"
+        android:textAllCaps="false"
+        android:text="backFragment2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"></Button>
+</LinearLayout>

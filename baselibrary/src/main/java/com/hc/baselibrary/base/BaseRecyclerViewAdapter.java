@@ -1,4 +1,4 @@
-package com.android.recyclerview.adapter;
+package com.hc.baselibrary.base;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -61,11 +61,11 @@ public abstract class BaseRecyclerViewAdapter<T,VH extends RecyclerView.ViewHold
 	public abstract VH onCreateMyViewHolder(@NonNull ViewGroup parent, int viewType) ;
 	public abstract void onBindMyViewHolder(@NonNull VH holder, int position);
 
-	public void setOnItemClickListener(BaseRecyclerViewAdapter.OnItemClickListener<T> onItemClickListener) {
+	public void setOnItemClickListener(OnItemClickListener<T> onItemClickListener) {
 		mOnItemClickListener = onItemClickListener;
 	}
 
-	public BaseRecyclerViewAdapter.OnItemClickListener<T> mOnItemClickListener;
+	public OnItemClickListener<T> mOnItemClickListener;
 	public    interface OnItemClickListener<T>{
 		void  onItemClick(int positon, T t);
 	}

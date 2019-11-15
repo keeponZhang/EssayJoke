@@ -189,7 +189,7 @@ final class BackStackRecord extends FragmentTransaction implements
     static final int OP_UNSET_PRIMARY_NAV = 9;
 
     static final class Op {
-        int cmd;
+        int cmd;  //状态
         Fragment fragment;
         int enterAnim;
         int exitAnim;
@@ -216,7 +216,7 @@ final class BackStackRecord extends FragmentTransaction implements
     boolean mAllowAddToBackStack = true;
     String mName;
     boolean mCommitted;
-    int mIndex = -1;
+    int mIndex = -1;  //栈中最后一个元素的索引
 
     int mBreadCrumbTitleRes;
     CharSequence mBreadCrumbTitleText;
@@ -650,6 +650,7 @@ final class BackStackRecord extends FragmentTransaction implements
         return commitInternal(true);
     }
 
+    //同步执行
     @Override
     public void commitNow() {
         disallowAddToBackStack();
@@ -688,7 +689,7 @@ final class BackStackRecord extends FragmentTransaction implements
         }
         //将mCommitted设置为true，也就是说已经提交了
         mCommitted = true;
-        //mAddToBackStack是判断是否可以添加，在初始化的时候设置为true.
+        //mAddToBackStack是判断是否可以添加
         if (mAddToBackStack) {
             mIndex = mManager.allocBackStackIndex(this);
         } else {
@@ -783,6 +784,8 @@ final class BackStackRecord extends FragmentTransaction implements
                 case OP_REMOVE:
                     f.setNextAnim(op.exitAnim);
                     mManager.removeFragment(f);
+                    Log.e("BaseTestFragment", "BackStackRecord executeOps OP_REMOVE:");
+                    //此时onPause,onStop,onDestroyView回调方法还每走
                     break;
                 case OP_HIDE:
                     f.setNextAnim(op.exitAnim);
@@ -815,6 +818,7 @@ final class BackStackRecord extends FragmentTransaction implements
         }
         if (!mReorderingAllowed) {
             // Added fragments are added at the end to comply with prior behavior.
+            //如果在onCreate中addFragment,此时mCurState为Fragment.CREATE
             mManager.moveToState(mManager.mCurState, true);
         }
     }
@@ -826,6 +830,7 @@ final class BackStackRecord extends FragmentTransaction implements
      * @param moveToState {@code true} if added fragments should be moved to their final state
      *                    in ordered transactions
      */
+    //前面主要是对 Fragment 的包装类 Ops 进行一些状态修改，真正根据 Ops 状态进行操作在这个部分：
     void executePopOps(boolean moveToState) {
         for (int opNum = mOps.size() - 1; opNum >= 0; opNum--) {
             final Op op = mOps.get(opNum);
@@ -902,6 +907,7 @@ final class BackStackRecord extends FragmentTransaction implements
      */
     @SuppressWarnings("ReferenceEquality")
     Fragment expandOps(ArrayList<Fragment> added, Fragment oldPrimaryNav) {
+        //遍历链表挨个取出动作进行执行
         for (int opNum = 0; opNum < mOps.size(); opNum++) {
             final Op op = mOps.get(opNum);
             switch (op.cmd) {
@@ -937,7 +943,7 @@ final class BackStackRecord extends FragmentTransaction implements
                                     opNum++;
                                     oldPrimaryNav = null;
                                 }
-                                final Op removeOp = new Op(OP_REMOVE, old);
+                                final Op removeOp = new Op(OP_REMOVE, old);//可以看到，替换也是通过删除实现的
                                 removeOp.enterAnim = op.enterAnim;
                                 removeOp.popEnterAnim = op.popEnterAnim;
                                 removeOp.exitAnim = op.exitAnim;
@@ -952,7 +958,7 @@ final class BackStackRecord extends FragmentTransaction implements
                         mOps.remove(opNum);
                         opNum--;
                     } else {
-                        op.cmd = OP_ADD;
+                        op.cmd = OP_ADD;//可以看到，替换也是通过删除再添加实现的
                         added.add(f);
                     }
                 }

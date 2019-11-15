@@ -91,7 +91,9 @@ public class FragmentController {
      * Attaches the host to the FragmentManager for this controller. The host must be
      * attached before the FragmentManager can be used to manage Fragments.
      */
+//    FragmentManagerImpl 对象持有了 HostCallbacks 对象的引用
     public void attachHost(Fragment parent) {
+        //mHost:FragmentHostCallback  相当于FragmentActivity的回调
         mHost.mFragmentManager.attachController(
                 mHost, mHost /*container*/, parent);
     }
@@ -177,7 +179,9 @@ public class FragmentController {
      *
      * @see Fragment#onCreate(Bundle)
      */
+    //FragmentController 深得 Activity 精髓，把活推给了 FragmentManagerImpl
     public void dispatchCreate() {
+        //mFragmentManager 是FragmentActicity的回调对象mHost的一个对象
         mHost.mFragmentManager.dispatchCreate();
     }
 

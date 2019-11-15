@@ -16,8 +16,6 @@
 
 package android.support.v4.app;
 
-import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
-
 import android.app.Activity;
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
@@ -46,6 +44,8 @@ import android.view.Window;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.Collection;
+
+import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
 
 /**
  * Base class for activities that want to use the support-based
@@ -292,6 +292,7 @@ public class FragmentActivity extends BaseFragmentActivityApi16 implements
     @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        //FragmentController mFragments = FragmentController.createController(new HostCallbacks());
         mFragments.attachHost(null /*parent*/);
 
         super.onCreate(savedInstanceState);
@@ -327,7 +328,7 @@ public class FragmentActivity extends BaseFragmentActivityApi16 implements
             mPendingFragmentActivityResults = new SparseArrayCompat<>();
             mNextCandidateRequestIndex = 0;
         }
-
+        //FragmentController 干活
         mFragments.dispatchCreate();
     }
 
@@ -954,6 +955,7 @@ public class FragmentActivity extends BaseFragmentActivityApi16 implements
 
         @Override
         public void onAttachFragment(Fragment fragment) {
+            //也就说 Activity 可以通过这个方法知道被依附的 Fragment 的实例
             FragmentActivity.this.onAttachFragment(fragment);
         }
 

@@ -43,14 +43,26 @@ public class BaseTestFragment extends Fragment {
 
     @Override
     public void onStart() {
-        Log.d("BaseTestFragment", "--------"+TAG+"----------"+" onStart:");
+        Log.d("BaseTestFragment", "--------"+TAG+"----------"+" onStart  ----- ");
         super.onStart();
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        Log.d("BaseTestFragment", "--------"+TAG+"----------"+" onPause:");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d("BaseTestFragment", "--------"+TAG+"----------"+" onStop:");
+    }
+
+    @Override
     public void onResume() {
-        Log.d("BaseTestFragment", "--------"+TAG+"----------"+" onResume:");
         super.onResume();
+        Log.d("BaseTestFragment", "--------"+TAG+"----------"+" onResume:");
     }
 
     @Override

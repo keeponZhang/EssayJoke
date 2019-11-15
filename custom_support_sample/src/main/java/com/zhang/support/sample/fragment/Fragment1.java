@@ -56,7 +56,7 @@ public class Fragment1 extends BaseTestFragment {
         FragmentTransaction tx = fm.beginTransaction();
         tx.replace(R.id.container, f2);
       //将当前的事务添加到了回退栈
-        tx.addToBackStack("fragment1");
+//        tx.addToBackStack("fragment1");
         tx.commit();
     }
 }

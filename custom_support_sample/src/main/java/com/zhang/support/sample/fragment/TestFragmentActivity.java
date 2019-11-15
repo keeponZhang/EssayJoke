@@ -54,6 +54,6 @@ public class TestFragmentActivity extends AppCompatActivity {
         //fl为占位布局
         fragmentTransaction.add(R.id.container, f1);
         //这个方法是同步的
-        fragmentTransaction.commitNow();
+        fragmentTransaction.commit();
     }
 }

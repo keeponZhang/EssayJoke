@@ -30,11 +30,11 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 
 final class BackStackState implements Parcelable {
-    final int[] mOps;
+    final int[] mOps;//int[]数组，从head到tail的排列，保存{op.cmd, op.fragment.mIndex, op.enterAnim, op.exitAnim, op.popEnterAnim, op.popExitAnim, removed.size, removeIndex1, removeIndex2,...}
     final int mTransition;
     final int mTransitionStyle;
-    final String mName;
-    final int mIndex;
+    final String mName; //最后一次的name.
+    final int mIndex;//最后一次的index.
     final int mBreadCrumbTitleRes;
     final CharSequence mBreadCrumbTitleText;
     final int mBreadCrumbShortTitleRes;

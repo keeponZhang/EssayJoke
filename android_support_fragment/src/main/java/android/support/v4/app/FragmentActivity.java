@@ -118,6 +118,7 @@ public class FragmentActivity extends BaseFragmentActivityApi16 implements
     // for startActivityForResult calls where a result has not yet been delivered.
     SparseArrayCompat<String> mPendingFragmentActivityResults;
 
+    //它保存了一个Fragment的列表，这个列表是通过FragmentManager的retainNonConfig返回的
     static final class NonConfigurationInstances {
         Object custom;
         FragmentManagerNonConfig fragments;

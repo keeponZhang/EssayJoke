@@ -1595,6 +1595,7 @@ final class FragmentManagerImpl extends FragmentManager implements LayoutInflate
                             dispatchOnFragmentDetached(f, false);
                             if (!keepActive) {
                                 if (!f.mRetaining) {
+                                    //
                                     makeInactive(f);
                                 } else {
                                     f.mHost = null;
@@ -1919,9 +1920,11 @@ final class FragmentManagerImpl extends FragmentManager implements LayoutInflate
             mActive = new SparseArray<>();
         }
         mActive.put(f.mIndex, f);
-        if (DEBUG) Log.v(TAG, "Allocated fragment index " + f);
+        Log.w("TAG", "FragmentManagerImpl makeActive burpActive f.mIndex:"+f.mIndex+" Fragment="+f);
+        if (DEBUG) Log.v(TAG, "Allocated  fragment index " + f);
     }
 
+    //这个方法最要
     void makeInactive(Fragment f) {
         if (f.mIndex < 0) {
             return;
@@ -2887,10 +2890,13 @@ final class FragmentManagerImpl extends FragmentManager implements LayoutInflate
     void saveNonConfig() {
         ArrayList<Fragment> fragments = null;
         ArrayList<FragmentManagerNonConfig> childFragments = null;
+        //遍历mActive列表：
         if (mActive != null) {
             for (int i=0; i<mActive.size(); i++) {
                 Fragment f = mActive.valueAt(i);
                 if (f != null) {
+                   // mActive中mRetainInstance为true的Fragment保存了，
+                    //  而且设置了这个标识位的Fragment不会执行onCreate、onDestory，并且不会从mActive列表中移除，
                     if (f.mRetainInstance) {
                         if (fragments == null) {
                             fragments = new ArrayList<Fragment>();
@@ -2951,6 +2957,7 @@ final class FragmentManagerImpl extends FragmentManager implements LayoutInflate
         if (mStateBundle == null) {
             mStateBundle = new Bundle();
         }
+        //调用 Fragment 的 onSaveInstanceState 方法，让使用者保存额外的数据; 调用 childFragmentManager 的 saveAllState 方法
         f.performSaveInstanceState(mStateBundle);
         dispatchOnFragmentSaveInstanceState(f, mStateBundle, false);
         if (!mStateBundle.isEmpty()) {
@@ -2959,6 +2966,7 @@ final class FragmentManagerImpl extends FragmentManager implements LayoutInflate
         }
 
         if (f.mView != null) {
+            //保存mInnverView 的状态，赋值给mSavedViewState。
             saveFragmentViewState(f);
         }
         if (f.mSavedViewState != null) {
@@ -2972,6 +2980,7 @@ final class FragmentManagerImpl extends FragmentManager implements LayoutInflate
             if (result == null) {
                 result = new Bundle();
             }
+            //保存mUserVisibleHint
             // Only add this if it's not the default value
             result.putBoolean(FragmentManagerImpl.USER_VISIBLE_HINT_TAG, f.mUserVisibleHint);
         }
@@ -2984,11 +2993,12 @@ final class FragmentManagerImpl extends FragmentManager implements LayoutInflate
         // our state update-to-date.
         forcePostponedTransactions();
         endAnimatingAwayFragments();
+        //先执行完之前所有剩余的操作。
         execPendingActions();
 
         mStateSaved = true;
         mSavedNonConfig = null;
-
+        //如果mActive为空，那么什么其它的也不保存了。
         if (mActive == null || mActive.size() <= 0) {
             return null;
         }
@@ -2997,9 +3007,11 @@ final class FragmentManagerImpl extends FragmentManager implements LayoutInflate
         int N = mActive.size();
         FragmentState[] active = new FragmentState[N];
         boolean haveFragments = false;
+        //开始遍历mActive列表。
         for (int i=0; i<N; i++) {
             Fragment f = mActive.valueAt(i);
             if (f != null) {
+                //f.mIndex不许为空。
                 if (f.mIndex < 0) {
                     throwException(new IllegalStateException(
                             "Failure saving state: active " + f
@@ -3007,7 +3019,7 @@ final class FragmentManagerImpl extends FragmentManager implements LayoutInflate
                 }
 
                 haveFragments = true;
-
+                //这里面保存了基本的属性：mClassName, mIndex, mFromLayout, mFragmentId, ContainerId, mTag, mRetainInstance, mDetach, mArguments
                 FragmentState fs = new FragmentState(f);
                 active[i] = fs;
 
@@ -3015,6 +3027,8 @@ final class FragmentManagerImpl extends FragmentManager implements LayoutInflate
                     fs.mSavedFragmentState = saveFragmentBasicState(f);
 
                     if (f.mTarget != null) {
+                        //保存mTarget 到 mSavedFragmentState
+                        //保存mTargetRequestCode 到 mSavedFragmentState
                         if (f.mTarget.mIndex < 0) {
                             throwException(new IllegalStateException(
                                     "Failure saving state: " + f
@@ -3050,6 +3064,7 @@ final class FragmentManagerImpl extends FragmentManager implements LayoutInflate
         BackStackState[] backStack = null;
 
         // Build list of currently added fragments.
+        //处理mAdded列表：遍历mAdded列表，保存 mAdded的 mIndex，是一个int[]数组
         N = mAdded.size();
         if (N > 0) {
             added = new int[N];
@@ -3068,6 +3083,7 @@ final class FragmentManagerImpl extends FragmentManager implements LayoutInflate
         }
 
         // Now save back stack.
+        //最后处理BackStackRecord，保存成为 BackStackState
         if (mBackStack != null) {
             N = mBackStack.size();
             if (N > 0) {
@@ -3226,9 +3242,11 @@ final class FragmentManagerImpl extends FragmentManager implements LayoutInflate
     private void burpActive() {
         if (mActive != null) {
             for (int i = mActive.size() - 1; i >= 0; i--) {
+                Fragment fragment = mActive.valueAt(i);
                 if (mActive.valueAt(i) == null) {
                     mActive.delete(mActive.keyAt(i));
                 }
+                Log.e("TAG", "FragmentManagerImpl burpActive mActive.size():"+mActive.size()+"  i="+i+" fragment="+fragment);
             }
         }
     }

@@ -89,26 +89,31 @@ public abstract class FragmentPagerAdapter extends PagerAdapter {
         if (mCurTransaction == null) {
             mCurTransaction = mFragmentManager.beginTransaction();
         }
-
+        //这里的itemId返回的是对应position的页面的唯一标识符.
         final long itemId = getItemId(position);
 
         // Do we already have this fragment?
         String name = makeFragmentName(container.getId(), itemId);
+        //1.先是通过FragmentManager来找.
         Fragment fragment = mFragmentManager.findFragmentByTag(name);
         if (fragment != null) {
             if (DEBUG) Log.v(TAG, "Attaching item #" + itemId + ": f=" + fragment);
+            //2.如果找到了，那么调用attach方法
             mCurTransaction.attach(fragment);
         } else {
+            //3.如果没找到，那么通过子类实现的getItem方法来获取.
             fragment = getItem(position);
             if (DEBUG) Log.v(TAG, "Adding item #" + itemId + ": f=" + fragment);
+            //这里调用的是add方法.
             mCurTransaction.add(container.getId(), fragment,
                     makeFragmentName(container.getId(), itemId));
         }
+        //根据需要，回调下面这两个方法.
         if (fragment != mCurrentPrimaryItem) {
             fragment.setMenuVisibility(false);
             fragment.setUserVisibleHint(false);
         }
-
+        //返回给ViewPager.
         return fragment;
     }
 
@@ -119,6 +124,7 @@ public abstract class FragmentPagerAdapter extends PagerAdapter {
         }
         if (DEBUG) Log.v(TAG, "Detaching item #" + getItemId(position) + ": f=" + object
                 + " v=" + ((Fragment)object).getView());
+        //4.移除界面时，调用的是detach方法.
         mCurTransaction.detach((Fragment)object);
     }
 
@@ -138,7 +144,7 @@ public abstract class FragmentPagerAdapter extends PagerAdapter {
             mCurrentPrimaryItem = fragment;
         }
     }
-
+    //这个方法需注意下
     @Override
     public void finishUpdate(ViewGroup container) {
         if (mCurTransaction != null) {

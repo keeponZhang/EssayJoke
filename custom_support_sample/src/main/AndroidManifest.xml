@@ -43,7 +43,7 @@
 	    </activity>
 		<activity android:name="com.android.coordinatorLayout.DetailActivity"></activity>
 		<activity android:name=".fragment.TestFragmentActivity"></activity>
-
+		<activity android:name=".fragment.FragmentPagerAdapterBugActivity"></activity>
 	</application>
 
 </manifest>

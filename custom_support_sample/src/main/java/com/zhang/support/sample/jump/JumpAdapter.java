@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.hc.baselibrary.base.BaseRecyclerViewAdapter;
 import com.zhang.support.sample.R;
 import com.zhang.support.sample.SwipeRefreshActivity;
+import com.zhang.support.sample.fragment.FragmentPagerAdapterBugActivity;
 import com.zhang.support.sample.fragment.TestFragmentActivity;
 
 import java.util.List;
@@ -87,6 +88,7 @@ public class JumpAdapter extends BaseRecyclerViewAdapter<String,JumpAdapter.Main
                         Utils.startActivity(v.getContext(), TestFragmentActivity.class);
                         break;
                     case 12:
+                        Utils.startActivity(v.getContext(), FragmentPagerAdapterBugActivity.class);
                         break;
                     case 13:
                         break;

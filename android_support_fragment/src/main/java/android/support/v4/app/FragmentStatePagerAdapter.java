@@ -95,6 +95,7 @@ public abstract class FragmentStatePagerAdapter extends PagerAdapter {
         // to do.  This can happen when we are restoring the entire pager
         // from its saved state, where the fragment manager has already
         // taken care of restoring the fragments we previously had instantiated.
+        //如果mFragments中存在对应位置的fragment，那么直接返回.
         if (mFragments.size() > position) {
             Fragment f = mFragments.get(position);
             if (f != null) {
@@ -108,18 +109,22 @@ public abstract class FragmentStatePagerAdapter extends PagerAdapter {
 
         Fragment fragment = getItem(position);
         if (DEBUG) Log.v(TAG, "Adding item #" + position + ": f=" + fragment);
+        //多了恢复状态的操作.
         if (mSavedState.size() > position) {
             Fragment.SavedState fss = mSavedState.get(position);
             if (fss != null) {
                 fragment.setInitialSavedState(fss);
             }
         }
+        //保证mFragments的大小和ViewPager往右滑动的最远的index相同.
         while (mFragments.size() <= position) {
             mFragments.add(null);
         }
         fragment.setMenuVisibility(false);
         fragment.setUserVisibleHint(false);
+        //设置对应位置.
         mFragments.set(position, fragment);
+        //这里很关键，调用的add方法.
         mCurTransaction.add(container.getId(), fragment);
 
         return fragment;
@@ -140,9 +145,20 @@ public abstract class FragmentStatePagerAdapter extends PagerAdapter {
         mSavedState.set(position, fragment.isAdded()
                 ? mFragmentManager.saveFragmentInstanceState(fragment) : null);
         mFragments.set(position, null);
-
+        //调用的是remove方法.
         mCurTransaction.remove(fragment);
     }
+
+//    从上面的源码当中，总结出以下几点：
+//
+//    FragmentStatePagerAdapter在移除页面的时候，调用的是remove方法，也就是说，FragmentManager中不再有这个Fragment的实例，所走的生命周期为onPause() -> onDetach()。
+//    无论是添加页面还是重新添加页面，它是通过add方法，并且每次都会通过自定义的FragmentStatePagerAdapter子类的getItem方法来获取Fragment，所以它们内部的Fragment所走生命周期相同，都是从onAttach() -> onResume()。
+//    对于ViewPager当前界面中所对应的Fragment，是通过一个mFragments列表来管理的，由于此时没有FragmentManager来帮我们实现Fragment集合的状态的保存和恢复，所以就需要我们自己实现onSave/onRestore方法来进行状态的保存和恢复。
+//
+//    作者：泽毛
+//    链接：https://www.jianshu.com/p/8ac5152b2e06
+//    来源：简书
+//    著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 
     @Override
     @SuppressWarnings("ReferenceEquality")

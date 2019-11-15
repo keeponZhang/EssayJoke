@@ -29,11 +29,10 @@ public class Fragment3 extends BaseTestFragment {
         super.onAttach(context);
     }
 
-    @Nullable
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.layout_fragment3, null);
+    protected View getContentView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.layout_fragment3,null);
         unbinder = ButterKnife.bind(this, view);
         return view;
     }

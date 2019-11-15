@@ -9,12 +9,29 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.zhang.support.sample.R;
 
 /**
  * createBy	 keepon
  */
 public class BaseTestFragment extends Fragment {
     public   String TAG = "BaseTestFragment";
+    private String mTitle;
+    public BaseTestFragment(){
+        super();
+    }
+
+
+
+    public static BaseTestFragment newInstance(String title){
+        BaseTestFragment baseTestFragment = new BaseTestFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("title",title);
+        baseTestFragment.setArguments(bundle);
+        return baseTestFragment;
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -23,6 +40,7 @@ public class BaseTestFragment extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        mTitle = getArguments().getString("title");
         super.onCreate(savedInstanceState);
         Log.d("BaseTestFragment", "--------"+TAG+"----------"+" onCreate:");
     }
@@ -31,8 +49,15 @@ public class BaseTestFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d("BaseTestFragment", "--------"+TAG+"----------"+" onCreateView:");
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return getContentView(inflater, container, savedInstanceState);
 
+    }
+
+    protected View getContentView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.layout_fragment_base,null);
+        TextView tv = view.findViewById(R.id.tv_title);
+        tv.setText(mTitle);
+        return view;
     }
 
     @Override

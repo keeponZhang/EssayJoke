@@ -33,6 +33,7 @@ public class JumpActivity extends AppCompatActivity {
         titles.add("DarrenBehaviorActivity");
         titles.add("DetailActivity");
         titles.add("TestFragmentActivity");
+        titles.add("FragmentPagerAdapterBugActivity");
 
         for (int i = 0; i < 50; i++) {
             titles.add("test=" + i);

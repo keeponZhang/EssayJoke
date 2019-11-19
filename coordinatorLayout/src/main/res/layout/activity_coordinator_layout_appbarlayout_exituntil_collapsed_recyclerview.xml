@@ -33,6 +33,7 @@
 		android:layout_height="wrap_content"
 		app:layout_behavior="@string/appbar_scrolling_view_behavior"
 		>
+		<!--appbar_scrolling_view_behavior 的父容器是CoordinatorLayout，实现了NestedScrollingParent2接口-->
 <!--nestedScrollview加了这个behavior,更顺-->
 		<android.support.v7.widget.RecyclerView
 			android:nestedScrollingEnabled="false"
@@ -41,6 +42,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			 />
+		<!--appbar_scrolling_view_behavior的父容器是NestedScrollView，实现了NestedScrollingParent接口-->
 
 	</android.support.v4.widget.NestedScrollView>
 

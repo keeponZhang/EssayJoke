@@ -34,6 +34,7 @@ public class JumpActivity extends AppCompatActivity {
         titles.add("DetailActivity");
         titles.add("TestFragmentActivity");
         titles.add("FragmentPagerAdapterBugActivity");
+        titles.add("FixPagerAdapterBugActivity");
 
         for (int i = 0; i < 50; i++) {
             titles.add("test=" + i);

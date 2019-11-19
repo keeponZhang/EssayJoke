@@ -124,8 +124,8 @@ public class ViewPager extends ViewGroup {
     private int mExpectedAdapterCount;
 
     static class ItemInfo {
-        Object object;
-        int position;
+        Object object; //通过PagerAdapter#instantiateItem所返回的Object.
+        int position;//这个Item所处的位置，也就是上面我们所说的index.
         boolean scrolling;
         float widthFactor;
         float offset;
@@ -1013,24 +1013,29 @@ public class ViewPager extends ViewGroup {
 
     void dataSetChanged() {
         // This method only gets called if our observer is attached, so mAdapter is non-null.
-
+        //在我们的例子中，返回的是4
         final int adapterCount = mAdapter.getCount();
         mExpectedAdapterCount = adapterCount;
+        //此时为true.
         boolean needPopulate = mItems.size() < mOffscreenPageLimit * 2 + 1
                 && mItems.size() < adapterCount;
         int newCurrItem = mCurItem;
 
         boolean isUpdating = false;
+        //遍历列表，这个
         for (int i = 0; i < mItems.size(); i++) {
             final ItemInfo ii = mItems.get(i);
+            Log.e("LogcatFragment", "ViewPager dataSetChanged  mItems.size():"+mItems.size());
+            //这里是关键，默认都是返回POSITION_UNCHANGED
             final int newPos = mAdapter.getItemPosition(ii.object);
-
+            //第一种情况：如果返回的是POSITION_UNCHANGED，那么表示这个界面在ViewPager中的位置没有变，那么不需要更新.
             if (newPos == PagerAdapter.POSITION_UNCHANGED) {
                 continue;
             }
-
+            //第二种情况：如果返回的是POSITION_NONE，就表示这个界面在ViewPager中不存在了，那么就把它移除.
             if (newPos == PagerAdapter.POSITION_NONE) {
                 mItems.remove(i);
+                Log.e("LogcatFragment", "ViewPager dataSetChanged PagerAdapter.POSITION_NONE):");
                 i--;
 
                 if (!isUpdating) {
@@ -1048,7 +1053,7 @@ public class ViewPager extends ViewGroup {
                 }
                 continue;
             }
-
+            //第三种情况：界面仍然存在，但是其在ViewPager中的位置发生了改变.
             if (ii.position != newPos) {
                 if (ii.position == mCurItem) {
                     // Our current item changed position. Follow it.

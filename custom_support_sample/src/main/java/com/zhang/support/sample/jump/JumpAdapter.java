@@ -9,9 +9,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.coordinatorLayout.CoordinatorLayoutActivity;
+import com.android.coordinatorLayout.CoordinatorLayoutAppBarLayoutEnterAlwaysCollapsedActivity;
+import com.android.coordinatorLayout.CoordinatorLayoutAppBarLayoutExituntilCollapsedActivity;
+import com.android.coordinatorLayout.CoordinatorLayoutAppBarLayoutExituntilCollapsedRecyclerviewActivity;
+import com.android.coordinatorLayout.CoordinatorLayoutAppBarLayoutNoBehaviorActivity;
+import com.android.coordinatorLayout.CoordinatorLayoutCollapsingToolbarLayoutActivity;
+import com.android.coordinatorLayout.CoordinatorLayoutToolBarActivity;
+import com.android.coordinatorLayout.DetailActivity;
+import com.android.coordinatorLayout.adapter.CoverFolowActivity;
+import com.android.coordinatorLayout.darren.DarrenBehaviorActivity;
 import com.hc.baselibrary.base.BaseRecyclerViewAdapter;
 import com.zhang.support.sample.R;
 import com.zhang.support.sample.SwipeRefreshActivity;
+import com.zhang.support.sample.fragment.FixPagerAdapterBugActivity;
 import com.zhang.support.sample.fragment.FragmentPagerAdapterBugActivity;
 import com.zhang.support.sample.fragment.TestFragmentActivity;
 
@@ -54,35 +65,45 @@ public class JumpAdapter extends BaseRecyclerViewAdapter<String,JumpAdapter.Main
                         Utils.startActivity(v.getContext(), SwipeRefreshActivity.class);
                         break;
                     case 1:
-                        Utils.startActivity(v.getContext(), "CoordinatorLayoutAppBarLayoutExituntilCollapsedRecyclerviewActivity");
+//                        Utils.startActivity(v.getContext(), "CoordinatorLayoutAppBarLayoutExituntilCollapsedRecyclerviewActivity");
+                        Utils.startActivity(v.getContext(), CoordinatorLayoutAppBarLayoutExituntilCollapsedRecyclerviewActivity.class);
                         break;
                     case 2:
-                        Utils.startActivity(v.getContext(), "CoverFolowActivity");
+//                        Utils.startActivity(v.getContext(), "CoverFolowActivity");
+                        Utils.startActivity(v.getContext(), CoverFolowActivity.class );
                         break;
                     case 3:
-                        Utils.startActivity(v.getContext(), "CoordinatorLayoutActivity");
+//                        Utils.startActivity(v.getContext(), "CoordinatorLayoutActivity");
+                        Utils.startActivity(v.getContext(), CoordinatorLayoutActivity.class);
                         break;
                     case 4:
-                        Utils.startActivity(v.getContext(),"CoordinatorLayoutToolBarActivity" );
+//                        Utils.startActivity(v.getContext(),"CoordinatorLayoutToolBarActivity" );
+                        Utils.startActivity(v.getContext(), CoordinatorLayoutToolBarActivity.class );
                         break;
                     case 5:
-                        Utils.startActivity(v.getContext(),"CoordinatorLayoutAppBarLayoutNoBehaviorActivity" );
+//                        Utils.startActivity(v.getContext(),"CoordinatorLayoutAppBarLayoutNoBehaviorActivity" );
+                        Utils.startActivity(v.getContext(), CoordinatorLayoutAppBarLayoutNoBehaviorActivity.class );
                         break;
                     case 6:
-                        Utils.startActivity(v.getContext(), "CoordinatorLayoutAppBarLayoutExituntilCollapsedActivity");
+//                        Utils.startActivity(v.getContext(), "CoordinatorLayoutAppBarLayoutExituntilCollapsedActivity");
+                        Utils.startActivity(v.getContext(), CoordinatorLayoutAppBarLayoutExituntilCollapsedActivity.class);
                         break;
                     case 7:
-                        Utils.startActivity(v.getContext(),"CoordinatorLayoutAppBarLayoutEnterAlwaysCollapsedActivity" );
+//                        Utils.startActivity(v.getContext(),"CoordinatorLayoutAppBarLayoutEnterAlwaysCollapsedActivity" );
+                        Utils.startActivity(v.getContext(), CoordinatorLayoutAppBarLayoutEnterAlwaysCollapsedActivity.class );
 
                         break;
                     case 8:
-                        Utils.startActivity(v.getContext(), "CoordinatorLayoutCollapsingToolbarLayoutActivity");
+//                        Utils.startActivity(v.getContext(), "CoordinatorLayoutCollapsingToolbarLayoutActivity");
+                        Utils.startActivity(v.getContext(), CoordinatorLayoutCollapsingToolbarLayoutActivity.class);
                         break;
                     case 9:
-                        Utils.startActivity(v.getContext(), "DarrenBehaviorActivity");
+//                        Utils.startActivity(v.getContext(), "DarrenBehaviorActivity");
+                        Utils.startActivity(v.getContext(), DarrenBehaviorActivity.class);
                         break;
                     case 10:
-                        Utils.startActivity(v.getContext(),"DetailActivity");
+//                        Utils.startActivity(v.getContext(),"DetailActivity");
+                        Utils.startActivity(v.getContext(), DetailActivity.class);
                         break;
                     case 11:
                         Utils.startActivity(v.getContext(), TestFragmentActivity.class);
@@ -91,6 +112,7 @@ public class JumpAdapter extends BaseRecyclerViewAdapter<String,JumpAdapter.Main
                         Utils.startActivity(v.getContext(), FragmentPagerAdapterBugActivity.class);
                         break;
                     case 13:
+                        Utils.startActivity(v.getContext(), FixPagerAdapterBugActivity.class);
                         break;
                     case 14:
                         break;

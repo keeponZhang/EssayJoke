@@ -1,13 +1,11 @@
 package com.zhang.support.sample.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -19,11 +17,10 @@ import java.util.List;
 /**
  * createBy	 keepon
  */
-public class FragmentPagerAdapterBugActivity extends AppCompatActivity {
+public class FixPagerAdapterBugActivity extends AppCompatActivity {
     private static final int INCREASE = 4;
-    private FPAdapter mFPAdapter;
+    private FixedPagerAdapter mFixedPagerAdapter;
     private List<String> mTitles;
-    private int mGroup = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,51 +33,59 @@ public class FragmentPagerAdapterBugActivity extends AppCompatActivity {
                 updateFragments();
             }
         });
-        initFPAFragments();
+        initFragments();
     }
 
-    private void initFPAFragments() {
+    private void initFragments() {
         mTitles = new ArrayList<>();
         for (int i = 0; i < INCREASE; i++) {
-            mTitles.add("index=" + i + ",group=0");
+            mTitles.add(String.valueOf(i));
         }
         ViewPager viewPager = (ViewPager) findViewById(R.id.vp_content);
-        mFPAdapter = new FPAdapter(getSupportFragmentManager(), mTitles);
-        viewPager.setAdapter(mFPAdapter);
+        mFixedPagerAdapter = new MyFixedPagerAdapter(getSupportFragmentManager(), mTitles);
+        viewPager.setAdapter(mFixedPagerAdapter);
     }
 
     private void updateFragments() {
         mTitles.clear();
-        mGroup++;
-        for (int i = 0; i < INCREASE; i++) {
-            mTitles.add("index=" + i + ",group=" + mGroup);
-        }
-        mFPAdapter.notifyDataSetChanged();
+        mTitles.add("3");
+        mTitles.add("2");
+        mFixedPagerAdapter.notifyDataSetChanged();
     }
 
-    private class FPAdapter extends FragmentPagerAdapter {
+    private class MyFixedPagerAdapter extends FixedPagerAdapter<String> {
 
         private List<String> mTitles;
 
-        public FPAdapter(FragmentManager fm, List<String> titles) {
-            super(fm);
+        public MyFixedPagerAdapter(FragmentManager fragmentManager, List<String> titles) {
+            super(fragmentManager);
             mTitles = titles;
         }
 
         @Override
-        public Fragment getItem(int position) {
-            Log.d("LogcatFragment", "get Item from FPAdapter, position=" + position);
-            return BaseTestFragment.newInstance(mTitles.get(position));
+        public String getItemData(int position) {
+            return mTitles.size() > position ? mTitles.get(position) : null;
         }
-        public int getItemPosition(@NonNull Object object) {
-            return POSITION_NONE;
+
+        @Override
+        public int getDataPosition(String s) {
+            return mTitles.indexOf(s);
+        }
+
+        @Override
+        public boolean equals(String oldD, String newD) {
+            return TextUtils.equals(oldD, newD);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return BaseTestFragment.newInstance(mTitles.get(position));
         }
 
         @Override
         public int getCount() {
-            Log.e("LogcatFragment", "FPAdapter getCount  mTitles.size():"+ mTitles.size());
             return mTitles.size();
         }
-
     }
+
 }

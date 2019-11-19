@@ -86,6 +86,7 @@ public abstract class FragmentPagerAdapter extends PagerAdapter {
     @SuppressWarnings("ReferenceEquality")
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
+        Log.e("LogcatFragment", "FragmentPagerAdapter instantiateItem:");
         if (mCurTransaction == null) {
             mCurTransaction = mFragmentManager.beginTransaction();
         }
@@ -98,6 +99,7 @@ public abstract class FragmentPagerAdapter extends PagerAdapter {
         Fragment fragment = mFragmentManager.findFragmentByTag(name);
         if (fragment != null) {
             if (DEBUG) Log.v(TAG, "Attaching item #" + itemId + ": f=" + fragment);
+            Log.w("LogcatFragment", "FragmentPagerAdapter instantiateItem 找到了:");
             //2.如果找到了，那么调用attach方法
             mCurTransaction.attach(fragment);
         } else {
@@ -119,6 +121,8 @@ public abstract class FragmentPagerAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
+        Log.e("LogcatFragment", "FragmentPagerAdapter destroyItem:");
+
         if (mCurTransaction == null) {
             mCurTransaction = mFragmentManager.beginTransaction();
         }

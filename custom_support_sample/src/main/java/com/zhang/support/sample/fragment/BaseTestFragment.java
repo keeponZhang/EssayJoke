@@ -40,7 +40,10 @@ public class BaseTestFragment extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        mTitle = getArguments().getString("title");
+        if(getArguments()!=null){
+            mTitle = getArguments().getString("title");
+        }
+
         super.onCreate(savedInstanceState);
         Log.d("BaseTestFragment", "--------"+TAG+"----------"+" onCreate:");
     }

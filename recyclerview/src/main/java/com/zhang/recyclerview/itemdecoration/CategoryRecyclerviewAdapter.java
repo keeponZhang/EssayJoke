@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.android.recyclerview.itemdecoration.bean.FollowerBean;
 import com.bumptech.glide.Glide;
+import com.hc.baselibrary.base.BaseRecyclerViewAdapter;
 import com.zhang.recyclerview.R;
 
 import java.util.List;

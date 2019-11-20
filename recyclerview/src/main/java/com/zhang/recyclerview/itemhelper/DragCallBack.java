@@ -6,6 +6,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
 import com.android.recyclerview.itemdecoration.bean.FollowerBean;
+import com.hc.baselibrary.base.BaseRecyclerViewAdapter;
 
 import java.util.List;
 

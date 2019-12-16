@@ -186,7 +186,7 @@ public abstract class LoaderManager {
 
 class LoaderManagerImpl extends LoaderManager {
     static final String TAG = "LoaderManager";
-    static boolean DEBUG = false;
+    static boolean DEBUG = true;
 
     // These are the currently active loaders.  A loader is here
     // from the time its load is started until it has been explicitly
@@ -346,6 +346,9 @@ class LoaderManagerImpl extends LoaderManager {
             mDestroyed = true;
             boolean needReset = mDeliveredData;
             mDeliveredData = false;
+            // 它的调用需要满足以下条件：
+            //  1.HaveData == true：mHaveData 被置为 true 的地方是在 onLoadComplete 中判断到有新的数据，并且之前 mHaveData == false，在 onDestroy 时置为 false
+            //  2.mDeliveredData == true：它在 callOnLoadFinished 时被置为 true，成功地回调了调用者的 onLoadFinished
             if (mCallbacks != null && mLoader != null && mHaveData && needReset) {
                 if (DEBUG) Log.v(TAG, "  Resetting: " + this);
                 String lastBecause = null;
@@ -544,6 +547,8 @@ class LoaderManagerImpl extends LoaderManager {
     private LoaderInfo createAndInstallLoader(int id, Bundle args,
             LoaderCallbacks<Object> callback) {
         try {
+            Log.e("TAG", "LoaderManagerImpl createAndInstallLoader:");
+            // 调用者创建loader，在主线程中执行。
             mCreatingLoader = true;
             LoaderInfo info = createLoader(id, args, callback);
             installLoader(info);
@@ -555,6 +560,7 @@ class LoaderManagerImpl extends LoaderManager {
 
     void installLoader(LoaderInfo info) {
         mLoaders.put(info.mId, info);
+        //如果已经处于mStarted状态，说明错过了doStart方法，那么只有自己启动了。
         if (mStarted) {
             // The activity will start all existing loaders in it's onStart(),
             // so only start them here if we're past that point of the activity's
@@ -596,14 +602,17 @@ class LoaderManagerImpl extends LoaderManager {
 
         LoaderInfo info = mLoaders.get(id);
 
+        Log.e("TAG", "LoaderManagerImpl initLoader:");
         if (DEBUG) Log.v(TAG, "initLoader in " + this + ": args=" + args);
 
         if (info == null) {
             // Loader doesn't already exist; create.
+            //如果已经有数据，并且处于LoaderManager处于Started状态，那么立刻返回。
             info = createAndInstallLoader(id, args,  (LoaderCallbacks<Object>)callback);
             if (DEBUG) Log.v(TAG, "  Created new loader " + info);
         } else {
             if (DEBUG) Log.v(TAG, "  Re-using existing loader " + info);
+            Log.e("TAG", "LoaderManagerImpl initLoader 重新设置callback:");
             info.mCallbacks = (LoaderCallbacks<Object>)callback;
         }
 
@@ -648,19 +657,24 @@ class LoaderManagerImpl extends LoaderManager {
         LoaderInfo info = mLoaders.get(id);
         if (DEBUG) Log.v(TAG, "restartLoader in " + this + ": args=" + args);
         if (info != null) {
+            //这个mInactive列表是restartLoader的关键。
             LoaderInfo inactive = mInactiveLoaders.get(id);
+            // 如果要替换的LoaderInfo还处在被跟踪的状态，那么再去判断它内部的状态
             if (inactive != null) {
+                //如果info已经有了数据，那么取消它。
                 if (info.mHaveData) {
                     // This loader now has data...  we are probably being
                     // called from within onLoadComplete, where we haven't
                     // yet destroyed the last inactive loader.  So just do
                     // that now.
+                    // 已经有数据，调用info.destroy()，info.mLoader.abandon()，并继续跟踪。
                     if (DEBUG) Log.v(TAG, "  Removing last inactive loader: " + info);
                     inactive.mDeliveredData = false;
                     inactive.destroy();
                     info.mLoader.abandon();
                     mInactiveLoaders.put(id, info);
                 } else {
+                    //如果info没有数据
                     // We already have an inactive loader for this ID that we are
                     // waiting for! Try to cancel; if this returns true then the task is still
                     // running and we have more work to do.
@@ -669,12 +683,19 @@ class LoaderManagerImpl extends LoaderManager {
                         // we thus have no reason to keep it around. Remove it and a new
                         // LoaderInfo will be created below.
                         if (DEBUG) Log.v(TAG, "  Current loader is stopped; replacing");
+                        //info没有开始，那么直接把它移除。
+                        // 还没有开始，调用info.destroy()，直接在mLoaders中把对应id的位置置为null
                         mLoaders.put(id, null);
                         info.destroy();
                     } else {
                         // Now we have three active loaders... we'll queue
                         // up this request to be processed once one of the other loaders
                         // finishes.
+                        // 已经开始了，那么先info.cancel()，然后把新建的Loader赋值给LoaderInfo.mPendingLoader ，
+                        // 这时候mLoaders中就有两个Loader了，这是唯一没有新建LoaderInfo的情况，
+                        // 即希望替换但是还没有执行完毕的Loader以及这个新创建的Loader。
+
+
                         if (DEBUG) Log.v(TAG,
                                 "  Current loader is running; configuring pending loader");
                         if (info.mPendingLoader != null) {
@@ -683,6 +704,7 @@ class LoaderManagerImpl extends LoaderManager {
                             info.mPendingLoader = null;
                         }
                         if (DEBUG) Log.v(TAG, "  Enqueuing as new pending loader");
+                        //inactive && !mHaveData && mStarted，那么最新的Loader保存在mPendingLoader这个变量当中。
                         info.mPendingLoader = createLoader(id, args,
                                 (LoaderCallbacks<Object>)callback);
                         return (Loader<D>)info.mPendingLoader.mLoader;
@@ -692,7 +714,9 @@ class LoaderManagerImpl extends LoaderManager {
                 // Keep track of the previous instance of this loader so we can destroy
                 // it when the new one completes.
                 if (DEBUG) Log.v(TAG, "  Making last loader inactive: " + info);
+                // 如果调用restartLoader时已经有了相同id的Loader，那么保存在这个列表中进行跟踪。
                 info.mLoader.abandon();
+                // 如果要被替换的LoaderInfo没有被跟踪，那么调用info.mLoader.abandon()，再把它加入到跟踪列表，然后会新建一个全新的LoaderInfo放入mLoaders
                 mInactiveLoaders.put(id, info);
             }
         }

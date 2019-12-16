@@ -3,27 +3,28 @@
     package="com.zhang.app">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
+        android:name=".jump.MainApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name=".jump.MainApp">
-        <activity android:name=".indicator.IndicatorActivity"></activity>
-        <activity android:name=".banner.BannerActivity"></activity>
-        <activity android:name="com.zhang.recyclerview.itemdecoration.ItemDecorationActivity">
-        </activity>
-        <activity android:name="com.zhang.webview.WebViewActivity">
-
-        </activity>
-        <activity android:name="com.zhang.app.jump.JumpActivity">
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".loader.LoaderActivity"
+            ></activity>
+        <activity android:name=".indicator.IndicatorActivity" />
+        <activity android:name=".banner.BannerActivity" />
+        <activity android:name="com.zhang.recyclerview.itemdecoration.ItemDecorationActivity"></activity>
+        <activity android:name="com.zhang.webview.WebViewActivity"></activity>
+        <activity android:name=".jump.JumpActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>

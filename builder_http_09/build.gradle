@@ -26,8 +26,18 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile "com.android.support:appcompat-v7:${rootProject.ext.SUPPORT_LIBRARY_VERSION}"
-    compile "com.android.support.constraint:constraint-layout:${rootProject.ext.CONTRANT_LAYOUT_VERSION}"
+    implementation project(path: ':android_support_v4')
+    implementation project(path: ':android_appcompat_v7')
+    implementation project(path: ':android_support_recyclerview')
+    implementation project(path: ':android_support_core_ui')
+    implementation project(path: ':android_support_core_utils')
+    implementation project(path: ':android_support_fragment')
+    implementation "com.android.support.constraint:constraint-layout:${rootProject.ext.CONTRANT_LAYOUT_VERSION}"
 
-    compile project(':http')
+    implementation project(':http')
+
+    implementation ('com.squareup.okhttp3:okhttp:3.4.1'){ exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'support-compat'
+        exclude group: 'com.android.support', module: 'support-core-ui'
+    }
 }

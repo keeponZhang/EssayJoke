@@ -1,5 +1,6 @@
 package com.zhang.app.jump;
 
+import android.content.Loader;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import com.zhang.app.R;
 import com.zhang.app.banner.BannerActivity;
 import com.zhang.app.indicator.IndicatorActivity;
+import com.zhang.app.loader.LoaderActivity;
 import com.zhang.webview.WebChromeClientActivity;
 import com.zhang.webview.WebViewActivity;
 import com.zhang.recyclerview.itemdecoration.ItemDecorationActivity;
@@ -70,7 +72,7 @@ public class JumpAdapter extends RecyclerView.Adapter<JumpAdapter.MainViewHolder
                         Utils.startActivity(v.getContext(), WebChromeClientActivity.class);
                         break;
                     case 8:
-
+                        Utils.startActivity(v.getContext(), LoaderActivity.class);
                         break;
                     case 9:
                         break;

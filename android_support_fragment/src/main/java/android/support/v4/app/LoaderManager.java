@@ -602,7 +602,7 @@ class LoaderManagerImpl extends LoaderManager {
 
         LoaderInfo info = mLoaders.get(id);
 
-        Log.e("TAG", "LoaderManagerImpl initLoader:");
+
         if (DEBUG) Log.v(TAG, "initLoader in " + this + ": args=" + args);
 
         if (info == null) {

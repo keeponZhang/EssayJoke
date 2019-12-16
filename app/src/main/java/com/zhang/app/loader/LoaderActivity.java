@@ -24,7 +24,6 @@ import static android.provider.MediaStore.MediaColumns.MIME_TYPE;
 public class LoaderActivity extends AppCompatActivity {
 
     private static final String LOADER_TAG = "loader_tag";
-    private static final String QUERY = "query";
 
     private MyLoaderCallback mMyLoaderCallback;
     private TextView mResultView;
@@ -48,13 +47,14 @@ public class LoaderActivity extends AppCompatActivity {
     private void startQuery(String query) {
         if (query != null) {
             Bundle bundle = new Bundle();
-            bundle.putString(QUERY, query);
-            Log.e("TAG", "LoaderActivity startQuery:");
-            // Loader<String> stringLoader = getSupportLoaderManager().initLoader(0, bundle, mMyLoaderCallback);
-            Loader<String> stringLoader = getSupportLoaderManager().restartLoader(0, bundle,
-                    mMyLoaderCallback);
+            bundle.putString(MyLoader.QUERY, query);
+            Log.e("TAG", "LoaderActivity startQuery:"+query);
+            //initLoader 参数只有第一次初始化的时候有用
+            Loader<String> stringLoader = getSupportLoaderManager().initLoader(0, bundle, mMyLoaderCallback);
+            // Loader<String> stringLoader = getSupportLoaderManager().restartLoader(0, bundle,
+            //         mMyLoaderCallback);
             MyLoader myLoader = (MyLoader) stringLoader;
-            myLoader.loadData(query);
+            myLoader.loadData();
         }
     }
 
@@ -69,8 +69,8 @@ public class LoaderActivity extends AppCompatActivity {
 
         @Override
         public Loader onCreateLoader(int id, Bundle args) {
-            Log.d("TAG", "onCreateLoader args " + args);
-            return new MyLoader(getApplicationContext());
+            Log.w("TAG", "onCreateLoader args " + args);
+            return new MyLoader(getApplicationContext(),args);
         }
 
         @Override

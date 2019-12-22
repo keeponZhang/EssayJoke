@@ -12,25 +12,25 @@
 	    <activity android:name=".SwipeRefreshActivity">
 
         </activity>
-	    <activity android:name="com.android.coordinatorLayout.CoordinatorLayoutActivity"></activity>
+	    <activity android:name="com.android.coordinatorLayout.CoordinatorLayoutDepencyActivity"></activity>
 	    <activity android:name="com.android.coordinatorLayout.CoordinatorLayoutToolBarActivity"></activity>
 	    <activity
-		    android:name="com.android.coordinatorLayout.CoordinatorLayoutAppBarLayoutNoBehaviorActivity"
+		    android:name="com.android.coordinatorLayout.AppBarLayoutNoBehaviorActivity"
 		    android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
 	    <activity
-		    android:name="com.android.coordinatorLayout.CoordinatorLayoutAppBarLayoutExituntilCollapsedActivity"
+		    android:name="com.android.coordinatorLayout.AppBarLayoutExituntilCollapsedActivity"
 		    android:theme="@style/Theme.AppCompat.NoActionBar">
 	    </activity>
 	    <activity
-		    android:name="com.android.coordinatorLayout.CoordinatorLayoutAppBarLayoutEnterAlwaysCollapsedActivity"
+		    android:name="com.android.coordinatorLayout.AppBarLayoutEnterAlwaysCollapsedActivity"
 		    android:theme="@style/Theme.AppCompat.NoActionBar">
 	    </activity>
 	    <activity
-		    android:name="com.android.coordinatorLayout.CoordinatorLayoutCollapsingToolbarLayoutActivity"
+		    android:name="com.android.coordinatorLayout.CollapsingToolbarLayoutActivity"
 		    android:theme="@style/Theme.AppCompat.NoActionBar">
 	    </activity>
 		<activity
-			android:name="com.android.coordinatorLayout.CoordinatorLayoutAppBarLayoutExituntilCollapsedRecyclerviewActivity"
+			android:name="com.android.coordinatorLayout.AppBarLayoutExituntilCollapsedRecyclerviewActivity"
 			android:theme="@style/Theme.AppCompat.NoActionBar">
 		</activity>
 	    <activity android:name="com.android.coordinatorLayout.darren.DarrenBehaviorActivity"></activity>

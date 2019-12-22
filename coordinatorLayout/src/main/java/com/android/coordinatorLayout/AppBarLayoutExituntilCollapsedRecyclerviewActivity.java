@@ -10,7 +10,7 @@ import com.android.coordinatorLayout.adapter.MyRecyclerviewAdapter;
 
 import java.util.ArrayList;
 
-public class CoordinatorLayoutAppBarLayoutExituntilCollapsedRecyclerviewActivity extends AppCompatActivity {
+public class AppBarLayoutExituntilCollapsedRecyclerviewActivity extends AppCompatActivity {
 
 	private MyRecyclerviewAdapter myRecyclerviewAdapter;
 

@@ -9,6 +9,7 @@ public class QuChuChongfu {
     public static void main(String[] args) {
         HashMap<Long, Integer> longLongHashMap = new HashMap<>();
         HashMap<String, String> filter = new HashMap<>();
+        String filePath = "";
         File file = new File(filePath);
         if(file.isDirectory()){
             File[] files = file.listFiles();

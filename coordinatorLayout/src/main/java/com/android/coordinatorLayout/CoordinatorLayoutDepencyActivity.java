@@ -3,7 +3,7 @@ package com.android.coordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class CoordinatorLayoutActivity extends AppCompatActivity {
+public class CoordinatorLayoutDepencyActivity extends AppCompatActivity {
 //	CoordinatorLayou中最经典的设计就是Behavior，在前面我们提到了app：
 //	layout_behavior="@string/appbar_scrolling_view_behavior"，其实@string/appbar_scrolling_view_behavior对应
 //	着的是AppBarLayout.ScrollingViewBehavior。我们也可以自定义Behavior来实现自己的组件和滑动交互。自

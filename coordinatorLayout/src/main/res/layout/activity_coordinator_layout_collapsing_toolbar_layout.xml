@@ -17,7 +17,9 @@
 			app:contentScrim="@color/colorAccent"
 			app:expandedTitleGravity="left|top"
 			app:collapsedTitleGravity="right"
+			android:minHeight="50dp"
 			app:layout_scrollFlags="scroll|exitUntilCollapsed">
+			<!--这里最小高度为子view最小高度，可以大于这个的-->
 <!--CollapsingToolbarLayout是用来对Toolbar进行再次包装的ViewGroup，主要是用于实现折叠（其实就是看起来像伸缩~）的App Bar效果-->
 			<!--它需要放在AppBarLayout布局里面，并且作为AppBarLayout的直接子View-->
 			<!--expandedTitleMarginStart 设置下拉伸缩完成后，ToolBar标题文字左边的margin距离 -->
@@ -27,19 +29,14 @@
 			<!--置，默认的值为left+bottom。-->
 			<!--• app：collapsedTitleGravity="left"，表示当头部的衬图ImageView消失后，此title将回归到Toolbar的位-->
 			<!--置，默认的值为left。-->
-			<ImageView
-				android:id="@+id/main.backdrop"
-				android:layout_width="wrap_content"
-				android:layout_height="300dp"
-				android:scaleType="centerCrop"
-				android:src="@drawable/material_img"
-				app:layout_collapseMode="parallax" />
+
 
 			<android.support.v7.widget.Toolbar
 				android:id="@+id/toolbar"
 				android:layout_width="match_parent"
-				android:layout_height="?android:attr/actionBarSize"
-				app:layout_collapseMode="pin"  />
+				android:layout_height="10dp"
+
+				  />
 
 		</android.support.design.widget.CollapsingToolbarLayout>
 	</android.support.design.widget.AppBarLayout>

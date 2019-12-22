@@ -16,11 +16,13 @@
 			android:id="@+id/toolbar"
 			android:layout_width="match_parent"
 			android:minHeight="?android:attr/actionBarSize"
-			android:layout_height="200dp"
+			android:layout_height="10dp"
 			app:layout_scrollFlags="scroll|enterAlways|exitUntilCollapsed" />
 		<!--scroll:值设为scroll的View会跟随滚动事件一起发生移动。就好像这个View也是属于这个ScrollView一样。-->
 		<!--enterAlways:值设为enterAlways的View,当ScrollView往下滚动时，该View会直接往下滚动。而不用考虑ScrollView是否在滚动。-->
 		<!--exitUntilCollapsed：值设为exitUntilCollapsed的View，当这个View要往上逐渐“消逝”时，会一直往上滑动，直到剩下的的高度达到它的最小高度后，再响应ScrollView的内部滑动事件。-->
+
+<!--		android:minHeight="?android:attr/actionBarSize"  去掉这个并不会变成0-->
 
 		<!--手指向上移动的时候，会优先收起AppBarLayout中的子View，而收起的最小高度为0，假如希望它在收起时仍然保留部分可见，那么就需要使用exitUntilCollapsed + minHeight属性，minHeight就决定了收起时的最小高度是多少，也就是Collapsed状态。
 		作者：泽毛

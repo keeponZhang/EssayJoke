@@ -45,14 +45,14 @@ public abstract class FragmentHostCallback<E> extends FragmentContainer {
     final int mWindowAnimations;
     final FragmentManagerImpl mFragmentManager = new FragmentManagerImpl();
     /** The loader managers for individual fragments [i.e. Fragment#getLoaderManager()] */
-    private SimpleArrayMap<String, LoaderManager> mAllLoaderManagers;
+    private SimpleArrayMap<String, LoaderManager> mAllLoaderManagers;  //和Fragment关联的LoaderManager，每个Fragment对应一个LoaderManager。
     /** Whether or not fragment loaders should retain their state */
-    private boolean mRetainLoaders;
+    private boolean mRetainLoaders;  //Fragment的Loader是否要保持它们的状态。
     /** The loader manger for the fragment host [i.e. Activity#getLoaderManager()] */
-    private LoaderManagerImpl mLoaderManager;
-    private boolean mCheckedForLoaderManager;
+    private LoaderManagerImpl mLoaderManager;   //和Fragment宿主关联的LoaderManager
+    private boolean mCheckedForLoaderManager;  //当Fragment的宿主的LoaderManager被创建以后，该标志位变为true。
     /** Whether or not the fragment host loader manager was started */
-    private boolean mLoadersStarted;
+    private boolean mLoadersStarted;  //Fragment的宿主的Loader是否已经启动
 
     public FragmentHostCallback(Context context, Handler handler, int windowAnimations) {
         this(context instanceof Activity ? (Activity) context : null, context, handler,

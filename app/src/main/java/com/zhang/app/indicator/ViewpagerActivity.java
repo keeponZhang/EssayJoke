@@ -33,6 +33,8 @@ public class ViewpagerActivity extends AppCompatActivity {
 	private View view1;
 	private View view2;
 	private View view3;
+	private View view4;
+	private View view5;
 	private PagerAdapter mPagerAdapter;
 
 	@Override
@@ -55,12 +57,16 @@ public class ViewpagerActivity extends AppCompatActivity {
 		view1 = inflater.inflate(R.layout.layout1, null);
 		view2 = inflater.inflate(R.layout.layout2,null);
 		view3 = inflater.inflate(R.layout.layout3, null);
+		view4 = inflater.inflate(R.layout.layout4, null);
+		view5 = inflater.inflate(R.layout.layout5, null);
 
 		viewList = new ArrayList<View>();// 将要分页显示的View装入数组中
 		viewList.add(view1);
 		viewList.add(view2);
 		viewList.add(view3);
-
+		viewList.add(view4);
+		viewList.add(view5);
+		mViewPager.setOffscreenPageLimit(1);
 
 		mPagerAdapter = new PagerAdapter() {
 

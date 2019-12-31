@@ -56,9 +56,9 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="15dp"
-        app:layout_behavior="com.example.liuwangshu.mooncoordinatorlayout.FooterBehavior"
+        app:layout_behavior="com.android.coordinatorLayout.behavior.FooterBehavior"
         >
-        <!--app:layout_behavior="com.example.liuwangshu.mooncoordinatorlayout.FooterBehaviorAppBar"-->
+        <!--app:layout_behavior="com.android.coordinatorLayout.behavior.FooterBehaviorAppBar"-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.zhang.app.R;
 import com.zhang.app.banner.BannerActivity;
 import com.zhang.app.indicator.IndicatorActivity;
+import com.zhang.app.indicator.ViewpagerActivity;
 import com.zhang.app.loader.LoaderActivity;
 import com.zhang.webview.WebChromeClientActivity;
 import com.zhang.webview.WebViewActivity;
@@ -75,6 +76,7 @@ public class JumpAdapter extends RecyclerView.Adapter<JumpAdapter.MainViewHolder
                         Utils.startActivity(v.getContext(), LoaderActivity.class);
                         break;
                     case 9:
+                        Utils.startActivity(v.getContext(), ViewpagerActivity.class);
                         break;
                     case 10:
                         break;

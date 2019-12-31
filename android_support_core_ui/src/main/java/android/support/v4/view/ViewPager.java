@@ -497,47 +497,73 @@ public class ViewPager extends ViewGroup {
      * @param adapter Adapter to use
      */
     public void setAdapter(@Nullable PagerAdapter adapter) {
+        //1.如果已经设置过PagerAdapter，即mAdapter != null，则做一些清理工作
         if (mAdapter != null) {
+            //2.清除观察者
             mAdapter.setViewPagerObserver(null);
+            //3.回调startUpdate函数，告诉PagerAdapter开始更新要显示的页面
             mAdapter.startUpdate(this);
+            //4.如果之前保存有页面，则将之前所有的页面destroy掉
             for (int i = 0; i < mItems.size(); i++) {
                 final ItemInfo ii = mItems.get(i);
                 mAdapter.destroyItem(this, ii.position, ii.object);
             }
+            //5.回调finishUpdate，告诉PagerAdapter结束更新
             mAdapter.finishUpdate(this);
+            //6.将所有的页面清除
             mItems.clear();
+            //7.将所有的非Decor View移除，即将页面移除
             removeNonDecorViews();
+            //8.当前的显示页面重置到第一个
             mCurItem = 0;
+            //9.滑动重置到(0,0)位置
             scrollTo(0, 0);
         }
-
+        //10.保存上一次的PagerAdapter
         final PagerAdapter oldAdapter = mAdapter;
+        //11.设置mAdapter为新的PagerAdapter
         mAdapter = adapter;
+        //12.设置期望的适配器中的页面数量为0个
         mExpectedAdapterCount = 0;
-
+        //13.如果设置的PagerAdapter不为null
         if (mAdapter != null) {
+            //14.确保观察者不为null，观察者主要是用于监视数据源的内容发生变化
             if (mObserver == null) {
                 mObserver = new PagerObserver();
             }
+            //15.将观察者设置到PagerAdapter中
             mAdapter.setViewPagerObserver(mObserver);
             mPopulatePending = false;
+            //16.保存上一次是否是第一次Layout
             final boolean wasFirstLayout = mFirstLayout;
+            //17.设定当前为第一次Layout
             mFirstLayout = true;
+            //18.更新期望的数据源中页面个数
             mExpectedAdapterCount = mAdapter.getCount();
+            //19.如果有数据需要恢复
             if (mRestoredCurItem >= 0) {
+                //20.回调PagerAdapter的restoreState函数
                 mAdapter.restoreState(mRestoredAdapterState, mRestoredClassLoader);
                 setCurrentItemInternal(mRestoredCurItem, false, true);
+                //21.标记无需再恢复
                 mRestoredCurItem = -1;
                 mRestoredAdapterState = null;
                 mRestoredClassLoader = null;
             } else if (!wasFirstLayout) {
+                //如果在此之前不是第一次Layout
+                //22.由于ViewPager并不是将所有页面作为子View，
+                // 而是最多缓存用户指定缓存个数*2（左右两边，可能左边或右边没有那么多页面）
+                //因此需要创建和销毁页面，populate主要工作就是这些
                 populate();
             } else {
+                //23.重新布局（Layout）
                 requestLayout();
             }
         }
 
         // Dispatch the change to any listeners
+        //24.如果PagerAdapter发生变化，并且设置了OnAdapterChangeListener监听器
+        // 则回调OnAdapterChangeListener的onAdapterChanged函数
         if (mAdapterChangeListeners != null && !mAdapterChangeListeners.isEmpty()) {
             for (int i = 0, count = mAdapterChangeListeners.size(); i < count; i++) {
                 mAdapterChangeListeners.get(i).onAdapterChanged(this, oldAdapter, adapter);
@@ -1093,11 +1119,13 @@ public class ViewPager extends ViewGroup {
 
     void populate(int newCurrentItem) {
         ItemInfo oldCurInfo = null;
+
         if (mCurItem != newCurrentItem) {
             oldCurInfo = infoForPosition(mCurItem);
             mCurItem = newCurrentItem;
         }
-
+        //对子View的绘制顺序进行排序，优先绘制Decor View
+        //再按照position从小到大排序
         if (mAdapter == null) {
             sortChildDrawingOrder();
             return;
@@ -1107,8 +1135,12 @@ public class ViewPager extends ViewGroup {
         // on creating views from the time the user releases their finger to
         // fling to a new position until we have finished the scroll to
         // that position, avoiding glitches from happening at that point.
+        //如果我们正在等待populate,那么在用户手指抬起切换到新的位置期间应该推迟创建子View，
+        // 直到滚动到最终位置再去创建，以免在这个期间出现差错
         if (mPopulatePending) {
             if (DEBUG) Log.i(TAG, "populate is pending, skipping for now...");
+            //对子View的绘制顺序进行排序，优先绘制Decor View
+            //再按照position从小到大排序
             sortChildDrawingOrder();
             return;
         }
@@ -1116,17 +1148,23 @@ public class ViewPager extends ViewGroup {
         // Also, don't populate until we are attached to a window.  This is to
         // avoid trying to populate before we have restored our view hierarchy
         // state and conflicting with what is restored.
+        //同样，在ViewPager没有attached到window之前，不要populate.
+        // 这是因为如果我们在恢复View的层次结构之前进行populate，可能会与要恢复的内容有冲突
         if (getWindowToken() == null) {
             return;
         }
-
+        //回调PagerAdapter的startUpdate函数，
+        // 告诉PagerAdapter开始更新要显示的页面
         mAdapter.startUpdate(this);
-
         final int pageLimit = mOffscreenPageLimit;
+        //确保起始位置大于等于0，如果用户设置了缓存页面数量，第一个页面为当前页面减去缓存页面数量
         final int startPos = Math.max(0, mCurItem - pageLimit);
         final int N = mAdapter.getCount();
+        //确保最后的位置小于等于数据源中数据个数-1，
+        // 如果用户设置了缓存页面数量，最后一个页面为当前页面加缓存页面数量
         final int endPos = Math.min(N - 1, mCurItem + pageLimit);
 
+        //判断用户是否增减了数据源的元素，如果增减了且没有调用notifyDataSetChanged，则抛出异常
         if (N != mExpectedAdapterCount) {
             String resName;
             try {
@@ -1143,8 +1181,10 @@ public class ViewPager extends ViewGroup {
         }
 
         // Locate the currently focused item or add it if needed.
+        //定位到当前获焦的页面，如果没有的话，则添加一个
         int curIndex = -1;
         ItemInfo curItem = null;
+        //遍历每个页面对应的ItemInfo，找出获焦页面
         for (curIndex = 0; curIndex < mItems.size(); curIndex++) {
             final ItemInfo ii = mItems.get(curIndex);
             if (ii.position >= mCurItem) {
@@ -1153,6 +1193,8 @@ public class ViewPager extends ViewGroup {
             }
         }
 
+        //如果没有找到获焦的页面，说明mItems列表里面没有保存获焦页面，
+        // 需要将获焦页面加入到mItems里面
         if (curItem == null && N > 0) {
             curItem = addNewItem(mCurItem, curIndex);
         }
@@ -1160,25 +1202,41 @@ public class ViewPager extends ViewGroup {
         // Fill 3x the available width or up to the number of offscreen
         // pages requested to either side, whichever is larger.
         // If we have no current item we have no work to do.
+        //默认缓存当前页面的左右两边的页面，如果用户设定了缓存页面数量，
+        // 则将当前页面两边都缓存用户指定的数量的页面
+        //如果当前没有页面，则我们啥也不需要做
         if (curItem != null) {
             float extraWidthLeft = 0.f;
+            //左边的页面
             int itemIndex = curIndex - 1;
+            //如果当前页面左边有页面，则将左边页面对应的ItemInfo取出，否则左边页面的ItemInfo为null
             ItemInfo ii = itemIndex >= 0 ? mItems.get(itemIndex) : null;
+            //保存显示区域的宽度
             final int clientWidth = getClientWidth();
+            //算出左边页面需要的宽度，注意，这里的宽度是指实际宽度与可视区域宽度比例，
+            // 即实际宽度=leftWidthNeeded*clientWidth
             final float leftWidthNeeded = clientWidth <= 0 ? 0 :
                     2.f - curItem.widthFactor + (float) getPaddingLeft() / (float) clientWidth;
+            //从当前页面左边第一个页面开始，左边的页面进行遍历
             for (int pos = mCurItem - 1; pos >= 0; pos--) {
+                //如果左边的宽度超过了所需的宽度，并且当前当前页面位置比第一个缓存页面位置小
+                //这说明这个页面需要Destroy掉
                 if (extraWidthLeft >= leftWidthNeeded && pos < startPos) {
+                    //如果左边已经没有页面了，跳出循环
                     if (ii == null) {
                         break;
                     }
                     if (pos == ii.position && !ii.scrolling) {
+                        //将当前页面destroy掉
                         mItems.remove(itemIndex);
+                        //回调PagerAdapter的destroyItem
                         mAdapter.destroyItem(this, pos, ii.object);
                         if (DEBUG) {
                             Log.i(TAG, "populate() - destroyItem() with pos: " + pos
                                     + " view: " + ((View) ii.object));
                         }
+                        //由于mItems删除了一个元素
+                        //需要将索引减一
                         itemIndex--;
                         curIndex--;
                         ii = itemIndex >= 0 ? mItems.get(itemIndex) : null;

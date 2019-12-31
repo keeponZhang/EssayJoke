@@ -30,6 +30,7 @@ public class JumpActivity extends AppCompatActivity {
         titles.add("WebviewClientActivity");
         titles.add("WebChromeClientActivity");
         titles.add("LoaderActivity");
+        titles.add("ViewpagerActivity");
 
 
         JumpAdapter mainAdapter = new JumpAdapter(titles);

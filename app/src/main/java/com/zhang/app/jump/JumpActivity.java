@@ -18,6 +18,7 @@ import com.zhang.app.banner.BannerActivity;
 import com.zhang.app.indicator.IndicatorActivity;
 import com.zhang.app.indicator.ViewpagerActivity;
 import com.zhang.app.loader.LoaderActivity;
+import com.zhang.app.zhiwen.LoginActivity;
 import com.zhang.recyclerview.itemdecoration.ItemDecorationActivity;
 import com.zhang.webview.WebChromeClientActivity;
 import com.zhang.webview.WebViewActivity;
@@ -105,6 +106,7 @@ public class JumpActivity extends BaseJumpActivity {
                 startActivity(intent3, compat3.toBundle());
                 break;
             case 15:
+                Utils.startActivity(this, LoginActivity.class);
                 break;
             case 16:
                 break;
@@ -131,6 +133,7 @@ public class JumpActivity extends BaseJumpActivity {
         titles.add("CTTargetSupportActivity");
         titles.add("CTTargetSupportActivityCustom");
         titles.add("CTTargetActivity");
+        titles.add("LoginActivity");
 
     }
 }

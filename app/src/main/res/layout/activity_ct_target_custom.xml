@@ -1,0 +1,55 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/ll_root"
+    android:tag="rootView">
+
+    <RelativeLayout
+        android:id="@+id/ll_header"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:gravity="center"
+        android:tag="ll_header">
+
+        <ImageView
+            android:id="@+id/iv_bg"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_monkey"
+            android:tag="transition_reveal" />
+
+        <ImageView
+            android:id="@+id/iv_header"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/account_icon_weibo"
+            android:tag="transition_scale" />
+
+        <TextView
+            android:id="@+id/tv_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/iv_header"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="30dp"
+            android:tag="transition_scale"
+            android:text="我是标题"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#1F000000"
+        android:padding="30dp"
+        android:tag="transition_translationY"
+        android:text="我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;"
+        android:textColor="@android:color/white" />
+</LinearLayout>

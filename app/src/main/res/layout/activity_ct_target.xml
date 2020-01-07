@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:tag="rootView"
+    android:id="@+id/ll_root"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/ll_header"
+        android:tag="ll_header"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+        <ImageView
+            android:id="@+id/iv_bg"
+            android:tag="iv_bg"
+            android:background="@drawable/bg_monkey"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:id="@+id/iv_header"
+            android:tag="iv_header"
+            android:layout_centerInParent="true"
+            android:src="@drawable/account_icon_weibo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="10dp"/>
+        <TextView
+            android:id="@+id/tv_header"
+            android:tag="tv_header"
+            android:layout_alignBottom="@id/iv_header"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="30dp"
+            android:text="我是标题"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/tv_content"
+        android:tag="tv_content"
+        android:layout_width="match_parent"
+        android:padding="30dp"
+        android:textColor="@android:color/white"
+        android:background="#1F000000"
+        android:text="我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;我是内容;"
+        android:layout_height="match_parent"/>
+</LinearLayout>

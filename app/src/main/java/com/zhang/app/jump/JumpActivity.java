@@ -1,9 +1,16 @@
 package com.zhang.app.jump;
 
 
+import android.content.Intent;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.view.View;
 
 import com.hc.baselibrary.base.BaseJumpActivity;
+import com.hc.baselibrary.util.IntentFlag;
+import com.hc.baselibrary.util.Utils;
+import com.zhang.app.transitiondemo.CTTargetSupportActivity;
+import com.zhang.app.transitiondemo.CTTargetActivity;
 import com.zhang.app.transitiondemo.FragmentCustomAnimationsActivity;
 import com.zhang.app.R;
 import com.zhang.app.transitiondemo.TransitionActivity;
@@ -18,6 +25,7 @@ import com.zhang.webview.WebviewClientActivity;
 import com.zhang.webview.WebviewLoudongActivity;
 import com.zhang.webview.WebviewLoudongFixActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class JumpActivity extends BaseJumpActivity {
@@ -65,10 +73,36 @@ public class JumpActivity extends BaseJumpActivity {
                 Utils.startActivity(this, FragmentCustomAnimationsActivity.class);
                 break;
             case 12:
+                List<Pair> pairs = new ArrayList<>();
+                //1.得到ActivityOptionsCompact对象
+                ActivityOptionsCompat compat = ActivityOptionsCompat
+                        .makeSceneTransitionAnimation(JumpActivity.this,
+                                pairs.toArray(new android.support.v4.util.Pair[pairs.size()]));
+                Intent intent = new Intent(JumpActivity.this, CTTargetSupportActivity.class);
+                //2.调用第1步生成的ActivityOptionsCompact的toBundle方法
+               startActivity(intent, compat.toBundle());
                 break;
             case 13:
+                List<Pair> pairs1 = new ArrayList<>();
+                //1.得到ActivityOptionsCompact对象
+                ActivityOptionsCompat compat2= ActivityOptionsCompat
+                        .makeSceneTransitionAnimation(JumpActivity.this,
+                                pairs1.toArray(new android.support.v4.util.Pair[pairs1.size()]));
+                Intent intent2 = new Intent(JumpActivity.this, CTTargetSupportActivity.class);
+                //2.调用第1步生成的ActivityOptionsCompact的toBundle方法
+                intent2.putExtra(IntentFlag.INTENT_FLAG_CUSTOM, true);
+                startActivity(intent2, compat2.toBundle());
                 break;
             case 14:
+                List<Pair> pairs3 = new ArrayList<>();
+                //1.得到ActivityOptionsCompact对象
+                ActivityOptionsCompat compat3= ActivityOptionsCompat
+                        .makeSceneTransitionAnimation(JumpActivity.this,
+                                pairs3.toArray(new android.support.v4.util.Pair[pairs3.size()]));
+                Intent intent3 = new Intent(JumpActivity.this, CTTargetActivity.class);
+                //2.调用第1步生成的ActivityOptionsCompact的toBundle方法
+                intent3.putExtra(IntentFlag.INTENT_FLAG_CUSTOM, true);
+                startActivity(intent3, compat3.toBundle());
                 break;
             case 15:
                 break;
@@ -94,6 +128,9 @@ public class JumpActivity extends BaseJumpActivity {
         titles.add("ViewpagerActivity");
         titles.add("TransitionActivity");
         titles.add("FragmentCustomAnimationsActivity");
+        titles.add("CTTargetSupportActivity");
+        titles.add("CTTargetSupportActivityCustom");
+        titles.add("CTTargetActivity");
 
     }
 }

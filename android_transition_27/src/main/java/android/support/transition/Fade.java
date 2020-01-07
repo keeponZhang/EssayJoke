@@ -105,7 +105,8 @@ public class Fade extends Visibility {
         setMode(fadingMode);
         a.recycle();
     }
-
+    // Fade只重写了captureStartValues，在这里面，它把View当前的translationAlpha值保存起来，
+    // 这个值表示的是在Transition开始之前View的translationAlpha的值：
     @Override
     public void captureStartValues(@NonNull TransitionValues transitionValues) {
         super.captureStartValues(transitionValues);
@@ -116,6 +117,7 @@ public class Fade extends Visibility {
     /**
      * Utility method to handle creating and running the Animator.
      */
+    // 从上面可以看出，它返回的是一个ObjectAnimator，这个Animator会把View的translationAlpha从startAlpha变为1，这也就是一个渐渐显示的过程。
     private Animator createAnimation(final View view, float startAlpha, float endAlpha) {
         if (startAlpha == endAlpha) {
             return null;
@@ -139,6 +141,8 @@ public class Fade extends Visibility {
         return anim;
     }
 
+    // 在上面的分析当中，我们提到过，当View的可见性从INVISIBLE变为VISIBLE时会调用Transition中的Animator来执行这一变换的过程，
+    // 例如从AActivity跳转到BActivity，那么BActivity中的View就会调用onAppear所返回的Animator：
     @Override
     public Animator onAppear(ViewGroup sceneRoot, View view,
             TransitionValues startValues,
@@ -148,6 +152,7 @@ public class Fade extends Visibility {
             Log.d(LOG_TAG, "Fade.onAppear: startView, startVis, endView, endVis = "
                     + startView + ", " + view);
         }
+        // 这里首先会通过getStartAlpha去获取起始的transitionAlpha值，它是把之前保存在PROPNAME_TRANSITION_ALPHA中的值取出来：
         float startAlpha = getStartAlpha(startValues, 0);
         if (startAlpha == 1) {
             startAlpha = 0;
@@ -155,6 +160,7 @@ public class Fade extends Visibility {
         return createAnimation(view, startAlpha, 1);
     }
 
+    // 再看一下onDisappear函数，它就是onAppear的反向过程：
     @Override
     public Animator onDisappear(ViewGroup sceneRoot, final View view, TransitionValues startValues,
             TransitionValues endValues) {

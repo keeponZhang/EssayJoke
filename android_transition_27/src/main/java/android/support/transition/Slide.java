@@ -171,6 +171,7 @@ public class Slide extends Visibility {
         setSlideEdge(edge);
     }
 
+    // 对于起点和终点值的获取都是调用了下面这个函数，它保存的是View在窗口中的位置：
     private void captureValues(TransitionValues transitionValues) {
         View view = transitionValues.view;
         int[] position = new int[2];
@@ -178,6 +179,8 @@ public class Slide extends Visibility {
         transitionValues.values.put(PROPNAME_SCREEN_POSITION, position);
     }
 
+    // 在capturexxx方法中，把属性保存在TranslationValues中，这里，一定要记得调用对应的super方法让系统保存一些默认的状态
+    // 在onAppear和onDisappear中，根据起点和终点和终点的TranslationValues，构造一个改变View属性的Animator，同时在动画结束之后，还原它的属性。
     @Override
     public void captureStartValues(@NonNull TransitionValues transitionValues) {
         super.captureStartValues(transitionValues);
@@ -247,10 +250,13 @@ public class Slide extends Visibility {
             return null;
         }
         int[] position = (int[]) endValues.values.get(PROPNAME_SCREEN_POSITION);
+        //终点值是确定的
         float endX = view.getTranslationX();
         float endY = view.getTranslationY();
+        //起点值则需要根据所选的模式来确定
         float startX = mSlideCalculator.getGoneX(sceneRoot, view);
         float startY = mSlideCalculator.getGoneY(sceneRoot, view);
+        //根据起点值、终点值、View所处窗口的位置，来得到一个`Animator`
         return TranslationAnimationCreator
                 .createAnimation(view, endValues, position[0], position[1],
                         startX, startY, endX, endY, sDecelerate);

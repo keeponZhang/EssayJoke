@@ -1,4 +1,4 @@
-package com.zhang.app.jump;
+package com.hc.baselibrary.util;
 
 import android.content.Context;
 import android.content.Intent;

@@ -33,7 +33,7 @@ public class CTTargetSupportActivity extends AppCompatActivity {
         if(custom){
             setContentView(R.layout.activity_ct_target_custom);
             initView();
-            setUpCustomTransition();
+
         }else{
             setContentView(R.layout.activity_ct_target);
             initView();
@@ -98,11 +98,22 @@ public class CTTargetSupportActivity extends AppCompatActivity {
             contentTransition.addTarget(R.id.tv_header);
             contentTransition.addTarget(R.id.iv_header);
             contentTransition.addTarget(R.id.tv_content);
-            contentTransition.setDuration(500);
+            contentTransition.setDuration(1500);
             TransitionManager.beginDelayedTransition(mRootView, contentTransition);
+            toggleVisibility(mIvBg,mIvHeader,mTvContent,mTvContent);
             // window.setEnterTransition(contentTransition);
             // window.setReturnTransition(contentTransition);
         }
+
+    }
+    private static void toggleVisibility(View... views) {
+        for (View view : views) {
+            boolean isVisible = view.getVisibility() == View.VISIBLE;
+            view.setVisibility(isVisible ? View.INVISIBLE : View.VISIBLE);
+        }
     }
 
+    public void test(View view) {
+        setUpCustomTransition();
+    }
 }

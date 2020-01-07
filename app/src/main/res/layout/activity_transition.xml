@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent" >
+<LinearLayout
+    android:layout_width="match_parent" android:layout_height="50dp"
+    android:orientation="horizontal"
+    android:id="@+id/layout_root_view">
+    <ImageView
+        android:id="@+id/red_box"
+        android:background="@android:color/holo_red_light"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"></ImageView>
+    <ImageView
+        android:id="@+id/green_box"
+        android:background="@android:color/holo_green_dark"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"></ImageView>
+    <ImageView
+        android:id="@+id/blue_box"
+        android:background="@android:color/holo_blue_dark"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"></ImageView>
+    <ImageView
+        android:id="@+id/black_box"
+        android:background="@android:color/black"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"></ImageView>
+</LinearLayout>
+    <Button
+        android:textAllCaps="false"
+        android:layout_below="@id/layout_root_view"
+        android:text="finish"
+        android:onClick="onClickFinish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></Button>
+
+</RelativeLayout>

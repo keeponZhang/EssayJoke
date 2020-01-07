@@ -31,7 +31,7 @@ public class MyRecyclerviewAdapter extends BaseRecyclerViewAdapter<String,MyRecy
     private int mCreatedHolder=0;
     @Override
     public ViewHolder onCreateMyViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_news_item, parent, false);
+        View rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.base_layout_news_item, parent, false);
         mCreatedHolder++;
         Log.d(TAG, "onCreateViewHolder  num:"+mCreatedHolder);
         return new ViewHolder(rootView);

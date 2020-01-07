@@ -45,7 +45,7 @@ public class JumpAdapter extends BaseRecyclerViewAdapter<String,JumpAdapter.Main
     public MainViewHolder onCreateMyViewHolder(@NonNull ViewGroup parent, int viewType) {
         mCreatedHolder++;
         Log.d(TAG, "onCreateViewHolder  num:"+mCreatedHolder);
-        View rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_news_item, parent, false);
+        View rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.base_layout_news_item, parent, false);
         return new MainViewHolder(rootView);
     }
 

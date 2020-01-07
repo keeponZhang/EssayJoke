@@ -28,6 +28,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".indicator.ViewpagerActivity"></activity>
+        <activity android:name=".transitiondemo.FragmentCustomAnimationsActivity"></activity>
+        <activity android:name=".transitiondemo.TransitionActivity"></activity>
     </application>
 
 </manifest>

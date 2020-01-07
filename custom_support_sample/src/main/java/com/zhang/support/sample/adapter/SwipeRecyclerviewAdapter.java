@@ -30,7 +30,7 @@ public class SwipeRecyclerviewAdapter extends BaseRecyclerViewAdapter<String,Swi
 
     @Override
     public ViewHolder onCreateMyViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_news_item, parent, false);
+        View rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.base_layout_news_item, parent, false);
         return new ViewHolder(rootView);
     }
 

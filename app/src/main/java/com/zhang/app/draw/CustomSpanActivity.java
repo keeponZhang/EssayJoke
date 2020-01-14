@@ -55,19 +55,19 @@ public class CustomSpanActivity extends AppCompatActivity {
 		StringBuilder stringBuilder2 = new StringBuilder();
 		//第一个Span
 		stringBuilder2.append(" ");
-		IconTextSpan topSpan2 = new IconTextSpan(getApplicationContext(), R.color.colorPrimary, "置顶2");
+		IconTextSpan2 topSpan2 = new IconTextSpan2(getApplicationContext(), R.color.colorPrimary, "置顶2",0);
 		spans2.add(topSpan2);
 		//第二个Span
 		stringBuilder2.append(" ");
-		IconTextSpan hotSpan2 = new IconTextSpan(getApplicationContext(), R.color.colorAccent, "热2");
+		IconTextSpan3 hotSpan2 = new IconTextSpan3(getApplicationContext(), R.color.colorAccent, "热闹2");
 		hotSpan2.setRightMarginDpValue(5);
 		spans2.add(hotSpan2);
 
 		stringBuilder2.append(content2);
 		SpannableString spannableString2 = new SpannableString(stringBuilder2.toString());
 		//循环遍历设置Span
-		for (int i = 0; i < spans.size(); i++) {
-			spannableString2.setSpan(spans.get(i), i, i + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		for (int i = 0; i < spans2.size(); i++) {
+			spannableString2.setSpan(spans2.get(i), i, i + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		}
 		textView2.setText(spannableString2);
 	}

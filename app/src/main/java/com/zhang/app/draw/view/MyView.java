@@ -1,4 +1,4 @@
-package com.zhang.app.draw;
+package com.zhang.app.draw.view;
 
 import android.content.Context;
 import android.graphics.Canvas;

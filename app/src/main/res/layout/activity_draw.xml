@@ -5,22 +5,22 @@
 	android:layout_height="fill_parent"
 	>
 
-	<com.zhang.app.draw.MyView
+	<com.zhang.app.draw.view.MyView
 		android:background="@color/white"
 		android:layout_width="fill_parent"
 		android:layout_height="120dp"
 		/>
-	<com.zhang.app.draw.MyView2
+	<com.zhang.app.draw.view.MyView2
 		android:background="@color/black"
 		android:layout_width="fill_parent"
 		android:layout_height="120dp"
 		/>
-	<com.zhang.app.draw.MyView3
+	<com.zhang.app.draw.view.MyView3
 		android:background="@color/white"
 		android:layout_width="fill_parent"
 		android:layout_height="150dp"
 		/>
-	<com.zhang.app.draw.MyView4
+	<com.zhang.app.draw.view.MyView4
 		android:background="@color/black"
 		android:layout_width="fill_parent"
 		android:layout_height="120dp"

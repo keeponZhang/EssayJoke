@@ -9,6 +9,7 @@ import android.view.View;
 import com.hc.baselibrary.base.BaseJumpActivity;
 import com.hc.baselibrary.util.IntentFlag;
 import com.hc.baselibrary.util.Utils;
+import com.zhang.app.draw.DrawActivity;
 import com.zhang.app.transitiondemo.CTTargetSupportActivity;
 import com.zhang.app.transitiondemo.CTTargetActivity;
 import com.zhang.app.transitiondemo.FragmentCustomAnimationsActivity;
@@ -109,6 +110,7 @@ public class JumpActivity extends BaseJumpActivity {
                 Utils.startActivity(this, LoginActivity.class);
                 break;
             case 16:
+                Utils.startActivity(this, DrawActivity.class);
                 break;
             default:
                 break;
@@ -134,6 +136,7 @@ public class JumpActivity extends BaseJumpActivity {
         titles.add("CTTargetSupportActivityCustom");
         titles.add("CTTargetActivity");
         titles.add("LoginActivity");
+        titles.add("DrawActivity");
 
     }
 }

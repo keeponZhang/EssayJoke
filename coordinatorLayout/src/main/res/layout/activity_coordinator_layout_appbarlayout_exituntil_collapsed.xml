@@ -16,7 +16,7 @@
 			android:id="@+id/toolbar"
 			android:layout_width="match_parent"
 			android:minHeight="?android:attr/actionBarSize"
-			android:layout_height="10dp"
+			android:layout_height="200dp"
 			app:layout_scrollFlags="scroll|enterAlways|exitUntilCollapsed" />
 		<!--scroll:值设为scroll的View会跟随滚动事件一起发生移动。就好像这个View也是属于这个ScrollView一样。-->
 		<!--enterAlways:值设为enterAlways的View,当ScrollView往下滚动时，该View会直接往下滚动。而不用考虑ScrollView是否在滚动。-->

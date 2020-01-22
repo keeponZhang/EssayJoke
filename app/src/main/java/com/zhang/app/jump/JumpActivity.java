@@ -9,6 +9,7 @@ import android.view.View;
 import com.hc.baselibrary.base.BaseJumpActivity;
 import com.hc.baselibrary.util.IntentFlag;
 import com.hc.baselibrary.util.Utils;
+import com.zhang.app.aop.AopActivity;
 import com.zhang.app.draw.CustomSpanActivity;
 import com.zhang.app.draw.DrawActivity;
 import com.zhang.app.transitiondemo.CTTargetSupportActivity;
@@ -116,6 +117,9 @@ public class JumpActivity extends BaseJumpActivity {
             case 17:
                 Utils.startActivity(this, CustomSpanActivity.class);
                 break;
+            case 18:
+                Utils.startActivity(this, AopActivity.class);
+                break;
             default:
                 break;
         }
@@ -142,6 +146,7 @@ public class JumpActivity extends BaseJumpActivity {
         titles.add("LoginActivity");
         titles.add("DrawActivity");
         titles.add("CustomSpanActivity");
+        titles.add("AopActivity");
 
     }
 }

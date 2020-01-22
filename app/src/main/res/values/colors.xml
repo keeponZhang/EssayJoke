@@ -649,4 +649,7 @@
 	<color name="write_comment_text">#ff6a6056</color>
 	<color name="write_comment_text_night">@color/default_text_night</color>
 
+
+	<color name="home_tab_course_item_icon_bg">@color/default_text_night</color>
+
 </resources>

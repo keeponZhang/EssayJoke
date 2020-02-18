@@ -91,9 +91,11 @@ public class FanShe2Activity extends AppCompatActivity {
 	public void getGenericInterface2(View view) {
 		Class<?> clazz = PointGenericityImpl.class;
 
+
 		Type[] types = clazz.getGenericInterfaces();
 		for (Type type:types) {
 			if (type instanceof ParameterizedType) {
+				//因为PointGenericityImpl覆写了PointInterface的泛型T
 				//parameterizedType:com.zhang.fanshe.interfaces.PointInterface<T, java.lang.Integer>
 				ParameterizedType parameterizedType = (ParameterizedType) type;
 				//返回表示此类型实际类型参数的 Type 对象的数组
@@ -177,7 +179,7 @@ public class FanShe2Activity extends AppCompatActivity {
 								Type[] lowerBounds = wt.getLowerBounds();
 								for (Type bound:lowerBounds){
 									Class<?> boundClass = (Class)bound;
-									Log.e(TAG, "lowerBound为：" + boundClass.getName());
+									Log.e(TAG, "lowerBound为 Super：" + boundClass.getName());
 								}
 
 								//通过getUpperBounds得到上界，即派生自extends的限定，如果没有，默认是Object
@@ -185,7 +187,7 @@ public class FanShe2Activity extends AppCompatActivity {
 								for (Type bound:upperBounds){
 									Class<?> boundClass = (Class)bound;
 									//如果不写，则默认输出Object，如果写了，则输出对应的
-									Log.e(TAG, "upperBound为：" + boundClass.getName());
+									Log.e(TAG, "upperBound extends为：" + boundClass.getName());
 								}
 
 							}

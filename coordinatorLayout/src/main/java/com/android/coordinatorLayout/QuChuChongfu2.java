@@ -14,7 +14,7 @@ public class QuChuChongfu2 {
     public static void main(String[] args) {
         HashMap<Long, Integer> longLongHashMap = new HashMap<>();
         ArrayList<Long> filterList = new ArrayList<>();
-        String filePath = "I:\\B 111111";
+        String filePath = "J:\\压缩保留";
         File file = new File(filePath);
         if(file.isDirectory()){
             File[] files = file.listFiles();

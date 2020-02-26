@@ -397,6 +397,7 @@ public class DrawerLayout extends ViewGroup {
      */
     @RestrictTo(LIBRARY_GROUP)
     public void setChildInsets(Object insets, boolean draw) {
+        //可以看出mLastInsets将会参与mSystemWindowInsets的后续处理
         mLastInsets = insets;
         mDrawStatusBarBackground = draw;
         setWillNotDraw(!draw && getBackground() == null);
@@ -1017,6 +1018,7 @@ public class DrawerLayout extends ViewGroup {
 
             if (applyInsets) {
                 final int cgrav = GravityCompat.getAbsoluteGravity(lp.gravity, layoutDirection);
+                // 如果child中设置fitsSystemWindow = true 属性，则会执行子view的dispatch, 否则会重新设置View的margin属性
                 if (ViewCompat.getFitsSystemWindows(child)) {
                     if (Build.VERSION.SDK_INT >= 21) {
                         WindowInsets wi = (WindowInsets) mLastInsets;

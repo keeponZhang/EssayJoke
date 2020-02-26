@@ -260,7 +260,7 @@ public class CollapsingToolbarLayout extends FrameLayout {
 
         super.onDetachedFromWindow();
     }
-    // 它会消耗windowinsets并且让子view不再消耗WindowInsets了
+
     WindowInsetsCompat onWindowInsetChanged(final WindowInsetsCompat insets) {
         WindowInsetsCompat newInsets = null;
 

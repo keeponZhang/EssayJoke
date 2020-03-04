@@ -25,5 +25,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api "com.android.support:support-annotations:${rootProject.ext.CUSTOM_SUPPORT_LIBRARY_VERSION}"
-    api "android.arch.lifecycle:runtime:${rootProject.ext.LIFECYCLE_RUNTIME_VERSION}"
+    api project(path: ':android_arch_core_common')
+    api project(path: ':android_arch_lifecycle_common')
+    api project(path: ':android_arch_lifecycle_runtime')
+
 }

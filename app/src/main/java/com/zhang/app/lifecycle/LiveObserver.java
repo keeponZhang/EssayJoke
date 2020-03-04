@@ -7,7 +7,8 @@ import android.util.Log;
 
 public class LiveObserver implements LifecycleObserver {
 
-    private static final String TAG = LiveObserver.class.getSimpleName();
+    // private static final String TAG = LiveObserver.class.getSimpleName();
+    private static final String TAG ="LifecycleRegistry LiveObserver";
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     void onCreate() {

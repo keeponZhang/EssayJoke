@@ -30,6 +30,7 @@ import java.util.Map.Entry;
  * An internal implementation of {@link GenericLifecycleObserver} that relies on reflection.
  */
 class ReflectiveGenericLifecycleObserver implements GenericLifecycleObserver {
+    //真正的观察者
     private final Object mWrapped;
     private final CallbackInfo mInfo;
     @SuppressWarnings("WeakerAccess")

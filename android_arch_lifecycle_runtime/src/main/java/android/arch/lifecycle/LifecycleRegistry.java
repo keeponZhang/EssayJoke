@@ -116,6 +116,7 @@ public class LifecycleRegistry extends Lifecycle {
         Log.e("TAG", "LifecycleRegistry handleLifecycleEvent mState:"+mState);
         if (mHandlingEvent || mAddingObserverCounter != 0) {
             mNewEventOccurred = true;
+            Log.e("TAG", "LifecycleRegistry handleLifecycleEvent 返回了:");
             // we will figure out what to do on upper level.
             return;
         }
@@ -126,6 +127,7 @@ public class LifecycleRegistry extends Lifecycle {
 
     private boolean isSynced() {
         if (mObserverMap.size() == 0) {
+            Log.d("TAG", "LifecycleRegistry isSynced mObserverMap.size() == 0 返回:");
             return true;
         }
         State eldestObserverState = mObserverMap.eldest().getValue().mState;
@@ -262,6 +264,7 @@ public class LifecycleRegistry extends Lifecycle {
     }
 
     private void forwardPass() {
+        Log.e("TAG", "LifecycleRegistry forwardPass mObserverMap:"+mObserverMap.size());
         Iterator<Entry<LifecycleObserver, ObserverWithState>> ascendingIterator =
                 mObserverMap.iteratorWithAdditions();
         while (ascendingIterator.hasNext() && !mNewEventOccurred) {
@@ -299,6 +302,7 @@ public class LifecycleRegistry extends Lifecycle {
     private void sync() {
         while (!isSynced()) {
             mNewEventOccurred = false;
+            Log.e("TAG", "LifecycleRegistry sync mObserverMap.size:"+mObserverMap.size());
             // no need to check eldest for nullability, because isSynced does it for us.
             if (mState.compareTo(mObserverMap.eldest().getValue().mState) < 0) {
                 //1.向后转移。

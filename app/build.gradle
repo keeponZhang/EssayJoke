@@ -37,8 +37,14 @@ dependencies {
     implementation project(path: ':android_design_27')
     implementation project(path: ':android_transition_27')
       implementation project(path: ':android_arch_core_common')
+    implementation project(path: ':android_arch_core_runtime')
       implementation project(path: ':android_arch_lifecycle_common')
+
     implementation project(path: ':android_arch_lifecycle_runtime')
+    implementation project(path: ':android_arch_lifecycle_viewmodel')
+    implementation project(path: ':android_arch_lifecycle_extentions')
+    implementation project(path: ':android_arch_lifecycle_livedata')
+    implementation project(path: ':android_arch_lifecycle_livedata_core')
 
 
     implementation "com.android.support.constraint:constraint-layout:${rootProject.ext.CONTRANT_LAYOUT_VERSION}"

@@ -37,6 +37,7 @@
 		<activity android:name=".zhiwen.LoginActivity" />
 		<activity android:name=".draw.CustomSpanActivity" />
 		<activity android:name=".aop.AopActivity" />
+		<activity android:name=".lifecycle.LiveAppCompactActivity" />
 	</application>
 
 </manifest>

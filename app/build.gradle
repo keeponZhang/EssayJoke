@@ -48,6 +48,7 @@ dependencies {
                 exclude group: 'com.android.support', module: 'support-v4'
                 exclude group: 'com.android.support', module: 'support-compat'
                 exclude group: 'com.android.support', module: 'support-core-ui'
+                exclude group: 'com.android.support', module: 'support_fragment'
             }
     implementation 'com.google.code.gson:gson:2.2.4'
     implementation project(':framelibrary')

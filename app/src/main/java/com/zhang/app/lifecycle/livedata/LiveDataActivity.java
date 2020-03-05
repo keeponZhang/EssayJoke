@@ -64,6 +64,27 @@ public class LiveDataActivity extends AppCompatActivity {
                 mViewModel.load();
             }
         });
+        final MyLiveObserver myLiveObserver = new MyLiveObserver(){
+
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+                Log.w("TAG", "LiveDataActivity LifecycleRegistry 包装 网络改变了 NetLiveData onChanged:");
+            }
+        };
+        final Observer<Boolean> booleanObserver = new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean o) {
+                Log.w("TAG", "LiveDataActivity LifecycleRegistry 网络改变了 NetLiveData onChanged:"+o);
+            }
+        };
+
+        findViewById(R.id.registerNetLiveData).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NetLiveData.getInstance(LiveDataActivity.this).observe(LiveDataActivity.this,
+                        myLiveObserver);
+            }
+        });
     }
 
     @Override

@@ -19,4 +19,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </Button>
+    <Button
+        android:layout_marginTop="50dp"
+        android:id="@+id/registerNetLiveData"
+        android:textSize="20sp"
+        android:text="registerNetLiveData"
+        android:textAllCaps="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </Button>
 </LinearLayout>

@@ -11,6 +11,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -53,12 +54,14 @@ public class NetLiveData extends LiveData<Boolean> {
     @Override
     protected void onActive() {
         super.onActive();
+        Log.e("TAG", "NetLiveData onActive:");
         registerBroadcast(sAppContext);
     }
 
     @Override
     protected void onInactive() {
         super.onInactive();
+        Log.e("TAG", "NetLiveData onInactive:");
         unRegisterReceiver(sAppContext);
     }
 

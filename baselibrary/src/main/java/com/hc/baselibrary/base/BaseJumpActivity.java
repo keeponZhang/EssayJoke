@@ -20,7 +20,7 @@ abstract public class BaseJumpActivity extends AppCompatActivity {
         initData();
     }
 
-    private void initData() {
+    protected void initData() {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_main);
         List<String> titles = new ArrayList<>();
         setData(titles);

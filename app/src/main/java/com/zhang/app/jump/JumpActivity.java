@@ -1,9 +1,12 @@
 package com.zhang.app.jump;
 
 
+import android.arch.lifecycle.Observer;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
+import android.util.Log;
 import android.view.View;
 
 import com.hc.baselibrary.base.BaseJumpActivity;
@@ -14,6 +17,7 @@ import com.zhang.app.draw.CustomSpanActivity;
 import com.zhang.app.draw.DrawActivity;
 import com.zhang.app.lifecycle.LiveAppCompactActivity;
 import com.zhang.app.lifecycle.livedata.LiveDataActivity;
+import com.zhang.app.lifecycle.livedata.NetLiveData;
 import com.zhang.app.transitiondemo.CTTargetSupportActivity;
 import com.zhang.app.transitiondemo.CTTargetActivity;
 import com.zhang.app.transitiondemo.FragmentCustomAnimationsActivity;
@@ -36,6 +40,17 @@ import java.util.List;
 
 public class JumpActivity extends BaseJumpActivity {
 
+    @Override
+    protected void initData() {
+        super.initData();
+        NetLiveData.getInstance(JumpActivity.this).observe(JumpActivity.this,
+                new Observer<Boolean>() {
+                    @Override
+                    public void onChanged(@Nullable Boolean aBoolean) {
+                        Log.e("TAG", "JumpActivity onChanged NetLiveData:"+aBoolean);
+                    }
+                });
+    }
 
     @Override
     protected void onRecyclerviewItemClick(View v, int position) {

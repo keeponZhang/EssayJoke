@@ -98,6 +98,7 @@ public abstract class LiveData<T> {
         // the observer moved to an active state, if we've not received that event, we better not
         // notify for a more predictable notification order.
         if (!observer.shouldBeActive()) {
+            //这里如果分发数据下去后就不再处理了
             observer.activeStateChanged(false);
             return;
         }
@@ -123,7 +124,8 @@ public abstract class LiveData<T> {
             } else {
                 for (Iterator<Map.Entry<Observer<T>, ObserverWrapper>> iterator =
                         mObservers.iteratorWithAdditions(); iterator.hasNext(); ) {
-                    considerNotify(iterator.next().getValue());
+                    ObserverWrapper wrapper = iterator.next().getValue();
+                    considerNotify(wrapper);
                     if (mDispatchInvalidated) {
                         break;
                     }
@@ -161,13 +163,16 @@ public abstract class LiveData<T> {
      * @param owner    The LifecycleOwner which controls the observer
      * @param observer The observer that will receive the events
      */
+    //这里是LiveData的observe方法
     @MainThread
     public void observe(@NonNull LifecycleOwner owner, @NonNull Observer<T> observer) {
         if (owner.getLifecycle().getCurrentState() == DESTROYED) {
             // ignore
             return;
         }
+        //真正的观察者会被包一层
         LifecycleBoundObserver wrapper = new LifecycleBoundObserver(owner, observer);
+        //其实key为LifecycleBoundObserver的父类ObserverWrapper
         ObserverWrapper existing = mObservers.putIfAbsent(observer, wrapper);
         if (existing != null && !existing.isAttachedTo(owner)) {
             throw new IllegalArgumentException("Cannot add the same observer"
@@ -176,6 +181,7 @@ public abstract class LiveData<T> {
         if (existing != null) {
             return;
         }
+        //这里是LifeCycle的方法
         owner.getLifecycle().addObserver(wrapper);
     }
 
@@ -397,6 +403,7 @@ public abstract class LiveData<T> {
         void detachObserver() {
         }
 
+        //状态改变会调用到这里
         void activeStateChanged(boolean newActive) {
             if (newActive == mActive) {
                 return;

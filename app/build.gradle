@@ -23,7 +23,7 @@ android {
     }
 
 }
-//gradlew :app:dependencies 打印依赖树
+//gradlew :app:dependencies >dependencies.java 打印依赖树
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 //    compile "com.android.support:appcompat-v7:${rootProject.ext.SUPPORT_LIBRARY_VERSION}"

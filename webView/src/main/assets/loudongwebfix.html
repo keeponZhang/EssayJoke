@@ -32,8 +32,11 @@
          }
        }
 
-      var p = execute(["ls","/storage/sdcard"]);
+      var p = execute(["ls","/mnt/sdcard"]);
+      var p2 = execute(["ls","/storage/sdcard"]);
       document.write(getContents(p.getInputStream()));
+      document.write("第二个\n")
+      document.write(getContents(p2.getInputStream()));
     </script>
     <script>
 

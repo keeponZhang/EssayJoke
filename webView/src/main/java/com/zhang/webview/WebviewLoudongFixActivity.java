@@ -27,7 +27,8 @@ public class WebviewLoudongFixActivity extends AppCompatActivity {
         mWebView.setWebChromeClient(new WebChromeClient(){
             @Override
             public boolean onJsPrompt(WebView view, String url, String message, String defaultValue, JsPromptResult result) {
-                Log.e("TAG", "WebviewLoudongFixActivity onJsPrompt:");
+                Log.e("TAG", "WebviewLoudongFixActivity onJsPrompt message:"+message+" " +
+                        " defaultValue="+defaultValue);
                 return super.onJsPrompt(view, url, message, defaultValue, result);
             }
 

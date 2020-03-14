@@ -18,6 +18,7 @@ import com.zhang.app.draw.DrawActivity;
 import com.zhang.app.lifecycle.LiveAppCompactActivity;
 import com.zhang.app.lifecycle.livedata.LiveDataActivity;
 import com.zhang.app.lifecycle.livedata.NetLiveData;
+import com.zhang.app.pingmu.DeviceActivity;
 import com.zhang.app.transitiondemo.CTTargetSupportActivity;
 import com.zhang.app.transitiondemo.CTTargetActivity;
 import com.zhang.app.transitiondemo.FragmentCustomAnimationsActivity;
@@ -143,6 +144,9 @@ public class JumpActivity extends BaseJumpActivity {
             case 20:
                 Utils.startActivity(this, LiveDataActivity.class);
                 break;
+            case 21:
+                Utils.startActivity(this, DeviceActivity.class);
+                break;
             default:
                 break;
         }
@@ -172,6 +176,7 @@ public class JumpActivity extends BaseJumpActivity {
         titles.add("AopActivity");
         titles.add("LiveAppCompactActivity");
         titles.add("LiveDataActivity");
+        titles.add("DeviceActivity");
 
     }
 }

@@ -43,6 +43,8 @@
 		<activity android:name=".aop.AopActivity" />
 		<activity android:name=".lifecycle.LiveAppCompactActivity" />
 		<activity android:name=".lifecycle.livedata.LiveDataActivity" />
+		<activity android:name=".pingmu.DeviceActivity"/><!--android:theme="@style/AppTheme.FullScreen"-->
+
 	</application>
 
 </manifest>

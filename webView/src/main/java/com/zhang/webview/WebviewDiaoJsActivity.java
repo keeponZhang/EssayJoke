@@ -29,11 +29,14 @@ public class WebviewDiaoJsActivity extends AppCompatActivity {
         mWebSettings.setJavaScriptEnabled(true);
         mWebView.addJavascriptInterface(this, "android");
         mWebView.loadUrl("file:///android_asset/webjs.html");
-
+        int first = 100;
+        StringBuffer stringBuffer = new StringBuffer("javascript:sum(");
+        stringBuffer.append(first).append(",").append(1).append(")");
+        final String s = stringBuffer.toString();
         mBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mWebView.loadUrl("javascript:sum(3,8)");
+                mWebView.loadUrl(s);
             }
         });
 

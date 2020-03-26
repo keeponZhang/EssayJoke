@@ -107,12 +107,20 @@ public class DeviceActivity extends BaseActivity {
     private InputMethodManager mInputManager;
 
     public void showsoftInput(View view) {
-        mInputManager =    (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        mInputManager.showSoftInput(mEditText, 0);
+        if(mInputManager == null){
+            mInputManager =    (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        }
+
+        view.setFocusable(true);
+        view.requestFocus();
+        mInputManager.showSoftInput(view, 0);
         //全面屏设置全面主题 弹出键盘
         // rect.top:0  rect.bottom=1257
     }
     public void hidesoftInput(View view) {
+        if(mInputManager == null){
+            mInputManager =    (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        }
         //全面屏设置全面主题 隐藏键盘
         // rect.top:0  rect.bottom=2158
         mInputManager.hideSoftInputFromWindow(mEditText.getWindowToken(), 0);

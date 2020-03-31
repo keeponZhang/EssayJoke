@@ -554,9 +554,11 @@ public class ViewPager extends ViewGroup {
                 //22.由于ViewPager并不是将所有页面作为子View，
                 // 而是最多缓存用户指定缓存个数*2（左右两边，可能左边或右边没有那么多页面）
                 //因此需要创建和销毁页面，populate主要工作就是这些
+                Log.e("TAG", "ViewPager setAdapter populate:");
                 populate();
             } else {
                 //23.重新布局（Layout）
+                Log.e("TAG", "ViewPager setAdapter重新布局:");
                 requestLayout();
             }
         }
@@ -564,8 +566,10 @@ public class ViewPager extends ViewGroup {
         // Dispatch the change to any listeners
         //24.如果PagerAdapter发生变化，并且设置了OnAdapterChangeListener监听器
         // 则回调OnAdapterChangeListener的onAdapterChanged函数
+        Log.e("TAG", "ViewPager setAdapter oldAdapter:"+oldAdapter+"  adapter="+adapter);
         if (mAdapterChangeListeners != null && !mAdapterChangeListeners.isEmpty()) {
             for (int i = 0, count = mAdapterChangeListeners.size(); i < count; i++) {
+
                 mAdapterChangeListeners.get(i).onAdapterChanged(this, oldAdapter, adapter);
             }
         }
@@ -1643,7 +1647,9 @@ public class ViewPager extends ViewGroup {
         // our view.  We can't really know what it is since we will be
         // adding and removing different arbitrary views and do not
         // want the layout to change as this happens.
-        setMeasuredDimension(getDefaultSize(0, widthMeasureSpec),
+        int defaultSize = getDefaultSize(0, widthMeasureSpec);
+        Log.e("TAG", "ViewPager onMeasure width defaultSize:"+defaultSize);
+        setMeasuredDimension(defaultSize,
                 getDefaultSize(0, heightMeasureSpec));
 
         final int measuredWidth = getMeasuredWidth();

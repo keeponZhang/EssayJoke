@@ -3,6 +3,7 @@ package com.zhang.webview;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -38,15 +39,22 @@ public class WebViewDiaoJavaActivity extends AppCompatActivity {
     public void toastMessage(String message) {
         Toast.makeText(getApplicationContext(), "js 调Java <<@JavascriptInterface>> Toast:" + message, Toast.LENGTH_LONG).show();
     }
-
-    public void toastMessage2(String message) {
-        Toast.makeText(getApplicationContext(), "js 调Java Toast:" + message, Toast.LENGTH_LONG).show();
+    @JavascriptInterface
+    public void toastMessageInt(int  message) {
+        Log.e("TAG", "WebViewDiaoJavaActivity toastMessageInt:"+message);
+        Toast.makeText(getApplicationContext(), "js 调Java Toast:" + message +" ",
+                Toast.LENGTH_LONG).show();
     }
 
 
     public class JSBridge {
         @JavascriptInterface
-        public void toastMessage(String message) {
+        public void toastMessageInt(String message) {
+            Toast.makeText(getApplicationContext(), "JSBridge js 调Java <<@JavascriptInterface>> Toast:" + message, Toast.LENGTH_LONG).show();
+        }
+        @JavascriptInterface
+        public void toastMessageInt(int  message) {
+            Log.e("TAG", "JSBridge toastMessageInt:");
             Toast.makeText(getApplicationContext(), "JSBridge js 调Java <<@JavascriptInterface>> Toast:" + message, Toast.LENGTH_LONG).show();
         }
 

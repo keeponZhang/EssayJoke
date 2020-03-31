@@ -30,6 +30,8 @@ public class IndicatorActivity extends AppCompatActivity {
 	@ViewById(R.id.view_pager)
 	private ViewPager                mViewPager;
 	private String                   TAG = "ViewPagerActivity";
+	private FragmentPagerAdapter mAdapter;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,7 +50,7 @@ public class IndicatorActivity extends AppCompatActivity {
 	 * 初始化ViewPager
 	 */
 	private void initViewPager() {
-		mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
+		mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
 			@Override
 			public Fragment getItem(int position) {
 				return ItemFragment.newInstance(items[position]);
@@ -63,31 +65,40 @@ public class IndicatorActivity extends AppCompatActivity {
 			public void destroyItem(ViewGroup container, int position, Object object) {
 
 			}
-		});
+		};
 
 		/**
 		 * 添加一个切换的监听那个setOnPageChangeListener过时了
 		 * 这个看源码去吧
 		 */
 		mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-			@Override
-			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-				Log.e(TAG, "position --> " + position + " positionOffset --> " + positionOffset);
-				if (positionOffset > 0) {
-					// 获取左边
-					ColorTrackTextView left = mIndicators.get(position);
-					// 设置朝向
-					left.setDirection(ColorTrackTextView.Direction.RIGHT_TO_LEFT);
-					// 设置进度  positionOffset 是从 0 一直变化到 1 不信可以看打印
-					left.setCurrentProgress(1 - positionOffset);
+											   @Override
+											   public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+												   Log.e(TAG, "position --> " + position + " positionOffset --> " + positionOffset);
+												   if (positionOffset > 0) {
+													   // 获取左边
+													   ColorTrackTextView left = mIndicators.get(position);
+													   // 设置朝向
+													   left.setDirection(ColorTrackTextView.Direction.RIGHT_TO_LEFT);
+													   // 设置进度  positionOffset 是从 0 一直变化到 1 不信可以看打印
+													   left.setCurrentProgress(1 - positionOffset);
 
-					// 获取右边
-					ColorTrackTextView right = mIndicators.get(position + 1);
-					right.setDirection(ColorTrackTextView.Direction.LEFT_TO_RIGHT);
-					right.setCurrentProgress(positionOffset);
+													   // 获取右边
+													   ColorTrackTextView right = mIndicators.get(position + 1);
+													   right.setDirection(ColorTrackTextView.Direction.LEFT_TO_RIGHT);
+													   right.setCurrentProgress(positionOffset);
+												   }
+											   }
+										   });
+
+		mViewPager.setAdapter(mAdapter);
+		mViewPager.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				items = new String[]{"直播", "推荐"};
+				mViewPager.setAdapter(mAdapter);
 				}
-			}
-		});
+		}, 3000);
 	}
 
 	/**

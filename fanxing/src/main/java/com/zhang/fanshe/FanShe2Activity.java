@@ -5,7 +5,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import com.zhang.fanshe.bean.Animal;
+import com.zhang.fanshe.bean.Call;
+import com.zhang.fanshe.bean.Call2;
+import com.zhang.fanshe.bean.Person;
 import com.zhang.fanshe.bean.PointImpl;
+import com.zhang.fanshe.bean.Result;
+import com.zhang.fanshe.bean.UserInfo;
 import com.zhang.fanshe.interfaces.PointArrayImpl;
 import com.zhang.fanshe.interfaces.PointGenericityImpl;
 import com.zhang.fanshe.interfaces.PointImpl2;
@@ -13,6 +19,7 @@ import com.zhang.fanshe.interfaces.PointWildcardImpl;
 import com.zhang.fanxing.R;
 
 import java.lang.reflect.GenericArrayType;
+import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
@@ -207,6 +214,21 @@ public class FanShe2Activity extends AppCompatActivity {
 	}
 
 
+
+	static Type getParameterUpperBound(int index, ParameterizedType type) {
+		Type[] types = type.getActualTypeArguments();
+		if (index < 0 || index >= types.length) {
+			throw new IllegalArgumentException(
+					"Index " + index + " not in range [0," + types.length + ") for " + type);
+		}
+		Type paramType = types[index];
+        Log.w("TAG", "FanShe2Activity getParameterUpperBound paramType:"+paramType);
+		if (paramType instanceof WildcardType) {
+			Log.e("TAG", "FanShe2Activity getParameterUpperBound paramType instanceof WildcardType:");
+			return ((WildcardType) paramType).getUpperBounds()[0];
+		}
+		return paramType;
+	}
 	private void parseTypeParameters(Type[] types){
 		for(Type type:types){
 			parseTypeParameter(type);
@@ -261,5 +283,32 @@ public class FanShe2Activity extends AppCompatActivity {
 
 	public void parseClass(View view) {
 		parseClass(PointWildcardImpl.class);
+	}
+	public Call<Result<UserInfo>>  getMethodReturn(){
+		return null;
+	}
+	public Call2<Result<UserInfo>,Animal> getMethodReturn2(){
+		return null;
+	}
+	public void getReturnType(View view) {
+		try {
+			Method method = this.getClass().getDeclaredMethod("getMethodReturn");
+			Method method2 = this.getClass().getDeclaredMethod("getMethodReturn");
+			method.setAccessible(true);
+			method2.setAccessible(true);
+			Type returnType = method.getGenericReturnType();
+			Type returnType2 = method2.getGenericReturnType();
+			Log.e("TAG",
+                    "FanShe2Activity getReturnType returnType:"+returnType+"    returnType2="+returnType2);
+			Type parameterUpperBound = getParameterUpperBound(0, (ParameterizedType) returnType);
+			Type parameterUpperBound2 = getParameterUpperBound(0, (ParameterizedType) returnType2);
+			Log.e("TAG",
+					"FanShe2Activity getReturnType parameterUpperBound:"+parameterUpperBound+" " +
+							"      parameterUpperBound2="+parameterUpperBound2);
+
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+
 	}
 }

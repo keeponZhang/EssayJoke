@@ -60,5 +60,13 @@
 		android:onClick="parseClass"
 		android:layout_height="wrap_content"
 		/>
+	<Button
+		android:padding="15dp"
+		android:textAllCaps="false"
+		android:layout_width="wrap_content"
+		android:text="getReturnType"
+		android:onClick="getReturnType"
+		android:layout_height="wrap_content"
+		/>
 </LinearLayout>
 </ScrollView>

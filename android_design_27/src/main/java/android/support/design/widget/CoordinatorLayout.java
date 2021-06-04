@@ -1251,6 +1251,7 @@ public class CoordinatorLayout extends ViewGroup implements NestedScrollingParen
      *
      * @param type the type of event which has caused this call
      */
+    // https://mp.weixin.qq.com/s?__biz=MzA5MzI3NjE2MA==&mid=2650237142&idx=1&sn=7470950e38945c5afb573e3ce7469bb6&chksm=886399b9bf1410afaf3a688bb3b4e0051ed2cd7aca72b6ca447fd0b0fa5844132364b37a83ba&scene=38#wechat_redirect
     final void onChildViewsChanged(@DispatchChangeEvent final int type) {
         final int layoutDirection = ViewCompat.getLayoutDirection(this);
         final int childCount = mDependencySortedChildren.size();
